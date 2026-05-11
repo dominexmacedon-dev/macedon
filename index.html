@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Premium Motion Studio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:#090909;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* Background */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:
+        radial-gradient(circle at top left,#7c3aed55,transparent 25%),
+        radial-gradient(circle at bottom right,#06b6d455,transparent 25%),
+        linear-gradient(120deg,#090909,#121212);
+    z-index:-1;
+}
+
+.app{
+    display:grid;
+    grid-template-columns:340px 1fr;
+    min-height:100vh;
+}
+
+/* Sidebar */
+
+.sidebar{
+    border-right:1px solid rgba(255,255,255,0.08);
+    background:rgba(255,255,255,0.04);
+    backdrop-filter:blur(20px);
+    padding:24px;
+    overflow-y:auto;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:700;
+    margin-bottom:25px;
+    background:linear-gradient(90deg,#8b5cf6,#06b6d4);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.panel{
+    margin-bottom:24px;
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:20px;
+    padding:18px;
+}
+
+.panel h3{
+    margin-bottom:14px;
+    font-size:15px;
+    color:#ddd;
+}
+
+input,
+select,
+button,
+textarea{
+    width:100%;
+    margin-bottom:12px;
+    border:none;
+    border-radius:12px;
+    padding:12px;
+    background:#181818;
+    color:white;
+    font-family:inherit;
+}
+
+input[type="color"]{
+    height:50px;
+    padding:4px;
+}
+
+button{
+    cursor:pointer;
+    background:linear-gradient(135deg,#7c3aed,#06b6d4);
+    font-weight:600;
+    transition:.3s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+    opacity:.95;
+}
+
+/* Main */
+
+.main{
+    padding:24px;
+}
+
+.preview-wrapper{
+    position:relative;
+    width:100%;
+    height:85vh;
+    border-radius:30px;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,0.08);
+    background:#111;
+    box-shadow:0 20px 60px rgba(0,0,0,0.5);
+}
+
+canvas{
+    width:100%;
+    height:100%;
+    display:block;
+}
+
+video{
+    display:none;
+}
+
+#previewImage{
+    display:none;
+}
+
+.overlay-text{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    font-size:64px;
+    font-weight:700;
+    pointer-events:none;
+    text-align:center;
+    white-space:nowrap;
+    text-shadow:0 10px 30px rgba(0,0,0,0.6);
+}
+
+/* Fancy animations */
+
+.fade{
+    animation:fadeAnim 3s infinite;
+}
+
+.slide{
+    animation:slideAnim 3s infinite;
+}
+
+.zoom{
+    animation:zoomAnim 3s infinite;
+}
+
+.glow{
+    animation:glowAnim 2s infinite alternate;
+}
+
+.rotate{
+    animation:rotateAnim 4s infinite linear;
+}
+
+@keyframes fadeAnim{
+    0%,100%{opacity:0;}
+    50%{opacity:1;}
+}
+
+@keyframes slideAnim{
+    0%{
+        transform:translate(-50%,120px);
+        opacity:0;
+    }
+    50%{
+        transform:translate(-50%,-50%);
+        opacity:1;
+    }
+    100%{
+        transform:translate(-50%,-200px);
+        opacity:0;
+    }
+}
+
+@keyframes zoomAnim{
+    0%,100%{
+        transform:translate(-50%,-50%) scale(.5);
+    }
+    50%{
+        transform:translate(-50%,-50%) scale(1.2);
+    }
+}
+
+@keyframes glowAnim{
+    from{
+        text-shadow:0 0 10px #fff;
+    }
+    to{
+        text-shadow:
+        0 0 20px #8b5cf6,
+        0 0 40px #06b6d4;
+    }
+}
+
+@keyframes rotateAnim{
+    from{
+        transform:translate(-50%,-50%) rotate(0deg);
+    }
+    to{
+        transform:translate(-50%,-50%) rotate(360deg);
+    }
+}
+
+.timeline{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.timeline input{
+    margin:0;
+}
+
+.small{
+    font-size:12px;
+    opacity:.7;
+}
+
+.export-buttons{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.badge{
+    background:#1f1f1f;
+    padding:8px 12px;
+    border-radius:999px;
+    display:inline-block;
+    font-size:12px;
+    margin-bottom:10px;
+    border:1px solid rgba(255,255,255,0.08);
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+        <div class="logo">Motion Studio</div>
+
+        <div class="badge">Premium Video & GIF Editor</div>
+
+        <div class="panel">
+            <h3>Upload Media</h3>
+
+            <input type="file" id="mediaInput" accept="image/*,video/mp4,video/webm,video/ogg">
+
+            <div class="small">
+                Supports images & videos up to 5 seconds.
+            </div>
+        </div>
+
+        <div class="panel">
+            <h3>Text Overlay</h3>
+
+            <textarea id="textInput" rows="3" placeholder="Enter fancy text..."></textarea>
+
+            <select id="fontSelect">
+                <option>Poppins</option>
+                <option>Arial</option>
+                <option>Georgia</option>
+                <option>Courier New</option>
+                <option>Impact</option>
+            </select>
+
+            <input type="color" id="textColor" value="#ffffff">
+
+            <input type="range" id="fontSize" min="20" max="120" value="64">
+        </div>
+
+        <div class="panel">
+            <h3>Text Animation</h3>
+
+            <select id="animationSelect">
+                <option value="fade">Fade</option>
+                <option value="slide">Slide</option>
+                <option value="zoom">Zoom</option>
+                <option value="glow">Glow</option>
+                <option value="rotate">Rotate</option>
+            </select>
+        </div>
+
+        <div class="panel">
+            <h3>Time Frame</h3>
+
+            <div class="timeline">
+                <span>Start</span>
+                <input type="number" id="startTime" min="0" value="0">
+            </div>
+
+            <div class="timeline">
+                <span>End</span>
+                <input type="number" id="endTime" min="1" value="5">
+            </div>
+        </div>
+
+        <div class="panel">
+            <h3>Export</h3>
+
+            <div class="export-buttons">
+                <button id="exportPNG">PNG</button>
+                <button id="exportGIF">GIF</button>
+                <button id="exportMP4">MP4</button>
+                <button id="exportWEBM">WEBM</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MAIN -->
+    <div class="main">
+
+        <div class="preview-wrapper">
+
+            <canvas id="canvas"></canvas>
+
+            <video id="video" controls muted loop></video>
+
+            <img id="previewImage">
+
+            <div class="overlay-text fade" id="overlayText">
+                Premium Text
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+const mediaInput = document.getElementById("mediaInput");
+const video = document.getElementById("video");
+const image = document.getElementById("previewImage");
+const overlayText = document.getElementById("overlayText");
+
+const textInput = document.getElementById("textInput");
+const fontSelect = document.getElementById("fontSelect");
+const textColor = document.getElementById("textColor");
+const fontSize = document.getElementById("fontSize");
+const animationSelect = document.getElementById("animationSelect");
+
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+function resizeCanvas(){
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+}
+resizeCanvas();
+window.addEventListener("resize",resizeCanvas);
+
+/* Upload */
+mediaInput.addEventListener("change",e=>{
+
+    const file = e.target.files[0];
+    if(!file) return;
+
+    const url = URL.createObjectURL(file);
+
+    if(file.type.startsWith("video")){
+        video.src = url;
+        video.style.display = "block";
+        image.style.display = "none";
+
+        video.onloadedmetadata = ()=>{
+            if(video.duration > 5){
+                alert("Video must be 5 seconds or less.");
+                return;
+            }
+            video.play();
+        }
+
+    }else{
+        image.src = url;
+        image.style.display = "block";
+        video.style.display = "none";
+    }
+});
+
+/* Text updates */
+
+textInput.addEventListener("input",()=>{
+    overlayText.innerText = textInput.value || "Premium Text";
+});
+
+fontSelect.addEventListener("change",()=>{
+    overlayText.style.fontFamily = fontSelect.value;
+});
+
+textColor.addEventListener("input",()=>{
+    overlayText.style.color = textColor.value;
+});
+
+fontSize.addEventListener("input",()=>{
+    overlayText.style.fontSize = fontSize.value + "px";
+});
+
+/* Animation */
+
+animationSelect.addEventListener("change",()=>{
+    overlayText.className = "overlay-text " + animationSelect.value;
+});
+
+/* Draw preview */
+
+function drawCanvas(){
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    if(video.style.display === "block"){
+        ctx.drawImage(video,0,0,canvas.width,canvas.height);
+    }
+
+    if(image.style.display === "block"){
+        ctx.drawImage(image,0,0,canvas.width,canvas.height);
+    }
+
+    requestAnimationFrame(drawCanvas);
+}
+
+drawCanvas();
+
+/* Export PNG */
+
+document.getElementById("exportPNG").onclick = ()=>{
+
+    const link = document.createElement("a");
+    link.download = "frame.png";
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+};
+
+/* Fake GIF export */
+
+document.getElementById("exportGIF").onclick = ()=>{
+    alert("GIF export feature can be connected using gif.js library.");
+};
+
+/* Fake MP4 export */
+
+document.getElementById("exportMP4").onclick = ()=>{
+    alert("MP4 export requires FFmpeg or MediaRecorder backend.");
+};
+
+/* WEBM export */
+
+document.getElementById("exportWEBM").onclick = ()=>{
+
+    const stream = canvas.captureStream(30);
+
+    const recorder = new MediaRecorder(stream,{
+        mimeType:"video/webm"
+    });
+
+    let chunks = [];
+
+    recorder.ondataavailable = e=>{
+        chunks.push(e.data);
+    };
+
+    recorder.onstop = ()=>{
+
+        const blob = new Blob(chunks,{
+            type:"video/webm"
+        });
+
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "animation.webm";
+        a.click();
+    };
+
+    recorder.start();
+
+    setTimeout(()=>{
+        recorder.stop();
+    },5000);
+};
+</script>
+
+</body>
+</html>
