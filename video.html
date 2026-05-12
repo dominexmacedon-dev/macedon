@@ -1,0 +1,315 @@
+<!-- Save as: video.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Python Shorts Video</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#0b0f17;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    font-family:'Poppins',sans-serif;
+}
+
+/* YouTube Shorts Style */
+.short-frame{
+    width:390px;
+    height:690px;
+    background:#111827;
+    border-radius:30px;
+    overflow:hidden;
+    position:relative;
+    border:2px solid #1f2937;
+    box-shadow:
+        0 0 50px rgba(0,0,0,.7),
+        0 0 15px rgba(255,255,255,.04);
+}
+
+/* Header */
+.top-bar{
+    height:60px;
+    background:#0f172a;
+    border-bottom:1px solid #1e293b;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 18px;
+}
+
+.title{
+    color:white;
+    font-size:18px;
+    font-weight:600;
+}
+
+.recording{
+    width:10px;
+    height:10px;
+    background:#ff3b30;
+    border-radius:50%;
+    animation:pulse 1s infinite;
+}
+
+@keyframes pulse{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.5);}
+    100%{transform:scale(1);}
+}
+
+/* Editor */
+.editor{
+    padding:22px;
+    height:560px;
+    overflow:hidden;
+    font-family:'Fira Code', monospace;
+    font-size:15px;
+    line-height:1.8;
+}
+
+/* Python syntax highlighting */
+.keyword{ color:#ff79c6; }
+.import{ color:#8be9fd; }
+.string{ color:#f1fa8c; }
+.function{ color:#50fa7b; }
+.comment{ color:#6272a4; }
+.number{ color:#bd93f9; }
+.operator{ color:#ffb86c; }
+
+.code-line{
+    opacity:0;
+    transform:translateY(8px);
+    animation:showLine .4s forwards;
+}
+
+@keyframes showLine{
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* Run button */
+.run-btn{
+    position:absolute;
+    right:20px;
+    bottom:90px;
+    border:none;
+    background:#22c55e;
+    color:white;
+    padding:12px 24px;
+    border-radius:12px;
+    font-weight:600;
+    cursor:pointer;
+    box-shadow:0 0 18px rgba(34,197,94,.4);
+    transition:.2s;
+}
+
+.run-btn:hover{
+    transform:scale(1.05);
+}
+
+/* Export area */
+.export-area{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:70px;
+    background:#0f172a;
+    border-top:1px solid #1e293b;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.export-btn{
+    border:none;
+    background:#ef4444;
+    color:white;
+    padding:14px 28px;
+    border-radius:14px;
+    font-size:15px;
+    font-weight:600;
+    opacity:0;
+    transform:translateY(20px);
+    animation:showExport 1s forwards;
+    animation-delay:9s;
+}
+
+@keyframes showExport{
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* Footer text */
+.footer{
+    position:absolute;
+    left:20px;
+    bottom:100px;
+    color:white;
+}
+
+.footer h3{
+    font-size:18px;
+    margin-bottom:5px;
+}
+
+.footer p{
+    font-size:13px;
+    color:#94a3b8;
+}
+
+/* Right-side controls */
+.side-controls{
+    position:absolute;
+    right:12px;
+    bottom:120px;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.control{
+    width:46px;
+    height:46px;
+    border-radius:50%;
+    background:#1e293b;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:15px;
+    box-shadow:0 0 10px rgba(255,255,255,.06);
+}
+</style>
+</head>
+
+<body>
+
+<div class="short-frame">
+
+    <div class="top-bar">
+        <div class="title">Python Coding</div>
+        <div class="recording"></div>
+    </div>
+
+    <div class="editor" id="editor"></div>
+
+    <button class="run-btn">Run</button>
+
+    <div class="footer">
+        <h3>@python_creator</h3>
+        <p>Python duplicate text animation</p>
+    </div>
+
+    <div class="side-controls">
+        <div class="control">Like</div>
+        <div class="control">Chat</div>
+        <div class="control">Share</div>
+    </div>
+
+    <div class="export-area">
+        <button class="export-btn">Export to MP4</button>
+    </div>
+
+</div>
+
+<script>
+
+const editor = document.getElementById("editor");
+
+const code = [
+
+`<span class="import">import</span> <span class="function">time</span>`,
+`<span class="import">import</span> <span class="function">random</span>`,
+``,
+`<span class="keyword">def</span> <span class="function">duplicate_text</span>():`,
+`&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100</span>):`,
+`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color <span class="operator">=</span> random.choice([`,
+`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"red"</span>,`,
+`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"blue"</span>,`,
+`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"green"</span>,`,
+`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"yellow"</span>`,
+`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;])`,
+``,
+`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">print</span>(`,
+`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"I love programming"</span>,`,
+`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color`,
+`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)`,
+``,
+`<span class="function">duplicate_text</span>()`,
+``,
+`<span class="comment"># Running program...</span>`
+
+];
+
+let delay = 0;
+
+code.forEach((line) => {
+
+    setTimeout(() => {
+
+        const div = document.createElement("div");
+        div.className = "code-line";
+        div.innerHTML = line;
+
+        editor.appendChild(div);
+
+        editor.scrollTop = editor.scrollHeight;
+
+    }, delay);
+
+    delay += 500;
+
+});
+
+/* Fake terminal output */
+
+setTimeout(() => {
+
+    const outputs = [
+        "I love programming : red",
+        "I love programming : blue",
+        "I love programming : green",
+        "I love programming : yellow",
+        "I love programming : purple"
+    ];
+
+    outputs.forEach((text, i) => {
+
+        setTimeout(() => {
+
+            const out = document.createElement("div");
+            out.className = "code-line";
+            out.innerHTML = `<span class="string">${text}</span>`;
+
+            editor.appendChild(out);
+
+            editor.scrollTop = editor.scrollHeight;
+
+        }, i * 350);
+
+    });
+
+}, 6500);
+
+</script>
+
+</body>
+</html>
