@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculator Coding Video</title>
+<title>Calculator HTML Coding Video</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
 
@@ -16,13 +16,13 @@
 }
 
 body{
-    background:#07111f;
+    background:#050b16;
     height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
     overflow:hidden;
-    font-family:Inter;
+    font-family:Inter,sans-serif;
 }
 
 /* FRAME */
@@ -30,26 +30,14 @@ body{
 .frame{
     width:390px;
     height:690px;
-    background:#111827;
-    border-radius:28px;
+    background:#0f172a;
+    border-radius:30px;
     overflow:hidden;
     position:relative;
-    border:2px solid #1e293b;
-    box-shadow:0 0 60px rgba(0,0,0,.75);
-}
-
-/* TOP BAR */
-
-.top{
-    height:60px;
-    background:#0f172a;
-    border-bottom:1px solid #1e293b;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    color:white;
-    font-weight:700;
-    letter-spacing:.4px;
+    border:1px solid #1e293b;
+    box-shadow:
+    0 0 60px rgba(0,0,0,.7),
+    inset 0 0 40px rgba(255,255,255,.02);
 }
 
 /* INTRO */
@@ -57,143 +45,145 @@ body{
 .intro{
     position:absolute;
     inset:0;
+    z-index:100;
     background:
-    radial-gradient(circle at top,#2563eb33,transparent 35%),
+    radial-gradient(circle at top,#2563eb55,transparent 30%),
     linear-gradient(135deg,#020617,#0f172a,#111827);
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
-    z-index:100;
-    animation:fadeOut 1s ease forwards;
+    animation:introHide 1s ease forwards;
     animation-delay:3s;
 }
 
 .intro h1{
     color:white;
-    font-size:32px;
+    font-size:34px;
     font-weight:800;
+    letter-spacing:.5px;
     margin-bottom:12px;
 }
 
 .intro p{
     color:#94a3b8;
     font-size:14px;
+    letter-spacing:.4px;
 }
 
-@keyframes fadeOut{
+.glow{
+    position:absolute;
+    width:240px;
+    height:240px;
+    background:#2563eb;
+    border-radius:50%;
+    filter:blur(120px);
+    opacity:.25;
+}
+
+@keyframes introHide{
     to{
         opacity:0;
         visibility:hidden;
     }
 }
 
-/* EDITOR */
+/* MAIN */
 
-.editor{
-    height:630px;
-    overflow:hidden;
-    padding:14px;
-    font-family:'Fira Code', monospace;
-    font-size:12px;
-    color:white;
+.main{
+    width:100%;
+    height:100%;
+    padding:20px;
     position:relative;
 }
 
-/* CODE LINE */
+/* FILE CREATION */
 
-.line{
-    display:flex;
-    line-height:1.6;
-}
-
-.num{
-    width:28px;
-    color:#64748b;
-    text-align:right;
-    margin-right:12px;
-    user-select:none;
-}
-
-/* COLORS */
-
-.tag{ color:#ff79c6; }
-.attr{ color:#8be9fd; }
-.value{ color:#f1fa8c; }
-.comment{ color:#6272a4; }
-.keyword{ color:#c084fc; }
-.func{ color:#50fa7b; }
-.css{ color:#f97316; }
-
-/* CURSOR */
-
-.cursor{
-    display:inline-block;
-    width:8px;
-    height:15px;
-    background:white;
-    animation:blink .7s infinite;
-}
-
-@keyframes blink{
-    50%{
-        opacity:0;
-    }
-}
-
-/* THOUGHT BOX */
-
-.thought{
-    position:absolute;
-    left:14px;
-    bottom:18px;
-    width:340px;
-    background:#0f172a;
-    border:1px solid #334155;
-    border-radius:16px;
-    padding:14px;
-    color:#cbd5e1;
-    font-size:12px;
-    line-height:1.7;
-    opacity:0;
-    transform:translateY(20px);
-    transition:.45s;
-}
-
-.thought.show{
-    opacity:1;
-    transform:translateY(0);
-}
-
-/* RUN SCENE */
-
-.runScene{
+.files{
     position:absolute;
     inset:0;
-    background:#111827;
     display:flex;
     justify-content:center;
     align-items:center;
-    opacity:0;
-    pointer-events:none;
+    flex-direction:column;
+    gap:18px;
+    z-index:20;
 }
 
-/* RUN BUTTON */
-
-.runBtn{
-    background:#22c55e;
+.file{
+    width:260px;
+    height:70px;
+    border-radius:18px;
+    background:#111827;
+    border:1px solid #1e293b;
+    display:flex;
+    align-items:center;
+    padding:0 22px;
     color:white;
-    border:none;
-    padding:14px 30px;
-    border-radius:14px;
-    font-size:18px;
-    font-weight:700;
-    box-shadow:0 0 30px rgba(34,197,94,.35);
-    transition:.2s;
+    font-weight:600;
+    transform:scale(.7);
+    opacity:0;
+    position:relative;
+    overflow:hidden;
 }
 
-.runBtn.press{
-    transform:scale(.9);
+.file::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.08),
+        transparent
+    );
+    transform:translateX(-100%);
+}
+
+.file.show{
+    animation:fileShow .7s ease forwards;
+}
+
+.file.show::before{
+    animation:shine 1.2s linear;
+}
+
+@keyframes shine{
+    to{
+        transform:translateX(250%);
+    }
+}
+
+@keyframes fileShow{
+    to{
+        transform:scale(1);
+        opacity:1;
+    }
+}
+
+.icon{
+    width:16px;
+    height:16px;
+    border-radius:4px;
+    margin-right:16px;
+}
+
+.htmlIcon{
+    background:#f97316;
+}
+
+.cssIcon{
+    background:#38bdf8;
+}
+
+.jsIcon{
+    background:#facc15;
+}
+
+.file.active{
+    border-color:#2563eb;
+    background:#172554;
+    box-shadow:0 0 35px rgba(37,99,235,.3);
 }
 
 /* MOUSE */
@@ -203,72 +193,135 @@ body{
     width:24px;
     height:24px;
     background:white;
-    clip-path:polygon(0 0, 0 100%, 30% 70%, 50% 100%, 60% 90%, 40% 60%, 100% 60%);
+    clip-path:polygon(0 0,0 100%,30% 72%,48% 100%,58% 92%,40% 60%,100% 60%);
+    z-index:60;
     opacity:0;
 }
 
-/* CALCULATOR */
+/* EDITOR */
 
-.calcWrap{
-    width:100%;
-    height:100%;
+.editor{
+    position:absolute;
+    inset:0;
+    background:#0b1220;
+    display:none;
+    flex-direction:column;
+}
+
+.editor.show{
     display:flex;
-    justify-content:center;
+}
+
+/* TAB */
+
+.tab{
+    height:56px;
+    background:#111827;
+    border-bottom:1px solid #1e293b;
+    display:flex;
     align-items:center;
+    padding:0 20px;
+    color:#e2e8f0;
+    font-size:14px;
+    font-weight:600;
 }
 
-.calculator{
-    width:300px;
-    background:#0f172a;
-    border-radius:26px;
-    padding:18px;
-    box-shadow:0 0 50px rgba(0,0,0,.55);
-}
-
-.screen{
-    height:90px;
-    background:#020617;
-    border-radius:16px;
-    margin-bottom:18px;
-    display:flex;
-    justify-content:flex-end;
-    align-items:flex-end;
-    padding:16px;
-    color:white;
-    font-size:34px;
-    font-weight:700;
-}
-
-.buttons{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:12px;
-}
-
-.btn{
-    height:58px;
-    border-radius:14px;
-    background:#1e293b;
-    color:white;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:20px;
-    font-weight:700;
-    transition:.15s;
-}
-
-.orange{
+.tabDot{
+    width:10px;
+    height:10px;
+    border-radius:50%;
     background:#f97316;
+    margin-right:12px;
 }
 
-.green{
-    background:#22c55e;
+/* CODE AREA */
+
+.code{
+    flex:1;
+    padding:18px;
+    overflow:hidden;
+    font-family:'Fira Code', monospace;
+    font-size:11.8px;
+    color:white;
+    line-height:1.75;
 }
 
-.btn.press{
-    transform:scale(.88);
-    filter:brightness(1.15);
+/* LINE */
+
+.line{
+    display:flex;
+}
+
+.num{
+    width:34px;
+    color:#475569;
+    text-align:right;
+    margin-right:14px;
+    user-select:none;
+}
+
+/* COLORS */
+
+.tag{
+    color:#ff79c6;
+}
+
+.attr{
+    color:#8be9fd;
+}
+
+.value{
+    color:#f1fa8c;
+}
+
+.text{
+    color:#e2e8f0;
+}
+
+.comment{
+    color:#6272a4;
+}
+
+/* CURSOR */
+
+.cursor{
+    width:8px;
+    height:14px;
+    background:white;
+    display:inline-block;
+    margin-left:2px;
+    animation:blink .7s infinite;
+}
+
+@keyframes blink{
+    50%{
+        opacity:0;
+    }
+}
+
+/* THOUGHT */
+
+.thought{
+    position:absolute;
+    left:20px;
+    bottom:18px;
+    width:350px;
+    background:#111827;
+    border:1px solid #334155;
+    border-radius:18px;
+    padding:14px;
+    color:#cbd5e1;
+    font-size:12px;
+    line-height:1.7;
+    opacity:0;
+    transform:translateY(25px);
+    transition:.5s;
+    z-index:90;
+}
+
+.thought.show{
+    opacity:1;
+    transform:translateY(0);
 }
 
 </style>
@@ -278,34 +331,66 @@ body{
 
 <div class="frame">
 
-    <div class="top">
-        Calculator Project
-    </div>
-
     <!-- INTRO -->
 
     <div class="intro">
+
+        <div class="glow"></div>
+
         <h1>Calculator</h1>
+
         <p>by Dominex Macedon</p>
-    </div>
-
-    <!-- CODE EDITOR -->
-
-    <div class="editor" id="editor">
-
-        <div class="thought" id="thought"></div>
 
     </div>
 
-    <!-- RUN SCENE -->
+    <!-- MAIN -->
 
-    <div class="runScene" id="runScene">
+    <div class="main">
 
-        <button class="runBtn" id="runBtn">
-            Run Project
-        </button>
+        <!-- FILES -->
+
+        <div class="files" id="files">
+
+            <div class="file" id="htmlFile">
+                <div class="icon htmlIcon"></div>
+                calculator.html
+            </div>
+
+            <div class="file" id="cssFile">
+                <div class="icon cssIcon"></div>
+                calculator.css
+            </div>
+
+            <div class="file" id="jsFile">
+                <div class="icon jsIcon"></div>
+                calculator.js
+            </div>
+
+        </div>
+
+        <!-- MOUSE -->
 
         <div class="mouse" id="mouse"></div>
+
+        <!-- EDITOR -->
+
+        <div class="editor" id="editor">
+
+            <div class="tab">
+
+                <div class="tabDot"></div>
+
+                calculator.html
+
+            </div>
+
+            <div class="code" id="code"></div>
+
+        </div>
+
+        <!-- THOUGHT -->
+
+        <div class="thought" id="thought"></div>
 
     </div>
 
@@ -313,123 +398,163 @@ body{
 
 <script>
 
-const editor = document.getElementById("editor");
-const thought = document.getElementById("thought");
+const htmlFile = document.getElementById("htmlFile");
+const cssFile = document.getElementById("cssFile");
+const jsFile = document.getElementById("jsFile");
 
-const runScene = document.getElementById("runScene");
-const runBtn = document.getElementById("runBtn");
+const editor = document.getElementById("editor");
+const codeBox = document.getElementById("code");
+
 const mouse = document.getElementById("mouse");
 
+const thought = document.getElementById("thought");
+
 /* =========================
-   FULL CODE
+   FILE APPEAR
+========================= */
+
+setTimeout(() => {
+    htmlFile.classList.add("show");
+},3500);
+
+setTimeout(() => {
+    cssFile.classList.add("show");
+},3900);
+
+setTimeout(() => {
+    jsFile.classList.add("show");
+},4300);
+
+/* =========================
+   CLICK HTML FILE
+========================= */
+
+setTimeout(() => {
+
+    mouse.style.opacity = "1";
+
+    mouse.style.left = "105px";
+    mouse.style.top = "290px";
+
+    mouse.style.transition = "1s ease";
+
+    setTimeout(() => {
+
+        mouse.style.left = "145px";
+        mouse.style.top = "260px";
+
+        setTimeout(() => {
+
+            htmlFile.classList.add("active");
+
+            openEditor();
+
+        },900);
+
+    },300);
+
+},5400);
+
+/* =========================
+   OPEN EDITOR
+========================= */
+
+function openEditor(){
+
+    showThought(
+        "Creating the complete HTML structure for the calculator interface."
+    );
+
+    setTimeout(() => {
+
+        document.getElementById("files").style.display = "none";
+
+        mouse.style.opacity = "0";
+
+        editor.classList.add("show");
+
+        startTyping();
+
+    },700);
+}
+
+/* =========================
+   COMPLETE HTML CODE
 ========================= */
 
 const code = [
 
-`<span class="comment">&lt;!-- HTML Structure --&gt;</span>`,
+`<span class="comment">&lt;!DOCTYPE html&gt;</span>`,
+`<span class="tag">&lt;html</span> <span class="attr">lang</span>=<span class="value">"en"</span><span class="tag">&gt;</span>`,
+`<span class="tag">&lt;head&gt;</span>`,
+`   <span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="value">"UTF-8"</span><span class="tag">&gt;</span>`,
+`   <span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="value">"viewport"</span>`,
+`         <span class="attr">content</span>=<span class="value">"width=device-width, initial-scale=1.0"</span><span class="tag">&gt;</span>`,
+``,
+`   <span class="tag">&lt;title&gt;</span><span class="text">Calculator</span><span class="tag">&lt;/title&gt;</span>`,
+``,
+`<span class="tag">&lt;/head&gt;</span>`,
+``,
+`<span class="tag">&lt;body&gt;</span>`,
+``,
+`<span class="comment">&lt;!-- Calculator Container --&gt;</span>`,
 `<span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"calculator"</span><span class="tag">&gt;</span>`,
-`   <span class="tag">&lt;div</span> <span class="attr">id</span>=<span class="value">"screen"</span><span class="tag">&gt;</span><span class="tag">&lt;/div&gt;</span>`,
+``,
+`   <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"screen"</span><span class="tag">&gt;</span>`,
+`      <span class="text">0</span>`,
+`   <span class="tag">&lt;/div&gt;</span>`,
 ``,
 `   <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"buttons"</span><span class="tag">&gt;</span>`,
-`      <span class="tag">&lt;button&gt;</span>7<span class="tag">&lt;/button&gt;</span>`,
-`      <span class="tag">&lt;button&gt;</span>8<span class="tag">&lt;/button&gt;</span>`,
-`      <span class="tag">&lt;button&gt;</span>9<span class="tag">&lt;/button&gt;</span>`,
-`      <span class="tag">&lt;button&gt;</span>+<span class="tag">&lt;/button&gt;</span>`,
 ``,
-`      <span class="tag">&lt;button&gt;</span>4<span class="tag">&lt;/button&gt;</span>`,
-`      <span class="tag">&lt;button&gt;</span>5<span class="tag">&lt;/button&gt;</span>`,
-`      <span class="tag">&lt;button&gt;</span>6<span class="tag">&lt;/button&gt;</span>`,
-`      <span class="tag">&lt;button&gt;</span>-<span class="tag">&lt;/button&gt;</span>`,
+`      <span class="tag">&lt;button&gt;</span><span class="text">7</span><span class="tag">&lt;/button&gt;</span>`,
+`      <span class="tag">&lt;button&gt;</span><span class="text">8</span><span class="tag">&lt;/button&gt;</span>`,
+`      <span class="tag">&lt;button&gt;</span><span class="text">9</span><span class="tag">&lt;/button&gt;</span>`,
+`      <span class="tag">&lt;button&gt;</span><span class="text">+</span><span class="tag">&lt;/button&gt;</span>`,
 ``,
-`      <span class="tag">&lt;button&gt;</span>1<span class="tag">&lt;/button&gt;</span>`,
-`      <span class="tag">&lt;button&gt;</span>2<span class="tag">&lt;/button&gt;</span>`,
-`      <span class="tag">&lt;button&gt;</span>3<span class="tag">&lt;/button&gt;</span>`,
-`      <span class="tag">&lt;button&gt;</span>×<span class="tag">&lt;/button&gt;</span>`,
+`      <span class="tag">&lt;button&gt;</span><span class="text">4</span><span class="tag">&lt;/button&gt;</span>`,
+`      <span class="tag">&lt;button&gt;</span><span class="text">5</span><span class="tag">&lt;/button&gt;</span>`,
+`      <span class="tag">&lt;button&gt;</span><span class="text">6</span><span class="tag">&lt;/button&gt;</span>`,
+`      <span class="tag">&lt;button&gt;</span><span class="text">-</span><span class="tag">&lt;/button&gt;</span>`,
 ``,
-`      <span class="tag">&lt;button&gt;</span>0<span class="tag">&lt;/button&gt;</span>`,
-`      <span class="tag">&lt;button&gt;</span>=<span class="tag">&lt;/button&gt;</span>`,
+`      <span class="tag">&lt;button&gt;</span><span class="text">1</span><span class="tag">&lt;/button&gt;</span>`,
+`      <span class="tag">&lt;button&gt;</span><span class="text">2</span><span class="tag">&lt;/button&gt;</span>`,
+`      <span class="tag">&lt;button&gt;</span><span class="text">3</span><span class="tag">&lt;/button&gt;</span>`,
+`      <span class="tag">&lt;button&gt;</span><span class="text">×</span><span class="tag">&lt;/button&gt;</span>`,
+``,
+`      <span class="tag">&lt;button&gt;</span><span class="text">0</span><span class="tag">&lt;/button&gt;</span>`,
+`      <span class="tag">&lt;button&gt;</span><span class="text">.</span><span class="tag">&lt;/button&gt;</span>`,
+`      <span class="tag">&lt;button&gt;</span><span class="text">=</span><span class="tag">&lt;/button&gt;</span>`,
+`      <span class="tag">&lt;button&gt;</span><span class="text">÷</span><span class="tag">&lt;/button&gt;</span>`,
+``,
 `   <span class="tag">&lt;/div&gt;</span>`,
+``,
 `<span class="tag">&lt;/div&gt;</span>`,
 ``,
-`<span class="comment">/* CSS Styling */</span>`,
-`<span class="css">.calculator</span>{`,
-`   background:#111827;`,
-`   border-radius:20px;`,
-`   padding:20px;`,
-`}`,
-``,
-`<span class="css">.buttons</span>{`,
-`   display:grid;`,
-`   grid-template-columns:repeat(4,1fr);`,
-`   gap:12px;`,
-`}`,
-``,
-`<span class="css">button</span>{`,
-`   height:60px;`,
-`   border:none;`,
-`   border-radius:14px;`,
-`   background:#1e293b;`,
-`   color:white;`,
-`}`,
-``,
-`<span class="comment">// JavaScript Logic</span>`,
-`<span class="keyword">let</span> expression = <span class="value">""</span>;`,
-``,
-`<span class="keyword">function</span> <span class="func">press</span>(value){`,
-`   expression += value;`,
-`   updateScreen();`,
-`}`,
-``,
-`<span class="keyword">function</span> <span class="func">calculate</span>(){`,
-`   expression = eval(expression);`,
-`   updateScreen();`,
-`}`,
-``,
-`<span class="keyword">function</span> <span class="func">updateScreen</span>(){`,
-`   screen.innerText = expression;`,
-`}`
+`<span class="tag">&lt;/body&gt;</span>`,
+`<span class="tag">&lt;/html&gt;</span>`
 
 ];
 
-/* =========================
-   THOUGHTS
-========================= */
-
-const thoughts = [
-
-"Let's build the full calculator layout with proper buttons and screen.",
-"Now styling everything to make it look modern and smooth.",
-"Finally adding JavaScript logic for real calculations."
-
-];
-
-let i = 0;
-
-setTimeout(typeCode,3500);
+let lineIndex = 0;
 
 /* =========================
    TYPE CODE
 ========================= */
 
-function typeCode(){
+function startTyping(){
 
-    if(i >= code.length){
+    typeLine();
+}
 
-        setTimeout(showRunScene,1800);
+function typeLine(){
+
+    if(lineIndex >= code.length){
+
+        showThought(
+            "calculator.html completed successfully. Next part will design the interface using CSS."
+        );
 
         return;
-    }
-
-    if(i === 0){
-        showThought(thoughts[0]);
-    }
-
-    if(i === 25){
-        showThought(thoughts[1]);
-    }
-
-    if(i === 39){
-        showThought(thoughts[2]);
     }
 
     const row = document.createElement("div");
@@ -440,33 +565,35 @@ function typeCode(){
 
     num.className = "num";
 
-    num.innerText = i + 1;
+    num.innerText = lineIndex + 1;
 
     const text = document.createElement("div");
 
-    let html = code[i];
+    let html = code[lineIndex];
 
-    let j = 0;
+    let i = 0;
 
-    function type(){
+    function typeChar(){
 
-        if(j <= html.length){
+        if(i <= html.length){
 
             text.innerHTML =
-            html.substring(0,j) +
+            html.substring(0,i) +
             '<span class="cursor"></span>';
 
-            j++;
+            i++;
 
-            setTimeout(type,3);
+            setTimeout(typeChar,2);
 
         }else{
 
             text.innerHTML = html;
 
-            i++;
+            lineIndex++;
 
-            setTimeout(typeCode,20);
+            codeBox.scrollTop = codeBox.scrollHeight;
+
+            setTimeout(typeLine,18);
         }
     }
 
@@ -474,9 +601,9 @@ function typeCode(){
 
     row.appendChild(text);
 
-    editor.insertBefore(row,thought);
+    codeBox.appendChild(row);
 
-    type();
+    typeChar();
 }
 
 /* =========================
@@ -493,142 +620,7 @@ function showThought(text){
 
         thought.classList.remove("show");
 
-    },2200);
-}
-
-/* =========================
-   RUN SCENE
-========================= */
-
-function showRunScene(){
-
-    editor.style.display = "none";
-
-    runScene.style.opacity = 1;
-
-    runScene.style.pointerEvents = "auto";
-
-    mouse.style.opacity = 1;
-
-    mouse.style.left = "120px";
-
-    mouse.style.top = "420px";
-
-    setTimeout(() => {
-
-        mouse.style.transition = "1s ease";
-
-        mouse.style.left = "195px";
-
-        mouse.style.top = "315px";
-
-        setTimeout(() => {
-
-            runBtn.classList.add("press");
-
-            setTimeout(showCalculator,500);
-
-        },1000);
-
-    },500);
-}
-
-/* =========================
-   SHOW CALCULATOR
-========================= */
-
-function showCalculator(){
-
-    runScene.innerHTML = `
-
-    <div class="calcWrap">
-
-        <div class="calculator">
-
-            <div class="screen" id="screen"></div>
-
-            <div class="buttons">
-
-                <div class="btn">7</div>
-                <div class="btn">8</div>
-                <div class="btn">9</div>
-                <div class="btn orange">+</div>
-
-                <div class="btn">4</div>
-                <div class="btn">5</div>
-                <div class="btn">6</div>
-                <div class="btn orange">-</div>
-
-                <div class="btn">1</div>
-                <div class="btn">2</div>
-                <div class="btn">3</div>
-                <div class="btn orange">×</div>
-
-                <div class="btn">0</div>
-                <div class="btn">.</div>
-                <div class="btn green">=</div>
-                <div class="btn orange">÷</div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    `;
-
-    autoTest();
-}
-
-/* =========================
-   AUTO TEST
-========================= */
-
-function autoTest(){
-
-    const screen = document.getElementById("screen");
-
-    const buttons = document.querySelectorAll(".btn");
-
-    const sequence = [
-
-        ["7","7"],
-        ["+","7+"],
-        ["3","7+3"],
-        ["=","10"]
-
-    ];
-
-    let i = 0;
-
-    function clickNext(){
-
-        if(i >= sequence.length) return;
-
-        const [key,result] = sequence[i];
-
-        buttons.forEach(btn => {
-
-            if(btn.innerText === key){
-
-                btn.classList.add("press");
-
-                setTimeout(() => {
-
-                    btn.classList.remove("press");
-
-                },180);
-            }
-        });
-
-        screen.innerText = result;
-
-        i++;
-
-        setTimeout(clickNext,700);
-    }
-
-    clickNext();
+    },2800);
 }
 
 </script>
