@@ -4,9 +4,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Python Video Animation</title>
+<title>Python Video Export</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-capture@2.1.1/dist/canvas-capture.min.js"></script>
 
 <style>
 
@@ -23,6 +26,35 @@ body{
     justify-content:center;
     align-items:center;
     overflow:hidden;
+    font-family:Arial;
+}
+
+/* EXPORT BUTTON */
+
+.export-top{
+    position:fixed;
+    top:20px;
+    right:20px;
+    z-index:9999;
+}
+
+#exportBtn{
+    background:#ef4444;
+    color:white;
+    border:none;
+    padding:14px 24px;
+    border-radius:14px;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+    opacity:.4;
+    pointer-events:none;
+    transition:.4s;
+}
+
+#exportBtn.ready{
+    opacity:1;
+    pointer-events:auto;
 }
 
 /* VIDEO FRAME */
@@ -34,11 +66,11 @@ body{
     border-radius:28px;
     overflow:hidden;
     position:relative;
-    box-shadow:0 0 40px rgba(0,0,0,.7);
     border:2px solid #1e293b;
+    box-shadow:0 0 40px rgba(0,0,0,.7);
 }
 
-/* TOP */
+/* TOP BAR */
 
 .top{
     height:58px;
@@ -48,7 +80,6 @@ body{
     align-items:center;
     padding:0 20px;
     color:white;
-    font-family:Arial;
     font-size:18px;
     font-weight:bold;
 }
@@ -56,8 +87,7 @@ body{
 /* EDITOR */
 
 .editor{
-    position:relative;
-    height:560px;
+    height:100%;
     padding:24px;
     overflow:hidden;
     font-family:'Fira Code', monospace;
@@ -76,7 +106,7 @@ body{
 .import{ color:#8be9fd; }
 .operator{ color:#ffb86c; }
 
-/* CODE LINES */
+/* LINES */
 
 .line{
     white-space:pre;
@@ -104,7 +134,7 @@ body{
 .run-btn{
     position:absolute;
     right:20px;
-    bottom:95px;
+    bottom:20px;
     background:#22c55e;
     color:white;
     border:none;
@@ -116,41 +146,11 @@ body{
     box-shadow:0 0 20px rgba(34,197,94,.4);
 }
 
-/* CLICK EFFECT */
+/* AUTO CLICK */
 
 .run-btn.clicked{
     transform:scale(.9);
     background:#16a34a;
-}
-
-/* FOOTER */
-
-.footer{
-    position:absolute;
-    bottom:0;
-    width:100%;
-    height:70px;
-    background:#0f172a;
-    border-top:1px solid #1e293b;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-}
-
-.export{
-    background:#ef4444;
-    color:white;
-    border:none;
-    padding:14px 28px;
-    border-radius:12px;
-    font-size:15px;
-    font-weight:bold;
-    opacity:0;
-    transition:1s;
-}
-
-.export.show{
-    opacity:1;
 }
 
 /* OUTPUT */
@@ -160,11 +160,11 @@ body{
 }
 
 .output-line{
-    animation:fadeIn .3s forwards;
     opacity:0;
+    animation:fade .3s forwards;
 }
 
-@keyframes fadeIn{
+@keyframes fade{
     to{
         opacity:1;
     }
@@ -175,7 +175,13 @@ body{
 
 <body>
 
-<div class="video-frame">
+<div class="export-top">
+    <button id="exportBtn">
+        Export MP4
+    </button>
+</div>
+
+<div class="video-frame" id="videoFrame">
 
     <div class="top">
         Python Program
@@ -187,19 +193,9 @@ body{
         Run
     </button>
 
-    <div class="footer">
-        <button class="export" id="exportBtn">
-            Export to MP4
-        </button>
-    </div>
-
 </div>
 
 <script>
-
-/* -----------------------------
-   SCENE 1 : WRITING CODE
-------------------------------*/
 
 const editor = document.getElementById("editor");
 
@@ -224,22 +220,27 @@ const codeLines = [
 ``,
 `<span class="function">duplicate_text</span>()`,
 ``,
-`<span class="comment"># program ready</span>`
+`<span class="comment"># ready to execute</span>`
 
 ];
 
 let lineIndex = 0;
 
+/* -------------------------
+   SCENE 1
+--------------------------*/
+
 function typeLines(){
 
     if(lineIndex >= codeLines.length){
 
-        setTimeout(scene2, 800);
+        setTimeout(scene2, 1000);
         return;
     }
 
     const line = document.createElement("div");
     line.className = "line";
+
     editor.appendChild(line);
 
     let html = codeLines[lineIndex];
@@ -249,12 +250,13 @@ function typeLines(){
 
         if(charIndex <= html.length){
 
-            line.innerHTML = html.substring(0, charIndex) +
+            line.innerHTML =
+            html.substring(0, charIndex) +
             '<span class="cursor"></span>';
 
             charIndex++;
 
-            setTimeout(typeChar, 12);
+            setTimeout(typeChar, 10);
 
         }else{
 
@@ -273,9 +275,9 @@ function typeLines(){
 
 typeLines();
 
-/* -----------------------------
-   SCENE 2 : CLICK RUN BUTTON
-------------------------------*/
+/* -------------------------
+   SCENE 2
+--------------------------*/
 
 function scene2(){
 
@@ -292,13 +294,14 @@ function scene2(){
     }, 500);
 }
 
-/* -----------------------------
-   SCENE 3 : EXECUTION OUTPUT
-------------------------------*/
+/* -------------------------
+   SCENE 3
+--------------------------*/
 
 function scene3(){
 
     const output = document.createElement("div");
+
     output.className = "output";
 
     editor.appendChild(output);
@@ -315,19 +318,20 @@ function scene3(){
 
     function printOutput(){
 
-        if(count >= 18){
+        if(count >= 20){
 
-            showExport();
+            readyExport();
             return;
         }
 
         const line = document.createElement("div");
+
         line.className = "output-line";
 
-        const color = colors[count % colors.length];
+        const c = colors[count % colors.length];
 
         line.innerHTML =
-        `<span class="string">I love programming</span> <span style="color:${color}">${color}</span>`;
+        `<span class="string">I love programming</span> <span style="color:${c}">${c}</span>`;
 
         output.appendChild(line);
 
@@ -335,22 +339,81 @@ function scene3(){
 
         count++;
 
-        setTimeout(printOutput, 180);
+        setTimeout(printOutput, 150);
     }
 
     printOutput();
 }
 
-/* -----------------------------
-   EXPORT BUTTON
-------------------------------*/
+/* -------------------------
+   EXPORT READY
+--------------------------*/
 
-function showExport(){
+function readyExport(){
 
     document
     .getElementById("exportBtn")
-    .classList.add("show");
+    .classList.add("ready");
 }
+
+/* -------------------------
+   EXPORT VIDEO
+--------------------------*/
+
+document
+.getElementById("exportBtn")
+.addEventListener("click", async () => {
+
+    const btn = document.getElementById("exportBtn");
+
+    btn.innerText = "Recording...";
+
+    const stream = document
+    .getElementById("videoFrame")
+    .captureStream(30);
+
+    const recorder = new MediaRecorder(stream, {
+        mimeType: "video/webm"
+    });
+
+    const chunks = [];
+
+    recorder.ondataavailable = e => {
+        if(e.data.size > 0){
+            chunks.push(e.data);
+        }
+    };
+
+    recorder.onstop = () => {
+
+        const blob = new Blob(chunks, {
+            type: "video/webm"
+        });
+
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+
+        a.href = url;
+
+        a.download = "python-video.webm";
+
+        a.click();
+
+        URL.revokeObjectURL(url);
+
+        btn.innerText = "Export MP4";
+    };
+
+    recorder.start();
+
+    setTimeout(() => {
+
+        recorder.stop();
+
+    }, 10000);
+
+});
 
 </script>
 
