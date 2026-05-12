@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>QR Code Generator Python Video</title>
 
-<title>Python Animation</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
 
@@ -23,11 +22,10 @@ body{
     justify-content:center;
     align-items:center;
     overflow:hidden;
-    font-family:Arial;
+    font-family:Inter, Arial;
 }
 
-/* VIDEO FRAME */
-
+/* FRAME */
 .video-frame{
     width:390px;
     height:690px;
@@ -36,123 +34,139 @@ body{
     overflow:hidden;
     position:relative;
     border:2px solid #1e293b;
-    box-shadow:0 0 40px rgba(0,0,0,.7);
+    box-shadow:0 0 45px rgba(0,0,0,.75);
 }
 
 /* TOP BAR */
-
 .top{
-    height:58px;
+    height:60px;
     background:#0f172a;
     border-bottom:1px solid #1e293b;
     display:flex;
     align-items:center;
-    padding:0 20px;
+    justify-content:center;
     color:white;
-    font-size:18px;
-    font-weight:bold;
+    font-weight:700;
+    font-size:16px;
+}
+
+/* INTRO SCREEN */
+.intro{
+    position:absolute;
+    inset:0;
+    background:#0b1020;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:20px;
+    color:white;
+    animation:fadeOut 1s ease forwards;
+    animation-delay:3.5s;
+}
+
+.intro h1{
+    font-size:20px;
+    margin-bottom:10px;
+}
+
+.intro p{
+    font-size:13px;
+    color:#94a3b8;
+}
+
+@keyframes fadeOut{
+    to{opacity:0; visibility:hidden;}
 }
 
 /* EDITOR */
-
 .editor{
-    padding:24px;
-    height:100%;
-    overflow:hidden;
+    padding:18px;
     font-family:'Fira Code', monospace;
-    font-size:15px;
+    font-size:14px;
     line-height:1.7;
     color:white;
+    height:100%;
+    overflow:hidden;
+}
+
+/* LINE NUMBERS */
+.line{
+    display:flex;
+}
+
+.num{
+    width:28px;
+    color:#64748b;
+    text-align:right;
+    margin-right:10px;
+    user-select:none;
 }
 
 /* PYTHON COLORS */
-
 .keyword{ color:#ff79c6; }
-.function{ color:#50fa7b; }
-.string{ color:#f1fa8c; }
-.number{ color:#bd93f9; }
-.comment{ color:#6272a4; }
 .import{ color:#8be9fd; }
+.string{ color:#f1fa8c; }
+.function{ color:#50fa7b; }
+.comment{ color:#6272a4; }
 .operator{ color:#ffb86c; }
 
-/* LINES */
-
-.line{
-    white-space:pre;
-}
-
 /* CURSOR */
-
 .cursor{
     display:inline-block;
-    width:10px;
-    height:18px;
+    width:8px;
+    height:15px;
     background:white;
     margin-left:2px;
     animation:blink .7s infinite;
 }
 
 @keyframes blink{
-    50%{
-        opacity:0;
-    }
+    50%{opacity:0;}
 }
 
 /* RUN BUTTON */
-
 .run-btn{
     position:absolute;
-    right:20px;
-    bottom:20px;
+    right:18px;
+    bottom:18px;
     background:#22c55e;
     color:white;
     border:none;
-    padding:14px 26px;
-    border-radius:14px;
-    font-size:16px;
-    font-weight:bold;
-    box-shadow:0 0 20px rgba(34,197,94,.4);
-    transition:.2s;
+    padding:12px 22px;
+    border-radius:12px;
+    font-weight:700;
+    transition:.3s;
 }
 
-/* CLICK EFFECT */
-
 .run-btn.clicked{
-    transform:scale(.88);
+    transform:scale(.9);
     background:#16a34a;
 }
 
 /* TERMINAL */
-
 .terminal{
-    margin-top:16px;
+    margin-top:10px;
     background:#020617;
-    border-radius:10px;
-    padding:14px;
     border:1px solid #1e293b;
+    border-radius:10px;
+    padding:12px;
 }
 
-/* OUTPUT LINES */
-
-.output-line{
+.out{
     opacity:0;
     animation:show .05s forwards;
+    font-size:13px;
     margin-bottom:4px;
+    color:#a5f3fc;
 }
 
 @keyframes show{
-    to{
-        opacity:1;
-    }
+    to{opacity:1;}
 }
 
-/* OUTPUT COLORS */
-
-.red{ color:#ff4d4d; }
-.blue{ color:#4da6ff; }
-.green{ color:#57ff57; }
-.yellow{ color:#ffe14d; }
-.purple{ color:#d26bff; }
+.hidden{ display:none; }
 
 </style>
 </head>
@@ -161,177 +175,143 @@ body{
 
 <div class="video-frame">
 
-    <div class="top">
-        Python Program
+    <div class="top">Python QR Code Generator</div>
+
+    <!-- INTRO SCENE -->
+    <div class="intro" id="intro">
+        <h1>Generating QR Code with Python</h1>
+        <p>Written by Dominex Macedon</p>
     </div>
 
+    <!-- CODE SCENE -->
     <div class="editor" id="editor"></div>
 
-    <button class="run-btn" id="runBtn">
-        Run
-    </button>
+    <button class="run-btn" id="runBtn">Run</button>
 
 </div>
 
 <script>
 
-/* =========================
-   ELEMENTS
-========================= */
-
 const editor = document.getElementById("editor");
 const runBtn = document.getElementById("runBtn");
+const intro = document.getElementById("intro");
 
 /* =========================
-   PYTHON CODE
+   SCENE 1 - CODE WRITING
 ========================= */
 
-const codeLines = [
+const code = [
 
-`<span class="import">import</span> <span class="function">time</span>`,
-`<span class="import">import</span> <span class="function">random</span>`,
+`<span class="import">import</span> qrcode`,
+`<span class="comment"># QR Code Generator</span>`,
 ``,
-`<span class="keyword">def</span> <span class="function">duplicate_text</span>():`,
-`    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100</span>):`,
-`        color <span class="operator">=</span> random.choice([`,
-`            <span class="string">"red"</span>,`,
-`            <span class="string">"blue"</span>,`,
-`            <span class="string">"green"</span>,`,
-`            <span class="string">"yellow"</span>,`,
-`            <span class="string">"purple"</span>`,
-`        ])`,
+`data = <span class="string">"https://example.com"</span>`,
+`img = qrcode.make(data)`,
+`img.save(<span class="string">"qr.png"</span>)`,
 ``,
-`        <span class="function">print</span>(`,
-`            <span class="string">"I love programming"</span>`,
-`        )`,
-``,
-`<span class="function">duplicate_text</span>()`,
-``,
-`<span class="comment"># ready to execute</span>`
+`<span class="comment"># Done</span>`
 
 ];
 
-let lineIndex = 0;
+let i = 0;
 
-/* =========================
-   PART 1
-   WRITING PROGRAM
-========================= */
+setTimeout(writeCode, 3800); // after intro disappears
 
-function typeLines(){
+function writeCode(){
 
-    if(lineIndex >= codeLines.length){
-
-        setTimeout(part2, 1000);
+    if(i >= code.length){
+        setTimeout(scene2, 700);
         return;
     }
 
-    const line = document.createElement("div");
+    const row = document.createElement("div");
+    row.className = "line";
 
-    line.className = "line";
+    const num = document.createElement("div");
+    num.className = "num";
+    num.innerText = i + 1;
 
-    editor.appendChild(line);
+    const text = document.createElement("div");
 
-    let html = codeLines[lineIndex];
+    let html = code[i];
+    let j = 0;
 
-    let charIndex = 0;
+    function type(){
 
-    function typeChar(){
+        if(j <= html.length){
 
-        if(charIndex <= html.length){
+            text.innerHTML =
+            html.substring(0,j) + '<span class="cursor"></span>';
 
-            line.innerHTML =
-            html.substring(0, charIndex) +
-            '<span class="cursor"></span>';
+            j++;
 
-            charIndex++;
-
-            setTimeout(typeChar, 8);
+            setTimeout(type, 10);
 
         }else{
-
-            line.innerHTML = html;
-
-            lineIndex++;
-
-            setTimeout(typeLines, 70);
+            text.innerHTML = html;
+            i++;
+            setTimeout(writeCode, 90);
         }
     }
 
-    typeChar();
+    row.appendChild(num);
+    row.appendChild(text);
+    editor.appendChild(row);
 
-    editor.scrollTop = editor.scrollHeight;
+    type();
 }
 
-typeLines();
-
 /* =========================
-   PART 2
-   CLICK RUN BUTTON
+   SCENE 2 - RUN BUTTON
 ========================= */
 
-function part2(){
+function scene2(){
 
     runBtn.classList.add("clicked");
 
     setTimeout(() => {
-
         runBtn.classList.remove("clicked");
-
-        part3();
-
-    }, 250);
+        scene3();
+    }, 450);
 }
 
 /* =========================
-   PART 3
-   SHOW OUTPUT
+   SCENE 3 - OUTPUT
 ========================= */
 
-function part3(){
+function scene3(){
+
+    editor.innerHTML = "";
 
     const terminal = document.createElement("div");
-
     terminal.className = "terminal";
 
-    editor.appendChild(terminal);
-
-    const colors = [
-        "red",
-        "blue",
-        "green",
-        "yellow",
-        "purple"
+    const lines = [
+        "Loading qrcode module...",
+        "Encoding data...",
+        "Generating matrix...",
+        "Saving QR image...",
+        "QR Code generated successfully"
     ];
 
-    let i = 0;
+    let k = 0;
 
-    function printFast(){
+    function print(){
 
-        if(i >= 90){
-            return;
-        }
+        if(k >= lines.length) return;
 
-        const line = document.createElement("div");
+        const d = document.createElement("div");
+        d.className = "out";
+        d.innerText = lines[k];
 
-        const c = colors[i % colors.length];
+        terminal.appendChild(d);
 
-        line.className =
-        `output-line ${c}`;
-
-        line.innerText =
-        "I love programming";
-
-        terminal.appendChild(line);
-
-        editor.scrollTop = editor.scrollHeight;
-
-        i++;
-
-        setTimeout(printFast, 15);
+        k++;
+        setTimeout(print, 500);
     }
 
-    printFast();
+    editor.appendChild(terminal);
+    print();
 }
 
 </script>
