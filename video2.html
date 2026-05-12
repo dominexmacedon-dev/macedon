@@ -456,35 +456,47 @@ setTimeout(()=> htmlFile.classList.add("show"),600);
 setTimeout(()=> cssFile.classList.add("show"),1000);
 setTimeout(()=> jsFile.classList.add("show"),1400);
 
-/* CLICK JS */
+/* =========================
+   CLICK JS FILE
+========================= */
 
-setTimeout(()=>{
+setTimeout(() => {
 
-    mouse.style.opacity = 1;
+    mouse.style.opacity = "1";
 
-    /* start position */
-    mouse.style.left = "90px";
-    mouse.style.top = "250px";
+    mouse.style.left = "100px";
+    mouse.style.top = "290px";
 
-    setTimeout(()=>{
+    mouse.style.transition = "1s ease";
 
-        /* move exactly to JS file */
-        mouse.style.left = "165px";
-        mouse.style.top = "392px";
+    setTimeout(() => {
 
-        setTimeout(()=>{
+        /* MOVE TO JS FILE */
+
+        mouse.style.left = "145px";
+        mouse.style.top = "410px";
+
+        setTimeout(() => {
+
+            /* CLICK EFFECT */
 
             jsFile.classList.add("active");
 
-            openEditor();
+            mouse.style.transform = "scale(.82)";
 
-        },800);
+            setTimeout(() => {
 
-    },600);
+                mouse.style.transform = "scale(1)";
 
-},2400);
-/* OPEN */
+                openEditor();
 
+            },180);
+
+        },900);
+
+    },300);
+
+},2300);
 function openEditor(){
 
     files.style.display = "none";
