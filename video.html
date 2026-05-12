@@ -36,7 +36,7 @@ body{
     border:2px solid #1e293b;
 }
 
-/* TOP */
+/* TOP BAR */
 .top{
     height:60px;
     background:#0f172a;
@@ -48,31 +48,7 @@ body{
     border-bottom:1px solid #1e293b;
 }
 
-/* INTRO */
-.intro{
-    position:absolute;
-    inset:0;
-    background:#0b1020;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    color:white;
-    text-align:center;
-    z-index:10;
-}
-
-.intro h1{
-    font-size:20px;
-    margin-bottom:8px;
-}
-
-.intro p{
-    font-size:13px;
-    color:#94a3b8;
-}
-
-/* EDITOR */
+/* EDITOR AREA (FIXED) */
 .editor{
     height:630px;
     padding:16px;
@@ -90,14 +66,15 @@ body{
 .num{
     width:28px;
     color:#64748b;
-    margin-right:10px;
     text-align:right;
+    margin-right:10px;
 }
 
 /* COLORS */
 .kw{ color:#ff79c6; }
 .fn{ color:#50fa7b; }
 .str{ color:#f1fa8c; }
+.cm{ color:#6272a4; }
 
 /* CURSOR */
 .cursor{
@@ -112,28 +89,54 @@ body{
     50%{opacity:0;}
 }
 
-/* RUN BUTTON (ONLY AFTER CODE) */
+/* COMMENT BOX */
+.commentBox{
+    background:#0f172a;
+    border:1px solid #334155;
+    padding:12px;
+    border-radius:10px;
+    margin-top:10px;
+    font-size:13px;
+    color:#cbd5e1;
+}
+
+/* RUN BUTTON (SEPARATE SCENE ONLY) */
 .runBtn{
     position:absolute;
-    right:16px;
-    bottom:16px;
+    right:70px;
+    bottom:140px;
     background:#22c55e;
     color:white;
     border:none;
-    padding:12px 20px;
+    padding:12px 22px;
     border-radius:12px;
     font-weight:700;
     opacity:0;
-    pointer-events:none;
     transition:.3s;
 }
 
-.runBtn.show{
-    opacity:1;
-    pointer-events:auto;
+/* MOUSE CURSOR */
+.mouse{
+    position:absolute;
+    width:26px;
+    height:26px;
+    background:white;
+    clip-path:polygon(0 0, 0 100%, 30% 70%, 50% 100%, 60% 90%, 40% 60%, 100% 60%);
+    opacity:0;
+    pointer-events:none;
 }
 
-/* TERMINAL (FIXED) */
+/* CLICK EFFECT */
+.click{
+    position:absolute;
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    border:2px solid white;
+    opacity:0;
+}
+
+/* TERMINAL */
 .terminal{
     background:#020617;
     border:1px solid #1e293b;
@@ -143,14 +146,12 @@ body{
     overflow:hidden;
 }
 
-/* PROMPT */
 .prompt{
     color:#34d399;
     font-size:13px;
     margin-bottom:8px;
 }
 
-/* LOG */
 .log{
     font-size:13px;
     color:#a5f3fc;
@@ -163,7 +164,6 @@ body{
     to{opacity:1;}
 }
 
-/* TIMER */
 .timer{
     font-size:48px;
     font-weight:800;
@@ -187,27 +187,27 @@ body{
 
     <div class="top">Python Countdown Timer</div>
 
-    <!-- INTRO -->
-    <div class="intro" id="intro">
-        <h1>Countdown Timer with Python</h1>
-        <p>Learn how loops power real-time execution</p>
-    </div>
-
     <div class="editor" id="editor"></div>
 
-    <!-- RUN BUTTON -->
+    <!-- RUN BUTTON (ONLY IN CLICK SCENE) -->
     <button class="runBtn" id="runBtn">Run</button>
+
+    <!-- MOUSE -->
+    <div class="mouse" id="mouse"></div>
+
+    <div class="click" id="click"></div>
 
 </div>
 
 <script>
 
 const editor = document.getElementById("editor");
-const intro = document.getElementById("intro");
 const runBtn = document.getElementById("runBtn");
+const mouse = document.getElementById("mouse");
+const clickFx = document.getElementById("click");
 
 /* =========================
-   SCENE 1 - CODE WRITING
+   SCENE 1 - CODE + COMMENT
 ========================= */
 
 const code = [
@@ -224,17 +224,17 @@ const code = [
 
 let i = 0;
 
-setTimeout(startCode, 2500);
+setTimeout(startCode, 1500);
 
 function startCode(){
-    intro.style.display = "none";
     typeCode();
+    showComment();
 }
 
 function typeCode(){
 
     if(i >= code.length){
-        runBtn.classList.add("show");
+        setTimeout(scene2, 800);
         return;
     }
 
@@ -253,17 +253,14 @@ function typeCode(){
     function type(){
 
         if(j <= html.length){
-
             text.innerHTML =
             html.substring(0,j) + '<span class="cursor"></span>';
-
             j++;
-            setTimeout(type, 8);
-
+            setTimeout(type, 7);
         }else{
             text.innerHTML = html;
             i++;
-            setTimeout(typeCode, 60);
+            setTimeout(typeCode, 50);
         }
     }
 
@@ -274,19 +271,57 @@ function typeCode(){
     type();
 }
 
+/* COMMENT BOX */
+function showComment(){
+
+    const box = document.createElement("div");
+    box.className = "commentBox";
+
+    box.innerHTML =
+    "This function counts down from 5 to 1 using a loop and delay.";
+
+    editor.appendChild(box);
+}
+
 /* =========================
-   RUN CLICK (REAL DEMO)
+   SCENE 2 - MOUSE CLICK RUN
 ========================= */
 
-runBtn.addEventListener("click", () => {
-    runBtn.classList.remove("show");
-    scene3();
-});
+function scene2(){
 
-/* AUTO DEMO CLICK (optional for video timing) */
-setTimeout(() => {
-    runBtn.click();
-}, 9000);
+    runBtn.style.opacity = 1;
+
+    setTimeout(() => {
+
+        mouse.style.opacity = 1;
+
+        mouse.style.left = "220px";
+        mouse.style.top = "430px";
+
+        setTimeout(() => {
+
+            mouse.style.left = "250px";
+            mouse.style.top = "520px";
+
+            setTimeout(() => {
+
+                clickFx.style.left = "260px";
+                clickFx.style.top = "530px";
+                clickFx.style.opacity = 1;
+
+                runBtn.style.transform = "scale(.9)";
+                runBtn.style.background = "#16a34a";
+
+                setTimeout(() => {
+                    scene3();
+                }, 500);
+
+            }, 700);
+
+        }, 700);
+
+    }, 500);
+}
 
 /* =========================
    SCENE 3 - TERMINAL
@@ -296,12 +331,16 @@ function scene3(){
 
     editor.innerHTML = "";
 
+    runBtn.style.display = "none";
+    mouse.style.display = "none";
+    clickFx.style.display = "none";
+
     const terminal = document.createElement("div");
     terminal.className = "terminal";
 
     const prompt = document.createElement("div");
     prompt.className = "prompt";
-    prompt.innerText = "$ python timer.py";
+    prompt.innerText = "$ python countdown.py";
 
     terminal.appendChild(prompt);
 
@@ -336,7 +375,7 @@ function scene3(){
 
         n--;
 
-        setTimeout(tick, 700);
+        setTimeout(tick, 600);
     }
 
     tick();
