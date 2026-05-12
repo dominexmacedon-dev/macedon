@@ -38,7 +38,7 @@ body{
     box-shadow:0 0 60px rgba(0,0,0,.75);
 }
 
-/* TOP */
+/* TOP BAR */
 
 .top{
     height:60px;
@@ -71,7 +71,7 @@ body{
 
 .intro h1{
     color:white;
-    font-size:30px;
+    font-size:32px;
     font-weight:800;
     margin-bottom:12px;
 }
@@ -79,7 +79,6 @@ body{
 .intro p{
     color:#94a3b8;
     font-size:14px;
-    letter-spacing:.4px;
 }
 
 @keyframes fadeOut{
@@ -92,12 +91,12 @@ body{
 /* EDITOR */
 
 .editor{
-    padding:16px;
     height:630px;
     overflow:hidden;
+    padding:14px;
     font-family:'Fira Code', monospace;
+    font-size:12px;
     color:white;
-    font-size:13px;
     position:relative;
 }
 
@@ -105,17 +104,18 @@ body{
 
 .line{
     display:flex;
+    line-height:1.6;
 }
 
 .num{
-    width:30px;
+    width:28px;
     color:#64748b;
     text-align:right;
     margin-right:12px;
     user-select:none;
 }
 
-/* CODE COLORS */
+/* COLORS */
 
 .tag{ color:#ff79c6; }
 .attr{ color:#8be9fd; }
@@ -123,38 +123,41 @@ body{
 .comment{ color:#6272a4; }
 .keyword{ color:#c084fc; }
 .func{ color:#50fa7b; }
+.css{ color:#f97316; }
 
 /* CURSOR */
 
 .cursor{
+    display:inline-block;
     width:8px;
     height:15px;
     background:white;
-    display:inline-block;
     animation:blink .7s infinite;
 }
 
 @keyframes blink{
-    50%{opacity:0;}
+    50%{
+        opacity:0;
+    }
 }
 
-/* THINKING COMMENT */
+/* THOUGHT BOX */
 
 .thought{
     position:absolute;
-    left:16px;
-    bottom:25px;
-    width:330px;
+    left:14px;
+    bottom:18px;
+    width:340px;
     background:#0f172a;
     border:1px solid #334155;
     border-radius:16px;
     padding:14px;
     color:#cbd5e1;
+    font-size:12px;
     line-height:1.7;
-    font-size:13px;
     opacity:0;
     transform:translateY(20px);
-    transition:.5s;
+    transition:.45s;
 }
 
 .thought.show{
@@ -222,8 +225,6 @@ body{
     box-shadow:0 0 50px rgba(0,0,0,.55);
 }
 
-/* SCREEN */
-
 .screen{
     height:90px;
     background:#020617;
@@ -236,10 +237,7 @@ body{
     color:white;
     font-size:34px;
     font-weight:700;
-    overflow:hidden;
 }
-
-/* BUTTONS */
 
 .buttons{
     display:grid;
@@ -291,7 +289,7 @@ body{
         <p>by Dominex Macedon</p>
     </div>
 
-    <!-- EDITOR -->
+    <!-- CODE EDITOR -->
 
     <div class="editor" id="editor">
 
@@ -323,40 +321,89 @@ const runBtn = document.getElementById("runBtn");
 const mouse = document.getElementById("mouse");
 
 /* =========================
-   CODE
+   FULL CODE
 ========================= */
 
 const code = [
 
-`<span class="comment">&lt;!-- HTML --&gt;</span>`,
+`<span class="comment">&lt;!-- HTML Structure --&gt;</span>`,
 `<span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"calculator"</span><span class="tag">&gt;</span>`,
-`   <span class="tag">&lt;input</span> <span class="attr">id</span>=<span class="value">"screen"</span><span class="tag">&gt;</span>`,
+`   <span class="tag">&lt;div</span> <span class="attr">id</span>=<span class="value">"screen"</span><span class="tag">&gt;</span><span class="tag">&lt;/div&gt;</span>`,
+``,
+`   <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"buttons"</span><span class="tag">&gt;</span>`,
+`      <span class="tag">&lt;button&gt;</span>7<span class="tag">&lt;/button&gt;</span>`,
+`      <span class="tag">&lt;button&gt;</span>8<span class="tag">&lt;/button&gt;</span>`,
+`      <span class="tag">&lt;button&gt;</span>9<span class="tag">&lt;/button&gt;</span>`,
+`      <span class="tag">&lt;button&gt;</span>+<span class="tag">&lt;/button&gt;</span>`,
+``,
+`      <span class="tag">&lt;button&gt;</span>4<span class="tag">&lt;/button&gt;</span>`,
+`      <span class="tag">&lt;button&gt;</span>5<span class="tag">&lt;/button&gt;</span>`,
+`      <span class="tag">&lt;button&gt;</span>6<span class="tag">&lt;/button&gt;</span>`,
+`      <span class="tag">&lt;button&gt;</span>-<span class="tag">&lt;/button&gt;</span>`,
+``,
+`      <span class="tag">&lt;button&gt;</span>1<span class="tag">&lt;/button&gt;</span>`,
+`      <span class="tag">&lt;button&gt;</span>2<span class="tag">&lt;/button&gt;</span>`,
+`      <span class="tag">&lt;button&gt;</span>3<span class="tag">&lt;/button&gt;</span>`,
+`      <span class="tag">&lt;button&gt;</span>×<span class="tag">&lt;/button&gt;</span>`,
+``,
+`      <span class="tag">&lt;button&gt;</span>0<span class="tag">&lt;/button&gt;</span>`,
+`      <span class="tag">&lt;button&gt;</span>=<span class="tag">&lt;/button&gt;</span>`,
+`   <span class="tag">&lt;/div&gt;</span>`,
 `<span class="tag">&lt;/div&gt;</span>`,
 ``,
-`<span class="comment">/* CSS */</span>`,
-`.calculator {`,
-`   background: #111827;`,
-`   border-radius: 20px;`,
+`<span class="comment">/* CSS Styling */</span>`,
+`<span class="css">.calculator</span>{`,
+`   background:#111827;`,
+`   border-radius:20px;`,
+`   padding:20px;`,
 `}`,
 ``,
-`<span class="comment">// JavaScript</span>`,
+`<span class="css">.buttons</span>{`,
+`   display:grid;`,
+`   grid-template-columns:repeat(4,1fr);`,
+`   gap:12px;`,
+`}`,
+``,
+`<span class="css">button</span>{`,
+`   height:60px;`,
+`   border:none;`,
+`   border-radius:14px;`,
+`   background:#1e293b;`,
+`   color:white;`,
+`}`,
+``,
+`<span class="comment">// JavaScript Logic</span>`,
+`<span class="keyword">let</span> expression = <span class="value">""</span>;`,
+``,
 `<span class="keyword">function</span> <span class="func">press</span>(value){`,
-`   screen.value += value`,
+`   expression += value;`,
+`   updateScreen();`,
+`}`,
+``,
+`<span class="keyword">function</span> <span class="func">calculate</span>(){`,
+`   expression = eval(expression);`,
+`   updateScreen();`,
+`}`,
+``,
+`<span class="keyword">function</span> <span class="func">updateScreen</span>(){`,
+`   screen.innerText = expression;`,
 `}`
 
 ];
 
-let i = 0;
+/* =========================
+   THOUGHTS
+========================= */
 
 const thoughts = [
 
-"First, let's create the calculator structure using HTML.",
-"Now styling the calculator to make it modern and clean.",
-"Finally, JavaScript will control the button interactions."
+"Let's build the full calculator layout with proper buttons and screen.",
+"Now styling everything to make it look modern and smooth.",
+"Finally adding JavaScript logic for real calculations."
 
 ];
 
-let thoughtIndex = 0;
+let i = 0;
 
 setTimeout(typeCode,3500);
 
@@ -369,6 +416,7 @@ function typeCode(){
     if(i >= code.length){
 
         setTimeout(showRunScene,1800);
+
         return;
     }
 
@@ -376,11 +424,11 @@ function typeCode(){
         showThought(thoughts[0]);
     }
 
-    if(i === 5){
+    if(i === 25){
         showThought(thoughts[1]);
     }
 
-    if(i === 11){
+    if(i === 39){
         showThought(thoughts[2]);
     }
 
@@ -410,7 +458,7 @@ function typeCode(){
 
             j++;
 
-            setTimeout(type,6);
+            setTimeout(type,3);
 
         }else{
 
@@ -418,7 +466,7 @@ function typeCode(){
 
             i++;
 
-            setTimeout(typeCode,45);
+            setTimeout(typeCode,20);
         }
     }
 
@@ -442,7 +490,9 @@ function showThought(text){
     thought.classList.add("show");
 
     setTimeout(() => {
+
         thought.classList.remove("show");
+
     },2200);
 }
 
@@ -484,7 +534,7 @@ function showRunScene(){
 }
 
 /* =========================
-   CALCULATOR
+   SHOW CALCULATOR
 ========================= */
 
 function showCalculator(){
