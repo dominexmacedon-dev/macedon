@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Countdown Timer Python Video</title>
+<title>Python Countdown Timer Video</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
@@ -40,15 +40,39 @@ body{
 .top{
     height:60px;
     background:#0f172a;
-    border-bottom:1px solid #1e293b;
     display:flex;
     justify-content:center;
     align-items:center;
     color:white;
     font-weight:700;
+    border-bottom:1px solid #1e293b;
 }
 
-/* EDITOR (FIXED — NO GROW) */
+/* INTRO */
+.intro{
+    position:absolute;
+    inset:0;
+    background:#0b1020;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    text-align:center;
+    z-index:10;
+}
+
+.intro h1{
+    font-size:20px;
+    margin-bottom:8px;
+}
+
+.intro p{
+    font-size:13px;
+    color:#94a3b8;
+}
+
+/* EDITOR */
 .editor{
     height:630px;
     padding:16px;
@@ -66,15 +90,14 @@ body{
 .num{
     width:28px;
     color:#64748b;
-    text-align:right;
     margin-right:10px;
+    text-align:right;
 }
 
 /* COLORS */
 .kw{ color:#ff79c6; }
 .fn{ color:#50fa7b; }
 .str{ color:#f1fa8c; }
-.cm{ color:#6272a4; }
 
 /* CURSOR */
 .cursor{
@@ -89,48 +112,42 @@ body{
     50%{opacity:0;}
 }
 
-/* RUN FLASH (ONLY MOMENTARY) */
-.runFlash{
+/* RUN BUTTON (ONLY AFTER CODE) */
+.runBtn{
     position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
+    right:16px;
+    bottom:16px;
     background:#22c55e;
     color:white;
-    padding:14px 26px;
-    border-radius:14px;
+    border:none;
+    padding:12px 20px;
+    border-radius:12px;
     font-weight:700;
     opacity:0;
     pointer-events:none;
+    transition:.3s;
 }
 
-.runFlash.show{
-    animation:pop .4s ease;
+.runBtn.show{
+    opacity:1;
+    pointer-events:auto;
 }
 
-@keyframes pop{
-    0%{opacity:0; transform:translate(-50%,-50%) scale(.6);}
-    50%{opacity:1;}
-    100%{opacity:0; transform:translate(-50%,-50%) scale(1);}
-}
-
-/* TERMINAL (FIXED FULL AREA) */
+/* TERMINAL (FIXED) */
 .terminal{
     background:#020617;
     border:1px solid #1e293b;
     border-radius:10px;
     padding:12px;
-    height:520px;        /* FIXED */
-    overflow:hidden;     /* NO EXPAND */
-    display:flex;
-    flex-direction:column;
+    height:520px;
+    overflow:hidden;
 }
 
-/* HEADER LINE */
+/* PROMPT */
 .prompt{
     color:#34d399;
     font-size:13px;
-    margin-bottom:6px;
+    margin-bottom:8px;
 }
 
 /* LOG */
@@ -146,29 +163,19 @@ body{
     to{opacity:1;}
 }
 
-/* BIG TIMER */
+/* TIMER */
 .timer{
-    margin-top:20px;
-    font-size:44px;
+    font-size:48px;
     font-weight:800;
-    text-align:center;
     color:#fbbf24;
-}
-
-/* LABEL */
-.label{
     text-align:center;
-    margin-top:8px;
-    color:#94a3b8;
-    font-size:13px;
 }
 
-/* CENTER */
 .center{
-    flex:1;
     display:flex;
     flex-direction:column;
     justify-content:center;
+    height:100%;
 }
 
 </style>
@@ -180,20 +187,27 @@ body{
 
     <div class="top">Python Countdown Timer</div>
 
+    <!-- INTRO -->
+    <div class="intro" id="intro">
+        <h1>Countdown Timer with Python</h1>
+        <p>Learn how loops power real-time execution</p>
+    </div>
+
     <div class="editor" id="editor"></div>
 
-    <!-- RUN FLASH ONLY -->
-    <div class="runFlash" id="runFlash">Running...</div>
+    <!-- RUN BUTTON -->
+    <button class="runBtn" id="runBtn">Run</button>
 
 </div>
 
 <script>
 
 const editor = document.getElementById("editor");
-const runFlash = document.getElementById("runFlash");
+const intro = document.getElementById("intro");
+const runBtn = document.getElementById("runBtn");
 
 /* =========================
-   SCENE 1 - CODE
+   SCENE 1 - CODE WRITING
 ========================= */
 
 const code = [
@@ -210,12 +224,17 @@ const code = [
 
 let i = 0;
 
-setTimeout(typeCode, 1500);
+setTimeout(startCode, 2500);
+
+function startCode(){
+    intro.style.display = "none";
+    typeCode();
+}
 
 function typeCode(){
 
     if(i >= code.length){
-        setTimeout(scene2, 700);
+        runBtn.classList.add("show");
         return;
     }
 
@@ -244,7 +263,7 @@ function typeCode(){
         }else{
             text.innerHTML = html;
             i++;
-            setTimeout(typeCode, 70);
+            setTimeout(typeCode, 60);
         }
     }
 
@@ -256,17 +275,18 @@ function typeCode(){
 }
 
 /* =========================
-   SCENE 2 - RUN FLASH ONLY
+   RUN CLICK (REAL DEMO)
 ========================= */
 
-function scene2(){
+runBtn.addEventListener("click", () => {
+    runBtn.classList.remove("show");
+    scene3();
+});
 
-    runFlash.classList.add("show");
-
-    setTimeout(() => {
-        scene3();
-    }, 400);
-}
+/* AUTO DEMO CLICK (optional for video timing) */
+setTimeout(() => {
+    runBtn.click();
+}, 9000);
 
 /* =========================
    SCENE 3 - TERMINAL
@@ -276,14 +296,14 @@ function scene3(){
 
     editor.innerHTML = "";
 
-    const term = document.createElement("div");
-    term.className = "terminal";
+    const terminal = document.createElement("div");
+    terminal.className = "terminal";
 
     const prompt = document.createElement("div");
     prompt.className = "prompt";
-    prompt.innerText = "$ python countdown.py";
+    prompt.innerText = "$ python timer.py";
 
-    term.appendChild(prompt);
+    terminal.appendChild(prompt);
 
     const logs = document.createElement("div");
 
@@ -293,39 +313,30 @@ function scene3(){
     const timer = document.createElement("div");
     timer.className = "timer";
 
-    const label = document.createElement("div");
-    label.className = "label";
-    label.innerText = "Counting down...";
-
     center.appendChild(timer);
-    center.appendChild(label);
 
-    term.appendChild(logs);
-    term.appendChild(center);
+    terminal.appendChild(logs);
+    terminal.appendChild(center);
 
-    editor.appendChild(term);
+    editor.appendChild(terminal);
 
     let n = 5;
 
     function tick(){
 
-        if(n < 0){
-            label.innerText = "Completed";
-            timer.innerText = "DONE";
-            return;
-        }
+        if(n < 0) return;
 
         timer.innerText = n;
 
         const log = document.createElement("div");
         log.className = "log";
-        log.innerText = "Executing: " + n;
+        log.innerText = "> " + n;
 
         logs.appendChild(log);
 
         n--;
 
-        setTimeout(tick, 800);
+        setTimeout(tick, 700);
     }
 
     tick();
