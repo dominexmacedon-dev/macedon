@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculator JS Video</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#050b16;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    font-family:Inter;
+}
+
+/* FRAME */
+
+.frame{
+    width:390px;
+    height:690px;
+    background:#0f172a;
+    border-radius:28px;
+    overflow:hidden;
+    position:relative;
+    border:1px solid #1e293b;
+    box-shadow:0 0 70px rgba(0,0,0,.75);
+}
+
+/* FILE AREA */
+
+.files{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:16px;
+}
+
+.file{
+    width:260px;
+    height:70px;
+    background:#111827;
+    border:1px solid #1e293b;
+    border-radius:18px;
+    display:flex;
+    align-items:center;
+    padding:0 18px;
+    color:white;
+    font-weight:600;
+    opacity:0;
+    transform:scale(.8);
+    transition:.4s;
+    position:relative;
+    overflow:hidden;
+}
+
+.file.show{
+    opacity:1;
+    transform:scale(1);
+}
+
+.file.active{
+    border-color:#22c55e;
+    background:#0b2a1a;
+    box-shadow:0 0 30px rgba(34,197,94,.25);
+}
+
+/* ICON */
+
+.icon{
+    width:14px;
+    height:14px;
+    border-radius:3px;
+    margin-right:14px;
+}
+
+.html{ background:#f97316; }
+.css{ background:#38bdf8; }
+.js{ background:#facc15; }
+
+/* MOUSE */
+
+.mouse{
+    position:absolute;
+    width:22px;
+    height:22px;
+    background:white;
+    clip-path:polygon(0 0,0 100%,30% 70%,50% 100%,60% 90%,40% 60%,100% 60%);
+    opacity:0;
+    transition:1s ease;
+}
+
+/* EDITOR */
+
+.editor{
+    position:absolute;
+    inset:0;
+    background:#0b1220;
+    display:none;
+    flex-direction:column;
+}
+
+.editor.show{
+    display:flex;
+}
+
+/* TAB */
+
+.tab{
+    height:54px;
+    background:#111827;
+    border-bottom:1px solid #1e293b;
+    display:flex;
+    align-items:center;
+    padding:0 16px;
+    color:#e2e8f0;
+    font-weight:600;
+}
+
+/* CODE */
+
+.code{
+    flex:1;
+    padding:16px;
+    font-family:'Fira Code', monospace;
+    font-size:12px;
+    color:white;
+    line-height:1.7;
+    overflow:hidden;
+}
+
+/* LINE */
+
+.line{
+    display:flex;
+}
+
+.num{
+    width:30px;
+    color:#475569;
+    margin-right:12px;
+    user-select:none;
+}
+
+/* COLORS */
+
+.keyword{ color:#c084fc; }
+.func{ color:#4ade80; }
+.comment{ color:#64748b; }
+.string{ color:#facc15; }
+
+/* CURSOR */
+
+.cursor{
+    width:8px;
+    height:14px;
+    background:white;
+    display:inline-block;
+    animation:blink .7s infinite;
+}
+
+@keyframes blink{
+    50%{opacity:0;}
+}
+
+/* THOUGHT */
+
+.thought{
+    position:absolute;
+    left:18px;
+    bottom:18px;
+    width:350px;
+    background:#111827;
+    border:1px solid #334155;
+    border-radius:16px;
+    padding:12px;
+    color:#cbd5e1;
+    font-size:12px;
+    line-height:1.6;
+    opacity:0;
+    transform:translateY(20px);
+    transition:.4s;
+}
+
+.thought.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* SHINE EFFECT */
+
+.file::after{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:100%;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);
+}
+
+.file.active::after{
+    animation:shine 1s linear;
+}
+
+@keyframes shine{
+    to{ left:100%; }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="frame">
+
+    <!-- FILES -->
+
+    <div class="files" id="files">
+
+        <div class="file" id="htmlFile">
+            <div class="icon html"></div>
+            calculator.html
+        </div>
+
+        <div class="file" id="cssFile">
+            <div class="icon css"></div>
+            calculator.css
+        </div>
+
+        <div class="file" id="jsFile">
+            <div class="icon js"></div>
+            calculator.js
+        </div>
+
+    </div>
+
+    <!-- MOUSE -->
+
+    <div class="mouse" id="mouse"></div>
+
+    <!-- EDITOR -->
+
+    <div class="editor" id="editor">
+
+        <div class="tab">calculator.js</div>
+
+        <div class="code" id="code"></div>
+
+    </div>
+
+    <!-- THOUGHT -->
+
+    <div class="thought" id="thought"></div>
+
+</div>
+
+<script>
+
+const htmlFile = document.getElementById("htmlFile");
+const cssFile = document.getElementById("cssFile");
+const jsFile = document.getElementById("jsFile");
+
+const mouse = document.getElementById("mouse");
+
+const editor = document.getElementById("editor");
+const codeBox = document.getElementById("code");
+const thought = document.getElementById("thought");
+
+/* SHOW FILES */
+
+setTimeout(()=> htmlFile.classList.add("show"),800);
+setTimeout(()=> cssFile.classList.add("show"),1200);
+setTimeout(()=> jsFile.classList.add("show"),1600);
+
+/* CLICK ANIMATION */
+
+setTimeout(()=>{
+
+    mouse.style.opacity = 1;
+    mouse.style.left = "120px";
+    mouse.style.top = "290px";
+
+    setTimeout(()=>{
+
+        mouse.style.left = "170px";
+        mouse.style.top = "270px";
+
+        setTimeout(()=>{
+
+            jsFile.classList.add("active");
+
+            openEditor();
+
+        },900);
+
+    },600);
+
+},2500);
+
+/* OPEN EDITOR */
+
+function openEditor(){
+
+    document.getElementById("files").style.display = "none";
+
+    editor.classList.add("show");
+
+    showThought("Now we write JavaScript logic for calculator operations.");
+
+    setTimeout(typeCode,900);
+}
+
+/* FULL JS CODE */
+
+const code = [
+
+`<span class="comment">// Calculator Logic</span>`,
+
+`<span class="keyword">let</span> screen = document.getElementById(<span class="string">"screen"</span>);`,
+
+`<span class="keyword">function</span> <span class="func">press</span>(val){`,
+`   screen.value += val;`,
+`}`,
+
+`<span class="keyword">function</span> <span class="func">clearScreen</span>(){`,
+`   screen.value = "";`,
+`}`,
+
+`<span class="keyword">function</span> <span class="func">calculate</span>(){`,
+`   <span class="keyword">try</span>{`,
+`      screen.value = eval(screen.value);`,
+`   } <span class="keyword">catch</span>{`,
+`      screen.value = "Error";`,
+`   }`,
+`}`
+
+];
+
+let i = 0;
+
+/* TYPE CODE */
+
+function typeCode(){
+
+    if(i >= code.length){
+        showThought("JavaScript is now powering the calculator UI.");
+        return;
+    }
+
+    const row = document.createElement("div");
+    row.className = "line";
+
+    const num = document.createElement("div");
+    num.className = "num";
+    num.innerText = i + 1;
+
+    const text = document.createElement("div");
+
+    let html = code[i];
+    let j = 0;
+
+    function type(){
+
+        if(j <= html.length){
+
+            text.innerHTML =
+            html.substring(0,j) +
+            '<span class="cursor"></span>';
+
+            j++;
+
+            setTimeout(type,8);
+
+        } else {
+
+            text.innerHTML = html;
+            i++;
+
+            setTimeout(typeCode,180);
+        }
+    }
+
+    row.appendChild(num);
+    row.appendChild(text);
+
+    codeBox.appendChild(row);
+
+    type();
+}
+
+/* THOUGHT */
+
+function showThought(text){
+
+    thought.innerHTML = text;
+    thought.classList.add("show");
+
+    setTimeout(()=>{
+        thought.classList.remove("show");
+    },2500);
+}
+
+</script>
+
+</body>
+</html>
