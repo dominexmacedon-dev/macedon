@@ -4,11 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Python Coding Video</title>
+<title>Python Animation</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 <style>
 
@@ -26,34 +24,6 @@ body{
     align-items:center;
     overflow:hidden;
     font-family:Arial;
-}
-
-/* EXPORT BUTTON */
-
-.export-box{
-    position:fixed;
-    top:20px;
-    right:20px;
-    z-index:9999;
-}
-
-#exportBtn{
-    background:#ef4444;
-    color:white;
-    border:none;
-    padding:14px 26px;
-    border-radius:14px;
-    font-size:15px;
-    font-weight:bold;
-    cursor:pointer;
-    opacity:0;
-    pointer-events:none;
-    transition:.4s;
-}
-
-#exportBtn.ready{
-    opacity:1;
-    pointer-events:auto;
 }
 
 /* VIDEO FRAME */
@@ -137,7 +107,7 @@ body{
     background:#22c55e;
     color:white;
     border:none;
-    padding:14px 24px;
+    padding:14px 26px;
     border-radius:14px;
     font-size:16px;
     font-weight:bold;
@@ -145,12 +115,14 @@ body{
     transition:.2s;
 }
 
+/* CLICK EFFECT */
+
 .run-btn.clicked{
-    transform:scale(.9);
+    transform:scale(.88);
     background:#16a34a;
 }
 
-/* TERMINAL OUTPUT */
+/* TERMINAL */
 
 .terminal{
     margin-top:16px;
@@ -160,11 +132,12 @@ body{
     border:1px solid #1e293b;
 }
 
-.terminal-line{
-    font-size:14px;
-    margin-bottom:4px;
+/* OUTPUT LINES */
+
+.output-line{
     opacity:0;
     animation:show .05s forwards;
+    margin-bottom:4px;
 }
 
 @keyframes show{
@@ -173,7 +146,7 @@ body{
     }
 }
 
-/* COLORS */
+/* OUTPUT COLORS */
 
 .red{ color:#ff4d4d; }
 .blue{ color:#4da6ff; }
@@ -186,13 +159,7 @@ body{
 
 <body>
 
-<div class="export-box">
-    <button id="exportBtn">
-        Export Video
-    </button>
-</div>
-
-<div class="video-frame" id="videoFrame">
+<div class="video-frame">
 
     <div class="top">
         Python Program
@@ -214,7 +181,6 @@ body{
 
 const editor = document.getElementById("editor");
 const runBtn = document.getElementById("runBtn");
-const exportBtn = document.getElementById("exportBtn");
 
 /* =========================
    PYTHON CODE
@@ -248,14 +214,15 @@ const codeLines = [
 let lineIndex = 0;
 
 /* =========================
-   SCENE 1
+   PART 1
+   WRITING PROGRAM
 ========================= */
 
 function typeLines(){
 
     if(lineIndex >= codeLines.length){
 
-        setTimeout(scene2, 700);
+        setTimeout(part2, 1000);
         return;
     }
 
@@ -299,10 +266,11 @@ function typeLines(){
 typeLines();
 
 /* =========================
-   SCENE 2
+   PART 2
+   CLICK RUN BUTTON
 ========================= */
 
-function scene2(){
+function part2(){
 
     runBtn.classList.add("clicked");
 
@@ -310,16 +278,17 @@ function scene2(){
 
         runBtn.classList.remove("clicked");
 
-        scene3();
+        part3();
 
     }, 250);
 }
 
 /* =========================
-   SCENE 3
+   PART 3
+   SHOW OUTPUT
 ========================= */
 
-function scene3(){
+function part3(){
 
     const terminal = document.createElement("div");
 
@@ -339,9 +308,7 @@ function scene3(){
 
     function printFast(){
 
-        if(i >= 80){
-
-            exportBtn.classList.add("ready");
+        if(i >= 90){
             return;
         }
 
@@ -350,7 +317,7 @@ function scene3(){
         const c = colors[i % colors.length];
 
         line.className =
-        `terminal-line ${c}`;
+        `output-line ${c}`;
 
         line.innerText =
         "I love programming";
@@ -366,93 +333,6 @@ function scene3(){
 
     printFast();
 }
-
-/* =========================
-   EXPORT VIDEO
-========================= */
-
-exportBtn.addEventListener("click", async () => {
-
-    exportBtn.innerText = "Preparing...";
-
-    const frame = document.getElementById("videoFrame");
-
-    const canvas = document.createElement("canvas");
-
-    canvas.width = 390;
-    canvas.height = 690;
-
-    const ctx = canvas.getContext("2d");
-
-    const stream = canvas.captureStream(30);
-
-    const recorder = new MediaRecorder(stream, {
-        mimeType: "video/webm"
-    });
-
-    const chunks = [];
-
-    recorder.ondataavailable = e => {
-
-        if(e.data.size > 0){
-            chunks.push(e.data);
-        }
-    };
-
-    recorder.onstop = () => {
-
-        const blob = new Blob(chunks, {
-            type: "video/webm"
-        });
-
-        const url = URL.createObjectURL(blob);
-
-        const a = document.createElement("a");
-
-        a.href = url;
-
-        a.download = "python-video.webm";
-
-        a.click();
-
-        URL.revokeObjectURL(url);
-
-        exportBtn.innerText = "Export Video";
-    };
-
-    recorder.start();
-
-    exportBtn.innerText = "Recording...";
-
-    let recording = true;
-
-    async function renderFrame(){
-
-        if(!recording) return;
-
-        const shot = await html2canvas(frame, {
-            backgroundColor: null,
-            scale:1
-        });
-
-        ctx.clearRect(0,0,canvas.width,canvas.height);
-
-        ctx.drawImage(shot,0,0);
-
-        requestAnimationFrame(renderFrame);
-    }
-
-    renderFrame();
-
-    setTimeout(() => {
-
-        recording = false;
-
-        recorder.stop();
-
-    }, 8000);
-
-});
 
 </script>
 
