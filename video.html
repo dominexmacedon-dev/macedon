@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>QR Code Generator Python Video</title>
+<title>QR Python Video</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <style>
 
@@ -22,11 +24,11 @@ body{
     justify-content:center;
     align-items:center;
     overflow:hidden;
-    font-family:Inter, Arial;
+    font-family:Inter;
 }
 
 /* FRAME */
-.video-frame{
+.frame{
     width:390px;
     height:690px;
     background:#111827;
@@ -40,44 +42,21 @@ body{
 .top{
     height:60px;
     background:#0f172a;
-    border-bottom:1px solid #1e293b;
     display:flex;
-    align-items:center;
     justify-content:center;
+    align-items:center;
     color:white;
     font-weight:700;
-    font-size:16px;
-}
-
-/* INTRO */
-.intro{
-    position:absolute;
-    inset:0;
-    background:#0b1020;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    color:white;
-    text-align:center;
-    animation:fadeOut 1s ease forwards;
-    animation-delay:3.2s;
-}
-
-.intro h1{ font-size:20px; margin-bottom:8px; }
-.intro p{ font-size:13px; color:#94a3b8; }
-
-@keyframes fadeOut{
-    to{opacity:0; visibility:hidden;}
+    border-bottom:1px solid #1e293b;
 }
 
 /* EDITOR */
 .editor{
-    padding:18px;
+    padding:16px;
     font-family:'Fira Code', monospace;
     font-size:14px;
-    line-height:1.7;
     color:white;
+    line-height:1.7;
     height:100%;
     overflow:hidden;
 }
@@ -90,24 +69,22 @@ body{
 .num{
     width:28px;
     color:#64748b;
-    text-align:right;
     margin-right:10px;
-    user-select:none;
+    text-align:right;
 }
 
-/* PYTHON COLORS */
-.import{ color:#8be9fd; }
-.keyword{ color:#ff79c6; }
-.string{ color:#f1fa8c; }
-.comment{ color:#6272a4; }
+/* COLORS */
+.imp{ color:#8be9fd; }
+.kw{ color:#ff79c6; }
+.str{ color:#f1fa8c; }
+.cm{ color:#6272a4; }
 
 /* CURSOR */
 .cursor{
-    display:inline-block;
     width:8px;
     height:15px;
     background:white;
-    margin-left:2px;
+    display:inline-block;
     animation:blink .7s infinite;
 }
 
@@ -116,123 +93,114 @@ body{
 }
 
 /* RUN BUTTON */
-.run-btn{
+.run{
     position:absolute;
-    right:18px;
-    bottom:18px;
+    right:16px;
+    bottom:16px;
     background:#22c55e;
     color:white;
     border:none;
-    padding:12px 22px;
+    padding:12px 20px;
     border-radius:12px;
     font-weight:700;
 }
 
-.run-btn.clicked{
+.run.clicked{
     transform:scale(.9);
     background:#16a34a;
 }
 
 /* TERMINAL */
-.terminal{
+.term{
     background:#020617;
     border:1px solid #1e293b;
     border-radius:10px;
     padding:12px;
+    margin-top:10px;
 }
 
-.out{
-    opacity:0;
-    animation:show .05s forwards;
+.log{
     font-size:13px;
-    margin-bottom:4px;
     color:#a5f3fc;
+    opacity:0;
+    animation:show .04s forwards;
 }
 
 @keyframes show{
     to{opacity:1;}
 }
 
-/* QR CODE BOX */
-.qr-box{
-    margin-top:14px;
+/* QR AREA */
+.qrBox{
+    margin-top:18px;
     display:flex;
-    justify-content:center;
-    animation:pop .5s ease;
+    flex-direction:column;
+    align-items:center;
+    animation:pop .4s ease;
 }
 
 @keyframes pop{
-    from{transform:scale(0.5); opacity:0;}
-    to{transform:scale(1); opacity:1;}
+    from{transform:scale(.6);opacity:0;}
+    to{transform:scale(1);opacity:1;}
 }
 
-.qr{
-    width:160px;
-    height:160px;
+#qrcode{
     background:white;
-    display:grid;
-    grid-template-columns:repeat(10,1fr);
-    grid-template-rows:repeat(10,1fr);
-    gap:2px;
-    padding:8px;
-    border-radius:10px;
+    padding:10px;
+    border-radius:12px;
 }
 
-/* QR PIXELS */
-.px{
-    width:100%;
-    height:100%;
-    background:black;
+.file{
+    margin-top:10px;
+    color:#94a3b8;
+    font-size:13px;
 }
 
-.px.off{
-    background:white;
-}
+.hidden{display:none;}
 
 </style>
 </head>
 
 <body>
 
-<div class="video-frame">
+<div class="frame">
 
-    <div class="top">QR Code Generator (Python)</div>
+    <div class="top">Python QR Code Generator</div>
 
-    <!-- INTRO -->
-    <div class="intro" id="intro">
-        <h1>Generating QR Code with Python</h1>
-        <p>Written by Dominex Macedon</p>
-    </div>
-
-    <!-- CODE -->
     <div class="editor" id="editor"></div>
+
+    <button class="run" id="runBtn">Run</button>
 
 </div>
 
 <script>
 
 const editor = document.getElementById("editor");
+const runBtn = document.getElementById("runBtn");
 
-/* SCENE 1 */
+/* =========================
+   SCENE 1 - CODE WRITING
+========================= */
+
 const code = [
-`<span class="import">import</span> qrcode`,
-`<span class="comment"># QR Code Generator</span>`,
+`<span class="imp">import</span> qrcode`,
+`<span class="cm"># QR generator</span>`,
 ``,
-`data = <span class="string">"https://example.com"</span>`,
+`data = <span class="str">"https://example.com"</span>`,
 `img = qrcode.make(data)`,
-`img.save(<span class="string">"qr.png"</span>)`,
+`img.save(<span class="str">"qr.png"</span>)`,
 ``,
-`<span class="comment"># Done</span>`
+`<span class="cm"># ready</span>`
 ];
 
 let i = 0;
 
-setTimeout(typeCode, 3400);
+setTimeout(typeCode, 2000);
 
 function typeCode(){
 
     if(i >= code.length){
-        setTimeout(runScene, 700);
+        setTimeout(scene2, 600);
         return;
     }
 
@@ -251,14 +219,18 @@ function typeCode(){
     function type(){
 
         if(j <= html.length){
+
             text.innerHTML =
             html.substring(0,j) + '<span class="cursor"></span>';
+
             j++;
-            setTimeout(type, 10);
+
+            setTimeout(type, 8);
+
         }else{
             text.innerHTML = html;
             i++;
-            setTimeout(typeCode, 80);
+            setTimeout(typeCode, 70);
         }
     }
 
@@ -269,19 +241,36 @@ function typeCode(){
     type();
 }
 
-/* SCENE 2 */
-function runScene(){
+/* =========================
+   SCENE 2 - RUN
+========================= */
+
+function scene2(){
+
+    runBtn.classList.add("clicked");
+
+    setTimeout(() => {
+        runBtn.classList.remove("clicked");
+        scene3();
+    }, 300);
+}
+
+/* =========================
+   SCENE 3 - TERMINAL + QR
+========================= */
+
+function scene3(){
 
     editor.innerHTML = "";
 
-    const terminal = document.createElement("div");
-    terminal.className = "terminal";
+    const term = document.createElement("div");
+    term.className = "term";
 
     const logs = [
-        "Importing qrcode...",
+        "Importing qrcode module...",
         "Encoding data...",
         "Generating QR matrix...",
-        "Rendering image..."
+        "Saving file qr.png..."
     ];
 
     let k = 0;
@@ -289,56 +278,51 @@ function runScene(){
     function print(){
 
         if(k >= logs.length){
-            setTimeout(showQR, 600);
+            setTimeout(showQR, 500);
             return;
         }
 
         const d = document.createElement("div");
-        d.className = "out";
+        d.className = "log";
         d.innerText = logs[k];
 
-        terminal.appendChild(d);
-        k++;
+        term.appendChild(d);
 
-        setTimeout(print, 500);
+        k++;
+        setTimeout(print, 300);
     }
 
-    editor.appendChild(terminal);
+    editor.appendChild(term);
     print();
 }
 
-/* SCENE 3 - QR CODE DEMO */
+/* =========================
+   FINAL QR DISPLAY
+========================= */
+
 function showQR(){
 
     editor.innerHTML = "";
 
     const box = document.createElement("div");
-    box.className = "qr-box";
+    box.className = "qrBox";
 
-    const qr = document.createElement("div");
-    qr.className = "qr";
+    const qrDiv = document.createElement("div");
+    qrDiv.id = "qrcode";
 
-    /* simple fake QR pattern */
-    const pattern = [
-        1,0,1,1,0,1,0,1,1,0,
-        1,1,0,0,1,0,1,1,0,1,
-        0,1,1,1,0,1,0,0,1,1,
-        1,0,1,0,1,1,0,1,0,0,
-        1,1,0,1,1,0,1,0,1,1,
-        0,1,0,1,0,1,1,1,0,1,
-        1,0,1,1,0,0,1,1,0,1,
-        0,1,1,0,1,1,0,1,1,0,
-        1,0,0,1,1,0,1,0,1,1,
-        1,1,0,1,0,1,1,0,1,0
-    ];
-
-    pattern.forEach(v => {
-        const px = document.createElement("div");
-        px.className = v ? "px" : "px off";
-        qr.appendChild(px);
+    new QRCode(qrDiv, {
+        text: "https://example.com",
+        width: 160,
+        height: 160
     });
 
-    box.appendChild(qr);
+    const label = document.createElement("div");
+    label.className = "file";
+    label.innerText = "qr.png";
+
+    box.appendChild(qrDiv);
+    box.appendChild(label);
+
     editor.appendChild(box);
 }
 
