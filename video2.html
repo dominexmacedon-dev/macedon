@@ -22,7 +22,7 @@ body{
     justify-content:center;
     align-items:center;
     overflow:hidden;
-    font-family:Inter;
+    font-family:Inter,sans-serif;
 }
 
 /* FRAME */
@@ -38,7 +38,7 @@ body{
     box-shadow:0 0 70px rgba(0,0,0,.75);
 }
 
-/* FILE AREA */
+/* FILES */
 
 .files{
     position:absolute;
@@ -74,12 +74,10 @@ body{
 }
 
 .file.active{
-    border-color:#22c55e;
-    background:#0b2a1a;
-    box-shadow:0 0 30px rgba(34,197,94,.25);
+    border-color:#facc15;
+    background:#3a3200;
+    box-shadow:0 0 30px rgba(250,204,21,.25);
 }
-
-/* ICON */
 
 .icon{
     width:14px;
@@ -92,6 +90,33 @@ body{
 .css{ background:#38bdf8; }
 .js{ background:#facc15; }
 
+/* SHINE */
+
+.file::after{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:100%;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.1),
+        transparent
+    );
+}
+
+.file.active::after{
+    animation:shine 1s linear;
+}
+
+@keyframes shine{
+    to{
+        left:100%;
+    }
+}
+
 /* MOUSE */
 
 .mouse{
@@ -102,6 +127,7 @@ body{
     clip-path:polygon(0 0,0 100%,30% 70%,50% 100%,60% 90%,40% 60%,100% 60%);
     opacity:0;
     transition:1s ease;
+    z-index:90;
 }
 
 /* EDITOR */
@@ -118,9 +144,9 @@ body{
     display:flex;
 }
 
-/* TAB */
+/* TOP */
 
-.tab{
+.top{
     height:54px;
     background:#111827;
     border-bottom:1px solid #1e293b;
@@ -131,19 +157,25 @@ body{
     font-weight:600;
 }
 
+.dot{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:#facc15;
+    margin-right:10px;
+}
+
 /* CODE */
 
 .code{
     flex:1;
     padding:16px;
+    overflow:hidden;
     font-family:'Fira Code', monospace;
-    font-size:12px;
+    font-size:11.7px;
     color:white;
     line-height:1.7;
-    overflow:hidden;
 }
-
-/* LINE */
 
 .line{
     display:flex;
@@ -160,8 +192,9 @@ body{
 
 .keyword{ color:#c084fc; }
 .func{ color:#4ade80; }
-.comment{ color:#64748b; }
 .string{ color:#facc15; }
+.comment{ color:#64748b; }
+.var{ color:#38bdf8; }
 
 /* CURSOR */
 
@@ -174,7 +207,9 @@ body{
 }
 
 @keyframes blink{
-    50%{opacity:0;}
+    50%{
+        opacity:0;
+    }
 }
 
 /* THOUGHT */
@@ -194,6 +229,7 @@ body{
     opacity:0;
     transform:translateY(20px);
     transition:.4s;
+    z-index:100;
 }
 
 .thought.show{
@@ -201,24 +237,102 @@ body{
     transform:translateY(0);
 }
 
-/* SHINE EFFECT */
+/* RUN SCENE */
 
-.file::after{
-    content:"";
+.runScene{
     position:absolute;
-    top:0;
-    left:-100%;
-    width:100%;
-    height:100%;
-    background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);
+    inset:0;
+    background:#0f172a;
+    display:none;
+    justify-content:center;
+    align-items:center;
 }
 
-.file.active::after{
-    animation:shine 1s linear;
+.runScene.show{
+    display:flex;
 }
 
-@keyframes shine{
-    to{ left:100%; }
+.runBtn{
+    background:#22c55e;
+    color:white;
+    border:none;
+    padding:16px 34px;
+    border-radius:16px;
+    font-size:18px;
+    font-weight:700;
+    transition:.2s;
+}
+
+.runBtn.press{
+    transform:scale(.9);
+}
+
+/* CALCULATOR */
+
+.calcWrap{
+    position:absolute;
+    inset:0;
+    background:#0f172a;
+    display:none;
+    justify-content:center;
+    align-items:center;
+}
+
+.calcWrap.show{
+    display:flex;
+}
+
+.calculator{
+    width:300px;
+    background:#111827;
+    border-radius:24px;
+    padding:18px;
+    box-shadow:0 0 50px rgba(0,0,0,.6);
+}
+
+.screen{
+    height:90px;
+    background:#020617;
+    border-radius:16px;
+    margin-bottom:18px;
+    display:flex;
+    justify-content:flex-end;
+    align-items:flex-end;
+    padding:16px;
+    color:white;
+    font-size:34px;
+    font-weight:700;
+}
+
+.buttons{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+}
+
+.btn{
+    height:58px;
+    border-radius:14px;
+    background:#1e293b;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    font-size:20px;
+    font-weight:700;
+    transition:.15s;
+}
+
+.orange{
+    background:#f97316;
+}
+
+.green{
+    background:#22c55e;
+}
+
+.btn.press{
+    transform:scale(.88);
 }
 
 </style>
@@ -257,9 +371,58 @@ body{
 
     <div class="editor" id="editor">
 
-        <div class="tab">calculator.js</div>
+        <div class="top">
+            <div class="dot"></div>
+            calculator.js
+        </div>
 
         <div class="code" id="code"></div>
+
+    </div>
+
+    <!-- RUN -->
+
+    <div class="runScene" id="runScene">
+
+        <button class="runBtn" id="runBtn">
+            Run
+        </button>
+
+    </div>
+
+    <!-- CALCULATOR -->
+
+    <div class="calcWrap" id="calcWrap">
+
+        <div class="calculator">
+
+            <div class="screen" id="screen"></div>
+
+            <div class="buttons">
+
+                <div class="btn">7</div>
+                <div class="btn">8</div>
+                <div class="btn">9</div>
+                <div class="btn orange">+</div>
+
+                <div class="btn">4</div>
+                <div class="btn">5</div>
+                <div class="btn">6</div>
+                <div class="btn orange">-</div>
+
+                <div class="btn">1</div>
+                <div class="btn">2</div>
+                <div class="btn">3</div>
+                <div class="btn orange">×</div>
+
+                <div class="btn">0</div>
+                <div class="btn green">=</div>
+                <div class="btn">.</div>
+                <div class="btn orange">÷</div>
+
+            </div>
+
+        </div>
 
     </div>
 
@@ -279,26 +442,33 @@ const mouse = document.getElementById("mouse");
 
 const editor = document.getElementById("editor");
 const codeBox = document.getElementById("code");
+
 const thought = document.getElementById("thought");
 
-/* SHOW FILES */
+const runScene = document.getElementById("runScene");
+const runBtn = document.getElementById("runBtn");
 
-setTimeout(()=> htmlFile.classList.add("show"),800);
-setTimeout(()=> cssFile.classList.add("show"),1200);
-setTimeout(()=> jsFile.classList.add("show"),1600);
+const calcWrap = document.getElementById("calcWrap");
 
-/* CLICK ANIMATION */
+/* FILE SHOW */
+
+setTimeout(()=> htmlFile.classList.add("show"),600);
+setTimeout(()=> cssFile.classList.add("show"),1000);
+setTimeout(()=> jsFile.classList.add("show"),1400);
+
+/* CLICK JS */
 
 setTimeout(()=>{
 
     mouse.style.opacity = 1;
+
     mouse.style.left = "120px";
-    mouse.style.top = "290px";
+    mouse.style.top = "330px";
 
     setTimeout(()=>{
 
         mouse.style.left = "170px";
-        mouse.style.top = "270px";
+        mouse.style.top = "360px";
 
         setTimeout(()=>{
 
@@ -306,92 +476,106 @@ setTimeout(()=>{
 
             openEditor();
 
-        },900);
+        },800);
 
     },600);
 
-},2500);
+},2400);
 
-/* OPEN EDITOR */
+/* OPEN */
 
 function openEditor(){
 
-    document.getElementById("files").style.display = "none";
+    files.style.display = "none";
 
     editor.classList.add("show");
 
-    showThought("Now we write JavaScript logic for calculator operations.");
+    showThought(
+        "Now adding JavaScript functions to make calculator interactive."
+    );
 
     setTimeout(typeCode,900);
 }
 
-/* FULL JS CODE */
+/* JS CODE */
 
 const code = [
 
 `<span class="comment">// Calculator Logic</span>`,
 
-`<span class="keyword">let</span> screen = document.getElementById(<span class="string">"screen"</span>);`,
+`<span class="keyword">const</span> screen = document.getElementById(<span class="string">"screen"</span>);`,
 
-`<span class="keyword">function</span> <span class="func">press</span>(val){`,
-`   screen.value += val;`,
+`<span class="keyword">function</span> <span class="func">press</span>(value){`,
+`   screen.innerText += value;`,
 `}`,
 
 `<span class="keyword">function</span> <span class="func">clearScreen</span>(){`,
-`   screen.value = "";`,
+`   screen.innerText = "";`,
 `}`,
 
 `<span class="keyword">function</span> <span class="func">calculate</span>(){`,
 `   <span class="keyword">try</span>{`,
-`      screen.value = eval(screen.value);`,
-`   } <span class="keyword">catch</span>{`,
-`      screen.value = "Error";`,
+`      screen.innerText = eval(screen.innerText);`,
+`   }`,
+`   <span class="keyword">catch</span>{`,
+`      screen.innerText = "Error";`,
 `   }`,
 `}`
 
 ];
 
-let i = 0;
+let lineIndex = 0;
 
-/* TYPE CODE */
+/* TYPE */
 
 function typeCode(){
 
-    if(i >= code.length){
-        showThought("JavaScript is now powering the calculator UI.");
+    if(lineIndex >= code.length){
+
+        showThought(
+            "JavaScript completed. Running the calculator project now."
+        );
+
+        setTimeout(showRunScene,2200);
+
         return;
     }
 
     const row = document.createElement("div");
+
     row.className = "line";
 
     const num = document.createElement("div");
+
     num.className = "num";
-    num.innerText = i + 1;
+
+    num.innerText = lineIndex + 1;
 
     const text = document.createElement("div");
 
-    let html = code[i];
-    let j = 0;
+    let html = code[lineIndex];
 
-    function type(){
+    let i = 0;
 
-        if(j <= html.length){
+    function typeChar(){
+
+        if(i <= html.length){
 
             text.innerHTML =
-            html.substring(0,j) +
+            html.substring(0,i) +
             '<span class="cursor"></span>';
 
-            j++;
-
-            setTimeout(type,8);
-
-        } else {
-
-            text.innerHTML = html;
             i++;
 
-            setTimeout(typeCode,180);
+            setTimeout(typeChar,4);
+
+        }else{
+
+            text.innerHTML = html;
+
+            lineIndex++;
+
+            setTimeout(typeCode,40);
         }
     }
 
@@ -400,7 +584,95 @@ function typeCode(){
 
     codeBox.appendChild(row);
 
-    type();
+    typeChar();
+}
+
+/* RUN */
+
+function showRunScene(){
+
+    editor.style.display = "none";
+
+    runScene.classList.add("show");
+
+    mouse.style.opacity = 1;
+
+    mouse.style.left = "140px";
+    mouse.style.top = "430px";
+
+    setTimeout(()=>{
+
+        mouse.style.left = "195px";
+        mouse.style.top = "335px";
+
+        setTimeout(()=>{
+
+            runBtn.classList.add("press");
+
+            setTimeout(showCalculator,500);
+
+        },800);
+
+    },500);
+}
+
+/* SHOW CALCULATOR */
+
+function showCalculator(){
+
+    runScene.style.display = "none";
+
+    calcWrap.classList.add("show");
+
+    autoTest();
+}
+
+/* AUTO TEST */
+
+function autoTest(){
+
+    const screen = document.getElementById("screen");
+
+    const buttons =
+    document.querySelectorAll(".btn");
+
+    const sequence = [
+
+        ["7","7"],
+        ["+","7+"],
+        ["3","7+3"],
+        ["=","10"]
+
+    ];
+
+    let i = 0;
+
+    function clickNext(){
+
+        if(i >= sequence.length) return;
+
+        const [key,result] = sequence[i];
+
+        buttons.forEach(btn=>{
+
+            if(btn.innerText === key){
+
+                btn.classList.add("press");
+
+                setTimeout(()=>{
+                    btn.classList.remove("press");
+                },180);
+            }
+        });
+
+        screen.innerText = result;
+
+        i++;
+
+        setTimeout(clickNext,700);
+    }
+
+    clickNext();
 }
 
 /* THOUGHT */
@@ -408,11 +680,14 @@ function typeCode(){
 function showThought(text){
 
     thought.innerHTML = text;
+
     thought.classList.add("show");
 
     setTimeout(()=>{
+
         thought.classList.remove("show");
-    },2500);
+
+    },2800);
 }
 
 </script>
