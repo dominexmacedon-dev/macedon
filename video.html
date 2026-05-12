@@ -8,10 +8,7 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-<script src="https://cdn.jsdelivr.net/npm/ccapture.js-npmfixed@1.1.0/build/CCapture.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 <style>
 
@@ -31,7 +28,7 @@ body{
     font-family:Arial;
 }
 
-/* EXPORT */
+/* EXPORT BUTTON */
 
 .export-box{
     position:fixed;
@@ -59,7 +56,7 @@ body{
     pointer-events:auto;
 }
 
-/* VIDEO */
+/* VIDEO FRAME */
 
 .video-frame{
     width:390px;
@@ -72,7 +69,7 @@ body{
     box-shadow:0 0 40px rgba(0,0,0,.7);
 }
 
-/* TOP */
+/* TOP BAR */
 
 .top{
     height:58px;
@@ -98,7 +95,7 @@ body{
     color:white;
 }
 
-/* COLORS */
+/* PYTHON COLORS */
 
 .keyword{ color:#ff79c6; }
 .function{ color:#50fa7b; }
@@ -137,23 +134,23 @@ body{
     position:absolute;
     right:20px;
     bottom:20px;
-    width:62px;
-    height:62px;
-    border:none;
-    border-radius:50%;
     background:#22c55e;
     color:white;
-    font-size:24px;
-    box-shadow:0 0 25px rgba(34,197,94,.4);
+    border:none;
+    padding:14px 24px;
+    border-radius:14px;
+    font-size:16px;
+    font-weight:bold;
+    box-shadow:0 0 20px rgba(34,197,94,.4);
     transition:.2s;
 }
 
 .run-btn.clicked{
-    transform:scale(.82);
+    transform:scale(.9);
     background:#16a34a;
 }
 
-/* TERMINAL */
+/* TERMINAL OUTPUT */
 
 .terminal{
     margin-top:16px;
@@ -167,7 +164,7 @@ body{
     font-size:14px;
     margin-bottom:4px;
     opacity:0;
-    animation:show .08s forwards;
+    animation:show .05s forwards;
 }
 
 @keyframes show{
@@ -175,6 +172,8 @@ body{
         opacity:1;
     }
 }
+
+/* COLORS */
 
 .red{ color:#ff4d4d; }
 .blue{ color:#4da6ff; }
@@ -202,7 +201,7 @@ body{
     <div class="editor" id="editor"></div>
 
     <button class="run-btn" id="runBtn">
-        <i class="fa-solid fa-play"></i>
+        Run
     </button>
 
 </div>
@@ -242,7 +241,7 @@ const codeLines = [
 ``,
 `<span class="function">duplicate_text</span>()`,
 ``,
-`<span class="comment"># ready</span>`
+`<span class="comment"># ready to execute</span>`
 
 ];
 
@@ -250,7 +249,6 @@ let lineIndex = 0;
 
 /* =========================
    SCENE 1
-   WRITING CODE
 ========================= */
 
 function typeLines(){
@@ -268,6 +266,7 @@ function typeLines(){
     editor.appendChild(line);
 
     let html = codeLines[lineIndex];
+
     let charIndex = 0;
 
     function typeChar(){
@@ -301,7 +300,6 @@ typeLines();
 
 /* =========================
    SCENE 2
-   BUTTON CLICK
 ========================= */
 
 function scene2(){
@@ -319,7 +317,6 @@ function scene2(){
 
 /* =========================
    SCENE 3
-   OUTPUT TERMINAL
 ========================= */
 
 function scene3(){
@@ -364,7 +361,7 @@ function scene3(){
 
         i++;
 
-        setTimeout(printFast, 18);
+        setTimeout(printFast, 15);
     }
 
     printFast();
@@ -374,44 +371,86 @@ function scene3(){
    EXPORT VIDEO
 ========================= */
 
-exportBtn.addEventListener("click", () => {
+exportBtn.addEventListener("click", async () => {
 
-    exportBtn.innerText = "Recording...";
-
-    const capturer = new CCapture({
-        format: "webm",
-        framerate: 60,
-        verbose: false
-    });
+    exportBtn.innerText = "Preparing...";
 
     const frame = document.getElementById("videoFrame");
 
+    const canvas = document.createElement("canvas");
+
+    canvas.width = 390;
+    canvas.height = 690;
+
+    const ctx = canvas.getContext("2d");
+
+    const stream = canvas.captureStream(30);
+
+    const recorder = new MediaRecorder(stream, {
+        mimeType: "video/webm"
+    });
+
+    const chunks = [];
+
+    recorder.ondataavailable = e => {
+
+        if(e.data.size > 0){
+            chunks.push(e.data);
+        }
+    };
+
+    recorder.onstop = () => {
+
+        const blob = new Blob(chunks, {
+            type: "video/webm"
+        });
+
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+
+        a.href = url;
+
+        a.download = "python-video.webm";
+
+        a.click();
+
+        URL.revokeObjectURL(url);
+
+        exportBtn.innerText = "Export Video";
+    };
+
+    recorder.start();
+
+    exportBtn.innerText = "Recording...";
+
     let recording = true;
 
-    capturer.start();
-
-    function capture(){
+    async function renderFrame(){
 
         if(!recording) return;
 
-        capturer.capture(frame);
+        const shot = await html2canvas(frame, {
+            backgroundColor: null,
+            scale:1
+        });
 
-        requestAnimationFrame(capture);
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+
+        ctx.drawImage(shot,0,0);
+
+        requestAnimationFrame(renderFrame);
     }
 
-    capture();
+    renderFrame();
 
     setTimeout(() => {
 
         recording = false;
 
-        capturer.stop();
+        recorder.stop();
 
-        capturer.save();
-
-        exportBtn.innerText = "Export Video";
-
-    }, 10000);
+    }, 8000);
 
 });
 
