@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Python Countdown Timer Video</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculator Coding Video</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 
@@ -16,7 +16,7 @@
 }
 
 body{
-    background:#0b1020;
+    background:#07111f;
     height:100vh;
     display:flex;
     justify-content:center;
@@ -26,6 +26,7 @@ body{
 }
 
 /* FRAME */
+
 .frame{
     width:390px;
     height:690px;
@@ -34,49 +35,97 @@ body{
     overflow:hidden;
     position:relative;
     border:2px solid #1e293b;
+    box-shadow:0 0 60px rgba(0,0,0,.75);
 }
 
-/* TOP BAR */
+/* TOP */
+
 .top{
     height:60px;
     background:#0f172a;
+    border-bottom:1px solid #1e293b;
     display:flex;
     justify-content:center;
     align-items:center;
     color:white;
     font-weight:700;
-    border-bottom:1px solid #1e293b;
+    letter-spacing:.4px;
 }
 
-/* EDITOR AREA (FIXED) */
-.editor{
-    height:630px;
-    padding:16px;
-    font-family:'Fira Code', monospace;
-    font-size:14px;
+/* INTRO */
+
+.intro{
+    position:absolute;
+    inset:0;
+    background:
+    radial-gradient(circle at top,#2563eb33,transparent 35%),
+    linear-gradient(135deg,#020617,#0f172a,#111827);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    z-index:100;
+    animation:fadeOut 1s ease forwards;
+    animation-delay:3s;
+}
+
+.intro h1{
     color:white;
-    overflow:hidden;
+    font-size:30px;
+    font-weight:800;
+    margin-bottom:12px;
 }
 
-/* LINE */
+.intro p{
+    color:#94a3b8;
+    font-size:14px;
+    letter-spacing:.4px;
+}
+
+@keyframes fadeOut{
+    to{
+        opacity:0;
+        visibility:hidden;
+    }
+}
+
+/* EDITOR */
+
+.editor{
+    padding:16px;
+    height:630px;
+    overflow:hidden;
+    font-family:'Fira Code', monospace;
+    color:white;
+    font-size:13px;
+    position:relative;
+}
+
+/* CODE LINE */
+
 .line{
     display:flex;
 }
 
 .num{
-    width:28px;
+    width:30px;
     color:#64748b;
     text-align:right;
-    margin-right:10px;
+    margin-right:12px;
+    user-select:none;
 }
 
-/* COLORS */
-.kw{ color:#ff79c6; }
-.fn{ color:#50fa7b; }
-.str{ color:#f1fa8c; }
-.cm{ color:#6272a4; }
+/* CODE COLORS */
+
+.tag{ color:#ff79c6; }
+.attr{ color:#8be9fd; }
+.value{ color:#f1fa8c; }
+.comment{ color:#6272a4; }
+.keyword{ color:#c084fc; }
+.func{ color:#50fa7b; }
 
 /* CURSOR */
+
 .cursor{
     width:8px;
     height:15px;
@@ -89,93 +138,139 @@ body{
     50%{opacity:0;}
 }
 
-/* COMMENT BOX */
-.commentBox{
+/* THINKING COMMENT */
+
+.thought{
+    position:absolute;
+    left:16px;
+    bottom:25px;
+    width:330px;
     background:#0f172a;
     border:1px solid #334155;
-    padding:12px;
-    border-radius:10px;
-    margin-top:10px;
-    font-size:13px;
+    border-radius:16px;
+    padding:14px;
     color:#cbd5e1;
-}
-
-/* RUN BUTTON (SEPARATE SCENE ONLY) */
-.runBtn{
-    position:absolute;
-    right:70px;
-    bottom:140px;
-    background:#22c55e;
-    color:white;
-    border:none;
-    padding:12px 22px;
-    border-radius:12px;
-    font-weight:700;
+    line-height:1.7;
+    font-size:13px;
     opacity:0;
-    transition:.3s;
+    transform:translateY(20px);
+    transition:.5s;
 }
 
-/* MOUSE CURSOR */
-.mouse{
+.thought.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* RUN SCENE */
+
+.runScene{
     position:absolute;
-    width:26px;
-    height:26px;
-    background:white;
-    clip-path:polygon(0 0, 0 100%, 30% 70%, 50% 100%, 60% 90%, 40% 60%, 100% 60%);
+    inset:0;
+    background:#111827;
+    display:flex;
+    justify-content:center;
+    align-items:center;
     opacity:0;
     pointer-events:none;
 }
 
-/* CLICK EFFECT */
-.click{
+/* RUN BUTTON */
+
+.runBtn{
+    background:#22c55e;
+    color:white;
+    border:none;
+    padding:14px 30px;
+    border-radius:14px;
+    font-size:18px;
+    font-weight:700;
+    box-shadow:0 0 30px rgba(34,197,94,.35);
+    transition:.2s;
+}
+
+.runBtn.press{
+    transform:scale(.9);
+}
+
+/* MOUSE */
+
+.mouse{
     position:absolute;
-    width:10px;
-    height:10px;
-    border-radius:50%;
-    border:2px solid white;
+    width:24px;
+    height:24px;
+    background:white;
+    clip-path:polygon(0 0, 0 100%, 30% 70%, 50% 100%, 60% 90%, 40% 60%, 100% 60%);
     opacity:0;
 }
 
-/* TERMINAL */
-.terminal{
+/* CALCULATOR */
+
+.calcWrap{
+    width:100%;
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.calculator{
+    width:300px;
+    background:#0f172a;
+    border-radius:26px;
+    padding:18px;
+    box-shadow:0 0 50px rgba(0,0,0,.55);
+}
+
+/* SCREEN */
+
+.screen{
+    height:90px;
     background:#020617;
-    border:1px solid #1e293b;
-    border-radius:10px;
-    padding:12px;
-    height:520px;
+    border-radius:16px;
+    margin-bottom:18px;
+    display:flex;
+    justify-content:flex-end;
+    align-items:flex-end;
+    padding:16px;
+    color:white;
+    font-size:34px;
+    font-weight:700;
     overflow:hidden;
 }
 
-.prompt{
-    color:#34d399;
-    font-size:13px;
-    margin-bottom:8px;
+/* BUTTONS */
+
+.buttons{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
 }
 
-.log{
-    font-size:13px;
-    color:#a5f3fc;
-    margin-bottom:3px;
-    opacity:0;
-    animation:show .05s forwards;
-}
-
-@keyframes show{
-    to{opacity:1;}
-}
-
-.timer{
-    font-size:48px;
-    font-weight:800;
-    color:#fbbf24;
-    text-align:center;
-}
-
-.center{
+.btn{
+    height:58px;
+    border-radius:14px;
+    background:#1e293b;
+    color:white;
     display:flex;
-    flex-direction:column;
     justify-content:center;
-    height:100%;
+    align-items:center;
+    font-size:20px;
+    font-weight:700;
+    transition:.15s;
+}
+
+.orange{
+    background:#f97316;
+}
+
+.green{
+    background:#22c55e;
+}
+
+.btn.press{
+    transform:scale(.88);
+    filter:brightness(1.15);
 }
 
 </style>
@@ -185,200 +280,305 @@ body{
 
 <div class="frame">
 
-    <div class="top">Python Countdown Timer</div>
+    <div class="top">
+        Calculator Project
+    </div>
 
-    <div class="editor" id="editor"></div>
+    <!-- INTRO -->
 
-    <!-- RUN BUTTON (ONLY IN CLICK SCENE) -->
-    <button class="runBtn" id="runBtn">Run</button>
+    <div class="intro">
+        <h1>Calculator</h1>
+        <p>by Dominex Macedon</p>
+    </div>
 
-    <!-- MOUSE -->
-    <div class="mouse" id="mouse"></div>
+    <!-- EDITOR -->
 
-    <div class="click" id="click"></div>
+    <div class="editor" id="editor">
+
+        <div class="thought" id="thought"></div>
+
+    </div>
+
+    <!-- RUN SCENE -->
+
+    <div class="runScene" id="runScene">
+
+        <button class="runBtn" id="runBtn">
+            Run Project
+        </button>
+
+        <div class="mouse" id="mouse"></div>
+
+    </div>
 
 </div>
 
 <script>
 
 const editor = document.getElementById("editor");
+const thought = document.getElementById("thought");
+
+const runScene = document.getElementById("runScene");
 const runBtn = document.getElementById("runBtn");
 const mouse = document.getElementById("mouse");
-const clickFx = document.getElementById("click");
 
 /* =========================
-   SCENE 1 - CODE + COMMENT
+   CODE
 ========================= */
 
 const code = [
-`<span class="kw">import</span> time`,
+
+`<span class="comment">&lt;!-- HTML --&gt;</span>`,
+`<span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"calculator"</span><span class="tag">&gt;</span>`,
+`   <span class="tag">&lt;input</span> <span class="attr">id</span>=<span class="value">"screen"</span><span class="tag">&gt;</span>`,
+`<span class="tag">&lt;/div&gt;</span>`,
 ``,
-`<span class="kw">def</span> <span class="fn">countdown</span>(n):`,
-`    <span class="kw">while</span> n > 0:`,
-`        <span class="fn">print</span>(n)`,
-`        time.sleep(1)`,
-`        n -= 1`,
+`<span class="comment">/* CSS */</span>`,
+`.calculator {`,
+`   background: #111827;`,
+`   border-radius: 20px;`,
+`}`,
 ``,
-`countdown(5)`
+`<span class="comment">// JavaScript</span>`,
+`<span class="keyword">function</span> <span class="func">press</span>(value){`,
+`   screen.value += value`,
+`}`
+
 ];
 
 let i = 0;
 
-setTimeout(startCode, 1500);
+const thoughts = [
 
-function startCode(){
-    typeCode();
-    showComment();
-}
+"First, let's create the calculator structure using HTML.",
+"Now styling the calculator to make it modern and clean.",
+"Finally, JavaScript will control the button interactions."
+
+];
+
+let thoughtIndex = 0;
+
+setTimeout(typeCode,3500);
+
+/* =========================
+   TYPE CODE
+========================= */
 
 function typeCode(){
 
     if(i >= code.length){
-        setTimeout(scene2, 800);
+
+        setTimeout(showRunScene,1800);
         return;
     }
 
+    if(i === 0){
+        showThought(thoughts[0]);
+    }
+
+    if(i === 5){
+        showThought(thoughts[1]);
+    }
+
+    if(i === 11){
+        showThought(thoughts[2]);
+    }
+
     const row = document.createElement("div");
+
     row.className = "line";
 
     const num = document.createElement("div");
+
     num.className = "num";
+
     num.innerText = i + 1;
 
     const text = document.createElement("div");
 
     let html = code[i];
+
     let j = 0;
 
     function type(){
 
         if(j <= html.length){
+
             text.innerHTML =
-            html.substring(0,j) + '<span class="cursor"></span>';
+            html.substring(0,j) +
+            '<span class="cursor"></span>';
+
             j++;
-            setTimeout(type, 7);
+
+            setTimeout(type,6);
+
         }else{
+
             text.innerHTML = html;
+
             i++;
-            setTimeout(typeCode, 50);
+
+            setTimeout(typeCode,45);
         }
     }
 
     row.appendChild(num);
+
     row.appendChild(text);
-    editor.appendChild(row);
+
+    editor.insertBefore(row,thought);
 
     type();
 }
 
-/* COMMENT BOX */
-function showComment(){
+/* =========================
+   THOUGHT BOX
+========================= */
 
-    const box = document.createElement("div");
-    box.className = "commentBox";
+function showThought(text){
 
-    box.innerHTML =
-    "This function counts down from 5 to 1 using a loop and delay.";
+    thought.innerHTML = text;
 
-    editor.appendChild(box);
+    thought.classList.add("show");
+
+    setTimeout(() => {
+        thought.classList.remove("show");
+    },2200);
 }
 
 /* =========================
-   SCENE 2 - MOUSE CLICK RUN
+   RUN SCENE
 ========================= */
 
-function scene2(){
+function showRunScene(){
 
-    runBtn.style.opacity = 1;
+    editor.style.display = "none";
+
+    runScene.style.opacity = 1;
+
+    runScene.style.pointerEvents = "auto";
+
+    mouse.style.opacity = 1;
+
+    mouse.style.left = "120px";
+
+    mouse.style.top = "420px";
 
     setTimeout(() => {
 
-        mouse.style.opacity = 1;
+        mouse.style.transition = "1s ease";
 
-        mouse.style.left = "220px";
-        mouse.style.top = "430px";
+        mouse.style.left = "195px";
+
+        mouse.style.top = "315px";
 
         setTimeout(() => {
 
-            mouse.style.left = "250px";
-            mouse.style.top = "520px";
+            runBtn.classList.add("press");
 
-            setTimeout(() => {
+            setTimeout(showCalculator,500);
 
-                clickFx.style.left = "260px";
-                clickFx.style.top = "530px";
-                clickFx.style.opacity = 1;
+        },1000);
 
-                runBtn.style.transform = "scale(.9)";
-                runBtn.style.background = "#16a34a";
-
-                setTimeout(() => {
-                    scene3();
-                }, 500);
-
-            }, 700);
-
-        }, 700);
-
-    }, 500);
+    },500);
 }
 
 /* =========================
-   SCENE 3 - TERMINAL
+   CALCULATOR
 ========================= */
 
-function scene3(){
+function showCalculator(){
 
-    editor.innerHTML = "";
+    runScene.innerHTML = `
 
-    runBtn.style.display = "none";
-    mouse.style.display = "none";
-    clickFx.style.display = "none";
+    <div class="calcWrap">
 
-    const terminal = document.createElement("div");
-    terminal.className = "terminal";
+        <div class="calculator">
 
-    const prompt = document.createElement("div");
-    prompt.className = "prompt";
-    prompt.innerText = "$ python countdown.py";
+            <div class="screen" id="screen"></div>
 
-    terminal.appendChild(prompt);
+            <div class="buttons">
 
-    const logs = document.createElement("div");
+                <div class="btn">7</div>
+                <div class="btn">8</div>
+                <div class="btn">9</div>
+                <div class="btn orange">+</div>
 
-    const center = document.createElement("div");
-    center.className = "center";
+                <div class="btn">4</div>
+                <div class="btn">5</div>
+                <div class="btn">6</div>
+                <div class="btn orange">-</div>
 
-    const timer = document.createElement("div");
-    timer.className = "timer";
+                <div class="btn">1</div>
+                <div class="btn">2</div>
+                <div class="btn">3</div>
+                <div class="btn orange">×</div>
 
-    center.appendChild(timer);
+                <div class="btn">0</div>
+                <div class="btn">.</div>
+                <div class="btn green">=</div>
+                <div class="btn orange">÷</div>
 
-    terminal.appendChild(logs);
-    terminal.appendChild(center);
+            </div>
 
-    editor.appendChild(terminal);
+        </div>
 
-    let n = 5;
+    </div>
 
-    function tick(){
+    `;
 
-        if(n < 0) return;
+    autoTest();
+}
 
-        timer.innerText = n;
+/* =========================
+   AUTO TEST
+========================= */
 
-        const log = document.createElement("div");
-        log.className = "log";
-        log.innerText = "> " + n;
+function autoTest(){
 
-        logs.appendChild(log);
+    const screen = document.getElementById("screen");
 
-        n--;
+    const buttons = document.querySelectorAll(".btn");
 
-        setTimeout(tick, 600);
+    const sequence = [
+
+        ["7","7"],
+        ["+","7+"],
+        ["3","7+3"],
+        ["=","10"]
+
+    ];
+
+    let i = 0;
+
+    function clickNext(){
+
+        if(i >= sequence.length) return;
+
+        const [key,result] = sequence[i];
+
+        buttons.forEach(btn => {
+
+            if(btn.innerText === key){
+
+                btn.classList.add("press");
+
+                setTimeout(() => {
+
+                    btn.classList.remove("press");
+
+                },180);
+            }
+        });
+
+        screen.innerText = result;
+
+        i++;
+
+        setTimeout(clickNext,700);
     }
 
-    tick();
+    clickNext();
 }
 
 </script>
