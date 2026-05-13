@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Python Coding Animation</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
 
@@ -16,10 +17,7 @@
 }
 
 body{
-    background:
-    radial-gradient(circle at top left,#1e3a8a22,transparent 30%),
-    radial-gradient(circle at bottom right,#7c3aed22,transparent 30%),
-    #030712;
+    background:#050b16;
     height:100vh;
     display:flex;
     justify-content:center;
@@ -28,72 +26,33 @@ body{
     font-family:Inter,sans-serif;
 }
 
-/* BACKGROUND GLOW */
-
-.bgGlow1,
-.bgGlow2,
-.bgGlow3{
-    position:absolute;
-    border-radius:50%;
-    filter:blur(120px);
-    animation:floatGlow 8s ease-in-out infinite;
-}
-
-.bgGlow1{
-    width:320px;
-    height:320px;
-    background:#2563eb;
-    top:-120px;
-    left:-100px;
-    opacity:.18;
-}
-
-.bgGlow2{
-    width:300px;
-    height:300px;
-    background:#7c3aed;
-    right:-100px;
-    bottom:-120px;
-    opacity:.16;
-    animation-delay:2s;
-}
-
-.bgGlow3{
-    width:240px;
-    height:240px;
-    background:#06b6d4;
-    top:40%;
-    left:40%;
-    opacity:.08;
-    animation-delay:4s;
-}
-
-@keyframes floatGlow{
-    50%{
-        transform:translateY(-20px) scale(1.08);
-    }
-}
-
 /* FRAME */
 
 .frame{
     width:390px;
     height:690px;
-    background:
-    linear-gradient(
-        180deg,
-        rgba(255,255,255,.02),
-        rgba(255,255,255,.01)
-    ),
-    #0f172a;
-    border-radius:36px;
+    background:#0f172a;
+    border-radius:30px;
     overflow:hidden;
     position:relative;
-    border:1px solid rgba(255,255,255,.06);
+    border:1px solid #1e293b;
+
     box-shadow:
-    0 0 100px rgba(0,0,0,.85),
-    inset 0 0 40px rgba(255,255,255,.03),
-    0 0 0 1px rgba(255,255,255,.03);
+    0 0 50px rgba(0,0,0,.7);
+}
+
+/* LIGHT */
+
+.light{
+    position:absolute;
+    width:240px;
+    height:240px;
+    background:#2563eb;
+    border-radius:50%;
+    filter:blur(100px);
+    opacity:.12;
+    top:-80px;
+    left:-80px;
 }
 
 /* FILES */
@@ -101,132 +60,60 @@ body{
 .files{
     position:absolute;
     inset:0;
+
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
-    gap:22px;
-    z-index:10;
+
+    gap:18px;
 }
 
 .file{
-    width:285px;
-    height:76px;
-    border-radius:24px;
-    background:rgba(17,24,39,.92);
-    border:1px solid rgba(255,255,255,.06);
+    width:270px;
+    height:72px;
+
+    background:#111827;
+
+    border:1px solid #1e293b;
+    border-radius:20px;
+
     display:flex;
     align-items:center;
-    padding:0 24px;
+
+    padding:0 22px;
+
     color:white;
-    font-weight:600;
     font-size:15px;
-    position:relative;
-    overflow:hidden;
+    font-weight:600;
+
     opacity:0;
-    transform:
-    translateY(35px)
-    scale(.82)
-    rotateX(15deg);
+    transform:translateY(20px);
 
-    backdrop-filter:blur(18px);
-
-    box-shadow:
-    0 12px 35px rgba(0,0,0,.35),
-    inset 0 1px 0 rgba(255,255,255,.04);
+    transition:.5s;
 }
 
 .file.show{
-    animation:fileShow .85s cubic-bezier(.18,.89,.32,1.28) forwards;
+    opacity:1;
+    transform:translateY(0);
 }
-
-@keyframes fileShow{
-    0%{
-        opacity:0;
-        transform:
-        translateY(35px)
-        scale(.82)
-        rotateX(15deg);
-    }
-
-    60%{
-        opacity:1;
-        transform:
-        translateY(-6px)
-        scale(1.03);
-    }
-
-    100%{
-        opacity:1;
-        transform:
-        translateY(0)
-        scale(1);
-    }
-}
-
-/* SHINE */
-
-.file::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:
-    linear-gradient(
-        115deg,
-        transparent 20%,
-        rgba(255,255,255,.12) 50%,
-        transparent 80%
-    );
-
-    transform:translateX(-140%);
-}
-
-.file.show::before{
-    animation:shine 1.5s linear;
-}
-
-@keyframes shine{
-    to{
-        transform:translateX(250%);
-    }
-}
-
-/* ACTIVE FILE */
 
 .file.active{
-    border-color:#6366f1;
-    background:
-    linear-gradient(
-        135deg,
-        rgba(99,102,241,.22),
-        rgba(124,58,237,.18)
-    ),
-    rgba(30,27,75,.95);
-
-    box-shadow:
-    0 0 50px rgba(99,102,241,.45),
-    0 20px 45px rgba(79,70,229,.25),
-    inset 0 0 25px rgba(255,255,255,.04);
-
-    transform:scale(1.04);
+    border-color:#2563eb;
+    background:#172554;
 }
 
 /* ICONS */
 
 .icon{
-    width:18px;
-    height:18px;
-    border-radius:5px;
+    width:16px;
+    height:16px;
+    border-radius:4px;
     margin-right:16px;
-    box-shadow:0 0 14px rgba(255,255,255,.15);
 }
 
 .py{
-    background:linear-gradient(
-        135deg,
-        #38bdf8,
-        #facc15
-    );
+    background:linear-gradient(135deg,#38bdf8,#facc15);
 }
 
 .txt{
@@ -241,8 +128,10 @@ body{
 
 .mouse{
     position:absolute;
-    width:26px;
-    height:26px;
+
+    width:24px;
+    height:24px;
+
     background:white;
 
     clip-path:polygon(
@@ -255,52 +144,20 @@ body{
         100% 60%
     );
 
-    z-index:200;
-
     opacity:0;
+
+    z-index:100;
 
     transition:
-    left .9s cubic-bezier(.22,1,.36,1),
-    top .9s cubic-bezier(.22,1,.36,1),
-    transform .18s ease,
-    opacity .4s ease;
+    left .8s ease,
+    top .8s ease,
+    transform .15s ease;
 
-    filter:
-    drop-shadow(0 0 8px rgba(255,255,255,.6))
-    drop-shadow(0 0 20px rgba(255,255,255,.35));
+    filter:drop-shadow(0 0 6px rgba(255,255,255,.5));
 }
-
-/* CLICK EFFECT */
 
 .mouse.click{
-    transform:scale(.78);
-}
-
-.mousePulse{
-    position:absolute;
-    width:20px;
-    height:20px;
-    border:2px solid rgba(255,255,255,.75);
-    border-radius:50%;
-    pointer-events:none;
-    z-index:190;
-    opacity:0;
-}
-
-.mousePulse.show{
-    animation:pulse .55s ease;
-}
-
-@keyframes pulse{
-    0%{
-        opacity:1;
-        transform:scale(.3);
-    }
-
-    100%{
-        opacity:0;
-        transform:scale(2.6);
-    }
+    transform:scale(.82);
 }
 
 /* EDITOR */
@@ -308,56 +165,37 @@ body{
 .editor{
     position:absolute;
     inset:0;
+
     background:#0b1220;
+
     display:none;
     flex-direction:column;
-    animation:editorOpen .6s ease;
 }
 
 .editor.show{
     display:flex;
 }
 
-@keyframes editorOpen{
-    from{
-        opacity:0;
-        transform:scale(1.04);
-    }
-
-    to{
-        opacity:1;
-        transform:scale(1);
-    }
-}
-
 /* TOPBAR */
 
 .topbar{
-    height:60px;
-    background:
-    linear-gradient(
-        180deg,
-        rgba(255,255,255,.03),
-        rgba(255,255,255,.01)
-    ),
-    #111827;
+    height:56px;
 
-    border-bottom:1px solid rgba(255,255,255,.06);
+    background:#111827;
+
+    border-bottom:1px solid #1e293b;
 
     display:flex;
     align-items:center;
-    padding:0 18px;
 
-    box-shadow:
-    inset 0 -1px 0 rgba(255,255,255,.03);
+    padding:0 18px;
 }
 
 .dot{
-    width:11px;
-    height:11px;
+    width:10px;
+    height:10px;
     border-radius:50%;
-    margin-right:7px;
-    box-shadow:0 0 12px rgba(255,255,255,.15);
+    margin-right:6px;
 }
 
 .red{
@@ -373,50 +211,34 @@ body{
 }
 
 .filename{
-    color:#f1f5f9;
+    color:#e2e8f0;
     font-size:14px;
     font-weight:600;
-    margin-left:14px;
-    letter-spacing:.3px;
+    margin-left:12px;
 }
 
 /* CODE */
 
 .code{
     flex:1;
-    padding:20px;
+
+    padding:18px;
+
     overflow:hidden;
+
     font-family:'Fira Code', monospace;
     font-size:11.8px;
-    line-height:1.85;
+    line-height:1.8;
+
     color:white;
-    background:
-    linear-gradient(
-        180deg,
-        rgba(255,255,255,.015),
-        transparent
-    );
 }
 
 .line{
     display:flex;
-    animation:lineFade .25s ease;
-}
-
-@keyframes lineFade{
-    from{
-        opacity:0;
-        transform:translateY(6px);
-    }
-
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
 }
 
 .num{
-    width:36px;
+    width:34px;
     color:#475569;
     text-align:right;
     margin-right:14px;
@@ -453,13 +275,15 @@ body{
 
 .cursor{
     width:8px;
-    height:15px;
+    height:14px;
+
     background:white;
+
     display:inline-block;
+
     margin-left:2px;
-    border-radius:2px;
+
     animation:blink .7s infinite;
-    box-shadow:0 0 8px rgba(255,255,255,.6);
 }
 
 @keyframes blink{
@@ -472,49 +296,37 @@ body{
 
 .thought{
     position:absolute;
+
     left:18px;
     bottom:18px;
+
     width:352px;
 
-    background:
-    linear-gradient(
-        135deg,
-        rgba(30,41,59,.92),
-        rgba(17,24,39,.94)
-    );
+    background:#111827;
 
-    border:1px solid rgba(255,255,255,.08);
+    border:1px solid #334155;
 
-    border-radius:20px;
+    border-radius:18px;
 
-    padding:15px;
+    padding:14px;
 
-    color:#dbeafe;
+    color:#cbd5e1;
 
     font-size:12px;
-    line-height:1.8;
+    line-height:1.7;
 
     opacity:0;
 
-    transform:
-    translateY(30px)
-    scale(.96);
+    transform:translateY(20px);
 
-    transition:.45s;
+    transition:.4s;
 
-    z-index:250;
-
-    backdrop-filter:blur(18px);
-
-    box-shadow:
-    0 10px 35px rgba(0,0,0,.35);
+    z-index:120;
 }
 
 .thought.show{
     opacity:1;
-    transform:
-    translateY(0)
-    scale(1);
+    transform:translateY(0);
 }
 
 /* RUN SCREEN */
@@ -522,39 +334,30 @@ body{
 .runScreen{
     position:absolute;
     inset:0;
-    background:
-    radial-gradient(circle at top,#1e3a8a22,transparent 35%),
-    #0f172a;
+
+    background:#0f172a;
 
     display:none;
+
     justify-content:center;
     align-items:center;
     flex-direction:column;
-    gap:34px;
+
+    gap:26px;
 }
 
 .runScreen.show{
     display:flex;
-    animation:fadeIn .5s ease;
 }
 
-@keyframes fadeIn{
-    from{
-        opacity:0;
-    }
-
-    to{
-        opacity:1;
-    }
-}
-
-/* RUN BUTTON */
+/* BUTTON */
 
 .runBtn{
-    width:210px;
-    height:78px;
+    width:180px;
+    height:68px;
+
     border:none;
-    border-radius:26px;
+    border-radius:20px;
 
     background:
     linear-gradient(
@@ -565,87 +368,44 @@ body{
 
     color:white;
 
-    font-size:22px;
-    font-weight:800;
-    letter-spacing:.5px;
+    font-size:20px;
+    font-weight:700;
 
-    cursor:pointer;
-
-    box-shadow:
-    0 0 45px rgba(99,102,241,.5),
-    0 20px 40px rgba(79,70,229,.28);
-
-    transition:
-    transform .18s ease,
-    box-shadow .25s ease;
-}
-
-.runBtn:hover{
-    transform:translateY(-3px);
+    transition:.15s;
 }
 
 .runBtn.press{
-    transform:scale(.9);
-
-    box-shadow:
-    0 0 25px rgba(99,102,241,.35);
+    transform:scale(.92);
 }
 
 /* TERMINAL */
 
 .terminal{
-    width:325px;
-    height:215px;
+    width:320px;
+    height:200px;
 
-    background:
-    linear-gradient(
-        180deg,
-        rgba(255,255,255,.015),
-        transparent
-    ),
-    #020617;
+    background:#020617;
 
-    border:1px solid rgba(255,255,255,.06);
+    border:1px solid #1e293b;
 
-    border-radius:24px;
+    border-radius:20px;
 
     overflow:hidden;
 
     display:none;
     flex-direction:column;
-
-    box-shadow:
-    0 20px 45px rgba(0,0,0,.45),
-    inset 0 0 25px rgba(255,255,255,.02);
-
-    transform:translateY(20px);
-    opacity:0;
 }
 
 .terminal.show{
     display:flex;
-    animation:terminalShow .6s ease forwards;
-}
-
-@keyframes terminalShow{
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
 }
 
 .terminalTop{
-    height:44px;
+    height:42px;
 
-    background:
-    linear-gradient(
-        180deg,
-        rgba(255,255,255,.03),
-        rgba(255,255,255,.01)
-    ),
-    #111827;
+    background:#111827;
 
-    border-bottom:1px solid rgba(255,255,255,.05);
+    border-bottom:1px solid #1e293b;
 
     display:flex;
     align-items:center;
@@ -656,7 +416,7 @@ body{
 .termBody{
     flex:1;
 
-    padding:18px;
+    padding:16px;
 
     font-family:'Fira Code', monospace;
 
@@ -673,40 +433,13 @@ body{
 
 .output{
     opacity:0;
-    animation:fadeUp .45s ease forwards;
-    text-shadow:0 0 10px rgba(74,222,128,.18);
+    animation:fade .4s ease forwards;
 }
 
-@keyframes fadeUp{
-    from{
-        opacity:0;
-        transform:translateY(12px);
-    }
-
+@keyframes fade{
     to{
         opacity:1;
-        transform:translateY(0);
     }
-}
-
-/* SCAN EFFECT */
-
-.terminal::after{
-    content:"";
-    position:absolute;
-    inset:0;
-
-    background:
-    linear-gradient(
-        rgba(255,255,255,.015) 50%,
-        transparent 50%
-    );
-
-    background-size:100% 4px;
-
-    pointer-events:none;
-
-    opacity:.2;
 }
 
 </style>
@@ -714,8 +447,7 @@ body{
 
 <body>
 
-<div class="bgGlow1"></div>
-<div class="bgGlow2"></div>
+<div class="light"></div>
 
 <div class="frame">
 
@@ -796,6 +528,8 @@ body{
 
 <script>
 
+/* ELEMENTS */
+
 const txtFile = document.getElementById("txtFile");
 const jsonFile = document.getElementById("jsonFile");
 const pyFile = document.getElementById("pyFile");
@@ -818,115 +552,60 @@ const terminal = document.getElementById("terminal");
 
 const termBody = document.getElementById("termBody");
 
-/* =========================
-   PREMIUM MOUSE SYSTEM
-========================= */
-
-function moveMouseTo(element, duration = 1000, callback){
-
-    const rect = element.getBoundingClientRect();
-
-    const frameRect =
-    document.querySelector(".frame")
-    .getBoundingClientRect();
-
-    const x =
-    rect.left - frameRect.left +
-    rect.width / 2 - 12;
-
-    const y =
-    rect.top - frameRect.top +
-    rect.height / 2 - 12;
-
-    mouse.style.transition =
-    `${duration}ms cubic-bezier(.22,1,.36,1)`;
-
-    mouse.style.left = `${x}px`;
-
-    mouse.style.top = `${y}px`;
-
-    if(callback){
-
-        setTimeout(callback, duration);
-    }
-}
-
-/* =========================
-   CLICK EFFECT
-========================= */
-
-function clickEffect(element){
-
-    mouse.style.transform =
-    "scale(.72)";
-
-    element.style.transform =
-    "scale(.97)";
-
-    setTimeout(()=>{
-
-        mouse.style.transform =
-        "scale(1)";
-
-        element.style.transform = "";
-
-    },180);
-}
-
-/* =========================
-   FILE APPEAR
-========================= */
+/* FILE SHOW */
 
 setTimeout(()=>{
-
     txtFile.classList.add("show");
-
 },300);
 
 setTimeout(()=>{
-
     jsonFile.classList.add("show");
-
 },700);
 
 setTimeout(()=>{
-
     pyFile.classList.add("show");
-
 },1100);
 
-/* =========================
-   CLICK PY FILE
-========================= */
+/* CLICK PY FILE */
 
 setTimeout(()=>{
 
     mouse.style.opacity = "1";
 
-    moveMouseTo(pyFile,1200,()=>{
+    mouse.style.left = "95px";
+    mouse.style.top = "300px";
 
-        clickEffect(pyFile);
+    setTimeout(()=>{
 
-        pyFile.classList.add("active");
+        mouse.style.left = "165px";
+        mouse.style.top = "408px";
 
         setTimeout(()=>{
 
-            openEditor();
+            mouse.classList.add("click");
 
-        },500);
+            pyFile.classList.add("active");
 
-    });
+            setTimeout(()=>{
+
+                mouse.classList.remove("click");
+
+                openEditor();
+
+            },180);
+
+        },900);
+
+    },400);
 
 },2400);
 
-/* =========================
-   OPEN EDITOR
-========================= */
+/* OPEN EDITOR */
 
 function openEditor(){
 
     showThought(
-        "Creating Python calculator logic with clean and optimized functions."
+        "Writing Python calculator logic..."
     );
 
     setTimeout(()=>{
@@ -942,9 +621,7 @@ function openEditor(){
     },700);
 }
 
-/* =========================
-   PYTHON CODE
-========================= */
+/* PYTHON CODE */
 
 const code = [
 
@@ -954,21 +631,9 @@ const code = [
 `    <span class="keyword">return</span> a + b`,
 ``,
 
-`<span class="keyword">def</span> <span class="func">subtract</span>(a, b):`,
-`    <span class="keyword">return</span> a - b`,
-``,
-
 `<span class="keyword">def</span> <span class="func">multiply</span>(a, b):`,
 `    <span class="keyword">return</span> a * b`,
 ``,
-
-`<span class="keyword">def</span> <span class="func">divide</span>(a, b):`,
-`    <span class="keyword">if</span> b == <span class="number">0</span>:`,
-`        <span class="keyword">return</span> <span class="string">"Cannot divide by zero"</span>`,
-`    <span class="keyword">return</span> a / b`,
-``,
-
-`<span class="comment"># Example Calculation</span>`,
 
 `<span class="variable">result</span> = multiply(<span class="number">7</span>, <span class="number">8</span>)`,
 `print(<span class="string">"Result:"</span>, result)`
@@ -977,54 +642,39 @@ const code = [
 
 let lineIndex = 0;
 
-/* =========================
-   START TYPING
-========================= */
+/* TYPE */
 
 function startTyping(){
 
     typeLine();
 }
 
-/* =========================
-   TYPE LINE
-========================= */
-
 function typeLine(){
 
     if(lineIndex >= code.length){
 
         showThought(
-            "Python script completed successfully. Running program now."
+            "Python script completed successfully."
         );
 
-        setTimeout(()=>{
-
-            showRunScreen();
-
-        },2200);
+        setTimeout(showRunScreen,1800);
 
         return;
     }
 
-    const row =
-    document.createElement("div");
+    const row = document.createElement("div");
 
     row.className = "line";
 
-    const num =
-    document.createElement("div");
+    const num = document.createElement("div");
 
     num.className = "num";
 
-    num.innerText =
-    lineIndex + 1;
+    num.innerText = lineIndex + 1;
 
-    const text =
-    document.createElement("div");
+    const text = document.createElement("div");
 
-    let html =
-    code[lineIndex];
+    let html = code[lineIndex];
 
     let i = 0;
 
@@ -1049,7 +699,7 @@ function typeLine(){
             codeBox.scrollTop =
             codeBox.scrollHeight;
 
-            setTimeout(typeLine,18);
+            setTimeout(typeLine,30);
         }
     }
 
@@ -1062,9 +712,7 @@ function typeLine(){
     typeChar();
 }
 
-/* =========================
-   SHOW RUN SCREEN
-========================= */
+/* RUN SCREEN */
 
 function showRunScreen(){
 
@@ -1074,28 +722,34 @@ function showRunScreen(){
 
     mouse.style.opacity = "1";
 
+    mouse.style.left = "110px";
+    mouse.style.top = "520px";
+
     setTimeout(()=>{
 
-        moveMouseTo(runBtn,1200,()=>{
+        mouse.style.left = "185px";
+        mouse.style.top = "290px";
 
-            clickEffect(runBtn);
+        setTimeout(()=>{
+
+            mouse.classList.add("click");
 
             runBtn.classList.add("press");
 
             setTimeout(()=>{
 
+                mouse.classList.remove("click");
+
                 showOutput();
 
-            },350);
+            },180);
 
-        });
+        },800);
 
-    },500);
+    },400);
 }
 
-/* =========================
-   SHOW OUTPUT
-========================= */
+/* OUTPUT */
 
 function showOutput(){
 
@@ -1107,10 +761,6 @@ function showOutput(){
 
     },500);
 }
-
-/* =========================
-   TERMINAL OUTPUT
-========================= */
 
 const outputs = [
 
@@ -1128,30 +778,24 @@ let outputIndex = 0;
 
 function typeOutput(){
 
-    if(outputIndex >= outputs.length)
-    return;
+    if(outputIndex >= outputs.length){
+        return;
+    }
 
-    const line =
-    document.createElement("div");
+    const line = document.createElement("div");
 
     line.className = "output";
 
-    line.innerText =
-    outputs[outputIndex];
+    line.innerText = outputs[outputIndex];
 
     termBody.appendChild(line);
 
-    termBody.scrollTop =
-    termBody.scrollHeight;
-
     outputIndex++;
 
-    setTimeout(typeOutput,500);
+    setTimeout(typeOutput,450);
 }
 
-/* =========================
-   THOUGHT BOX
-========================= */
+/* THOUGHT */
 
 function showThought(text){
 
@@ -1163,7 +807,7 @@ function showThought(text){
 
         thought.classList.remove("show");
 
-    },3000);
+    },2500);
 }
 
 </script>
