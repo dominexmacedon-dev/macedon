@@ -17,7 +17,7 @@
 }
 
 body{
-    background:#030712;
+    background:#020617;
     height:100vh;
     display:flex;
     justify-content:center;
@@ -33,7 +33,7 @@ body::after{
     content:"";
     position:absolute;
     border-radius:50%;
-    filter:blur(130px);
+    filter:blur(120px);
 }
 
 body::before{
@@ -42,7 +42,7 @@ body::before{
     background:#2563eb;
     top:-120px;
     left:-120px;
-    opacity:.14;
+    opacity:.13;
 }
 
 body::after{
@@ -51,7 +51,7 @@ body::after{
     background:#7c3aed;
     right:-100px;
     bottom:-100px;
-    opacity:.12;
+    opacity:.11;
 }
 
 /* FRAME */
@@ -69,26 +69,29 @@ body::after{
     inset 0 0 30px rgba(255,255,255,.03);
 }
 
-/* TOP MESSAGE */
+/* HEADER */
 
-.message{
+.header{
     position:absolute;
     top:18px;
-    left:18px;
-    right:18px;
-    text-align:center;
-    color:#cbd5e1;
-    font-size:12px;
-    opacity:0;
-    transform:translateY(-8px);
-    transition:.6s ease;
-    z-index:30;
-    letter-spacing:.3px;
+    left:22px;
+    right:22px;
+    z-index:20;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 }
 
-.message.show{
-    opacity:1;
-    transform:translateY(0);
+.title{
+    color:white;
+    font-size:14px;
+    font-weight:700;
+}
+
+.status{
+    color:#94a3b8;
+    font-size:11px;
+    letter-spacing:.4px;
 }
 
 /* FILES */
@@ -104,7 +107,7 @@ body::after{
 }
 
 .file{
-    width:286px;
+    width:285px;
     height:72px;
     border-radius:22px;
     background:#111827;
@@ -114,11 +117,11 @@ body::after{
     padding:0 22px;
     color:white;
     font-weight:600;
+    opacity:0;
+    transform:translateY(16px);
+    transition:.8s ease;
     position:relative;
     overflow:hidden;
-    opacity:0;
-    transform:translateY(18px);
-    transition:.8s ease;
 }
 
 .file.show{
@@ -130,7 +133,7 @@ body::after{
     border-color:#4f46e5;
     background:#1d1b4f;
     box-shadow:
-    0 0 35px rgba(79,70,229,.35);
+    0 0 30px rgba(79,70,229,.35);
 }
 
 .file::before{
@@ -147,7 +150,7 @@ body::after{
 }
 
 .file.show::before{
-    animation:shine 2s linear;
+    animation:shine 1.8s linear;
 }
 
 @keyframes shine{
@@ -191,14 +194,14 @@ body::after{
         40% 60%,
         100% 60%
     );
-    z-index:100;
+    z-index:200;
     opacity:0;
     pointer-events:none;
     transition:
-    left 1.15s cubic-bezier(.18,.9,.2,1),
-    top 1.15s cubic-bezier(.18,.9,.2,1),
-    transform .16s ease,
-    opacity .35s ease;
+    left 1s cubic-bezier(.2,.9,.2,1),
+    top 1s cubic-bezier(.2,.9,.2,1),
+    transform .15s ease,
+    opacity .3s ease;
     filter:drop-shadow(0 0 10px rgba(255,255,255,.55));
 }
 
@@ -249,16 +252,17 @@ body::after{
 
 .code{
     flex:1;
-    padding:18px;
+    padding:22px 18px;
     overflow:hidden;
     font-family:'Fira Code', monospace;
     font-size:12px;
-    line-height:1.95;
+    line-height:2;
     color:white;
 }
 
 .line{
     display:flex;
+    min-height:24px;
 }
 
 .num{
@@ -267,11 +271,12 @@ body::after{
     text-align:right;
     margin-right:14px;
     user-select:none;
+    flex-shrink:0;
 }
 
 .text{
-    position:relative;
-    white-space:pre;
+    white-space:pre-wrap;
+    word-break:break-word;
 }
 
 /* COLORS */
@@ -309,7 +314,7 @@ body::after{
     background:white;
     margin-left:2px;
     vertical-align:middle;
-    animation:blink .8s infinite;
+    animation:blink .7s infinite;
 }
 
 @keyframes blink{
@@ -318,7 +323,7 @@ body::after{
     }
 }
 
-/* RUN SCREEN */
+/* RUN */
 
 .runScreen{
     position:absolute;
@@ -328,7 +333,6 @@ body::after{
     justify-content:center;
     align-items:center;
     flex-direction:column;
-    gap:26px;
 }
 
 .runScreen.show{
@@ -344,9 +348,9 @@ body::after{
     color:white;
     font-size:21px;
     font-weight:700;
+    transition:.15s ease;
     box-shadow:
     0 0 35px rgba(79,70,229,.35);
-    transition:.15s ease;
 }
 
 .runBtn.press{
@@ -356,30 +360,30 @@ body::after{
 /* TERMINAL */
 
 .terminal{
-    width:330px;
-    height:235px;
+    position:absolute;
+    inset:0;
     background:#020617;
-    border-radius:24px;
-    overflow:hidden;
-    border:1px solid #1e293b;
     display:none;
     flex-direction:column;
-    box-shadow:
-    0 0 35px rgba(0,0,0,.45);
+    opacity:0;
+    transform:scale(.96);
+    transition:.35s ease;
 }
 
 .terminal.show{
     display:flex;
+    opacity:1;
+    transform:scale(1);
 }
 
 .terminalTop{
-    height:42px;
+    height:48px;
     background:#111827;
     border-bottom:1px solid #1e293b;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding:0 14px;
+    padding:0 16px;
 }
 
 .termTitle{
@@ -389,40 +393,63 @@ body::after{
 
 .termBody{
     flex:1;
-    padding:16px;
+    padding:22px;
     font-family:'Fira Code', monospace;
-    color:#4ade80;
-    font-size:13px;
-    line-height:1.85;
+    font-size:14px;
+    line-height:2;
     overflow:hidden;
 }
 
 .termLine{
     opacity:0;
-    transform:translateY(6px);
-    animation:termFade .35s ease forwards;
+    transform:translateY(8px);
+    animation:show .22s ease forwards;
 }
 
-@keyframes termFade{
+@keyframes show{
     to{
         opacity:1;
         transform:translateY(0);
     }
 }
 
-/* FOLLOW CARD */
+.redText{
+    color:#fb7185;
+}
+
+.blueText{
+    color:#38bdf8;
+}
+
+.greenText{
+    color:#4ade80;
+}
+
+.yellowText{
+    color:#facc15;
+}
+
+.purpleText{
+    color:#c084fc;
+}
+
+.white{
+    color:#e2e8f0;
+}
+
+/* FOLLOW */
 
 .followCard{
     position:absolute;
     inset:0;
+    background:#0f172a;
     display:flex;
+    flex-direction:column;
     justify-content:center;
     align-items:center;
-    flex-direction:column;
-    background:#0f172a;
     opacity:0;
     pointer-events:none;
-    transition:.8s ease;
+    transition:.7s ease;
 }
 
 .followCard.show{
@@ -431,19 +458,17 @@ body::after{
 }
 
 .profile{
-    width:90px;
-    height:90px;
+    width:92px;
+    height:92px;
     border-radius:50%;
     object-fit:cover;
     border:3px solid #334155;
     margin-bottom:18px;
-    box-shadow:
-    0 0 30px rgba(255,255,255,.08);
 }
 
 .name{
     color:white;
-    font-size:22px;
+    font-size:23px;
     font-weight:800;
 }
 
@@ -471,11 +496,9 @@ body::after{
         #ff0050
     );
     color:white;
-    font-weight:700;
     font-size:15px;
+    font-weight:700;
     transition:.15s ease;
-    box-shadow:
-    0 0 24px rgba(255,0,80,.25);
 }
 
 .followBtn.done{
@@ -489,8 +512,18 @@ body::after{
 
 <div class="frame">
 
-    <div class="message" id="message">
-        Building duplication program...
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <div class="title">
+            Python Duplication Demo
+        </div>
+
+        <div class="status">
+            LIVE TERMINAL
+        </div>
+
     </div>
 
     <!-- FILES -->
@@ -499,7 +532,7 @@ body::after{
 
         <div class="file" id="txtFile">
             <div class="icon txt"></div>
-            notes.txt
+            message.txt
         </div>
 
         <div class="file" id="jsonFile">
@@ -525,6 +558,7 @@ body::after{
         <div class="topbar">
 
             <div style="display:flex;align-items:center;">
+
                 <div class="dot red"></div>
                 <div class="dot yellow"></div>
                 <div class="dot green"></div>
@@ -532,6 +566,7 @@ body::after{
                 <div class="filename">
                     duplicate.py
                 </div>
+
             </div>
 
         </div>
@@ -548,25 +583,29 @@ body::after{
             Run Python
         </button>
 
-        <div class="terminal" id="terminal">
+    </div>
 
-            <div class="terminalTop">
+    <!-- TERMINAL -->
 
-                <div style="display:flex;align-items:center;">
-                    <div class="dot red"></div>
-                    <div class="dot yellow"></div>
-                    <div class="dot green"></div>
-                </div>
+    <div class="terminal" id="terminal">
 
-                <div class="termTitle">
-                    terminal — python duplicate.py
-                </div>
+        <div class="terminalTop">
+
+            <div style="display:flex;align-items:center;">
+
+                <div class="dot red"></div>
+                <div class="dot yellow"></div>
+                <div class="dot green"></div>
 
             </div>
 
-            <div class="termBody" id="termBody"></div>
+            <div class="termTitle">
+                terminal — python duplicate.py
+            </div>
 
         </div>
+
+        <div class="termBody" id="termBody"></div>
 
     </div>
 
@@ -588,7 +627,7 @@ body::after{
         </div>
 
         <div class="followText">
-            Follow my TikTok account for more coding videos
+            Follow for more premium coding videos
         </div>
 
         <button class="followBtn" id="followBtn">
@@ -607,9 +646,9 @@ const txtFile = document.getElementById("txtFile");
 const jsonFile = document.getElementById("jsonFile");
 const pyFile = document.getElementById("pyFile");
 
-const files = document.getElementById("files");
-
 const mouse = document.getElementById("mouse");
+
+const files = document.getElementById("files");
 
 const editor = document.getElementById("editor");
 
@@ -629,9 +668,6 @@ document.getElementById("followCard");
 const followBtn =
 document.getElementById("followBtn");
 
-const message =
-document.getElementById("message");
-
 /* FILES */
 
 setTimeout(()=>{
@@ -640,15 +676,11 @@ setTimeout(()=>{
 
 setTimeout(()=>{
     jsonFile.classList.add("show");
-},900);
+},950);
 
 setTimeout(()=>{
     pyFile.classList.add("show");
-},1450);
-
-setTimeout(()=>{
-    message.classList.add("show");
-},1700);
+},1500);
 
 /* MOUSE */
 
@@ -669,7 +701,7 @@ function moveMouseTo(element,x,y){
 
 function clickMouse(callback){
 
-    mouse.style.transform = "scale(.74)";
+    mouse.style.transform = "scale(.72)";
 
     setTimeout(()=>{
 
@@ -694,13 +726,13 @@ setTimeout(()=>{
 
             pyFile.classList.add("active");
 
-            setTimeout(openEditor,600);
+            setTimeout(openEditor,650);
 
         });
 
     },1400);
 
-},2900);
+},3000);
 
 /* OPEN EDITOR */
 
@@ -717,38 +749,29 @@ function openEditor(){
 
 /* CODE */
 
-const codeLines = [
+const lines = [
 
-`<span class="comment"># Python duplication program</span>`,
+`<span class="comment"># duplication program</span>`,
 
 `<span class="variable">message</span> = <span class="string">"I love her so much"</span>`,
 
-`<span class="variable">colors</span> = [<span class="string">"Red"</span>, <span class="string">"Blue"</span>, <span class="string">"Purple"</span>]`,
+`<span class="variable">colors</span> = [<span class="string">"red"</span>, <span class="string">"blue"</span>, <span class="string">"green"</span>, <span class="string">"yellow"</span>, <span class="string">"purple"</span>]`,
 
 `<span class="keyword">for</span> color <span class="keyword">in</span> colors:`,
 
-`    print(color, message * <span class="number">3</span>)`
+`    print(color, message * <span class="number">5</span>)`
 
 ];
 
-function stripHTML(html){
-
-    const temp = document.createElement("div");
-
-    temp.innerHTML = html;
-
-    return temp.textContent;
-}
-
 function typeCode(){
 
-    let lineIndex = 0;
+    let line = 0;
 
-    function typeNextLine(){
+    function nextLine(){
 
-        if(lineIndex >= codeLines.length){
+        if(line >= lines.length){
 
-            setTimeout(showRunScreen,1500);
+            setTimeout(showRunScreen,1800);
 
             return;
         }
@@ -763,7 +786,7 @@ function typeCode(){
 
         num.className = "num";
 
-        num.innerText = lineIndex + 1;
+        num.innerText = line + 1;
 
         const text =
         document.createElement("div");
@@ -776,11 +799,11 @@ function typeCode(){
 
         codeBox.appendChild(row);
 
-        const html = codeLines[lineIndex];
+        const html = lines[line];
 
         let i = 0;
 
-        function typeChar(){
+        function type(){
 
             if(i <= html.length){
 
@@ -790,23 +813,23 @@ function typeCode(){
 
                 i++;
 
-                setTimeout(typeChar,8);
+                setTimeout(type,10);
 
             }else{
 
                 text.innerHTML = html;
 
-                lineIndex++;
+                line++;
 
-                setTimeout(typeNextLine,320);
+                setTimeout(nextLine,450);
 
             }
         }
 
-        typeChar();
+        type();
     }
 
-    typeNextLine();
+    nextLine();
 }
 
 /* RUN */
@@ -829,72 +852,83 @@ function showRunScreen(){
 
                 runBtn.classList.add("press");
 
-                setTimeout(showOutput,700);
+                setTimeout(showOutput,650);
 
             });
 
         },1200);
 
-    },450);
+    },500);
 }
 
-/* OUTPUT */
+/* TERMINAL */
+
+function addLine(html){
+
+    const line =
+    document.createElement("div");
+
+    line.className = "termLine";
+
+    line.innerHTML = html;
+
+    termBody.appendChild(line);
+}
 
 function showOutput(){
 
     terminal.classList.add("show");
 
-    const outputs = [
+    setTimeout(()=>{
 
-        "> python duplicate.py",
-        "",
-        "Running duplication program...",
-        "",
-        "[Red] I love her so much I love her so much I love her so much",
-        "[Blue] I love her so much I love her so much I love her so much",
-        "[Purple] I love her so much I love her so much I love her so much",
-        "",
-        "Execution completed successfully"
+        addLine('<span class="white">> python duplicate.py</span>');
 
-    ];
+    },250);
 
-    outputs.forEach((text,index)=>{
+    setTimeout(()=>{
 
-        setTimeout(()=>{
+        addLine('<span class="white">Running duplication program...</span>');
 
-            const line =
-            document.createElement("div");
+    },650);
 
-            line.className = "termLine";
+    setTimeout(()=>{
 
-            line.innerText = text;
+        addLine('<span class="redText">I love her so much I love her so much I love her so much I love her so much I love her so much</span>');
 
-            termBody.appendChild(line);
+        addLine('<span class="blueText">I love her so much I love her so much I love her so much I love her so much I love her so much</span>');
 
-        },index * 450);
+        addLine('<span class="greenText">I love her so much I love her so much I love her so much I love her so much I love her so much</span>');
 
-    });
+        addLine('<span class="yellowText">I love her so much I love her so much I love her so much I love her so much I love her so much</span>');
 
-    setTimeout(showFollowCard,6200);
+        addLine('<span class="purpleText">I love her so much I love her so much I love her so much I love her so much I love her so much</span>');
+
+    },1200);
+
+    setTimeout(()=>{
+
+        addLine('<span class="white">Execution completed successfully</span>');
+
+    },1450);
+
+    setTimeout(showFollow,3500);
 }
 
 /* FOLLOW */
 
-function showFollowCard(){
+function showFollow(){
 
-    runScreen.style.opacity = "0";
+    terminal.style.opacity = "0";
 
     setTimeout(()=>{
 
-        runScreen.style.display = "none";
+        terminal.style.display = "none";
 
         followCard.classList.add("show");
 
-        mouse.style.opacity = "1";
-
         setTimeout(()=>{
 
-            moveMouseTo(followBtn,75,24);
+            moveMouseTo(followBtn,74,24);
 
             setTimeout(()=>{
 
@@ -908,11 +942,11 @@ function showFollowCard(){
 
                 });
 
-            },1400);
+            },1200);
 
         },700);
 
-    },700);
+    },600);
 }
 
 </script>
