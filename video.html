@@ -70,6 +70,25 @@ body::after{
     inset 0 0 30px rgba(255,255,255,.03);
 }
 
+/* MESSAGE */
+
+.message{
+    position:absolute;
+    top:18px;
+    left:18px;
+    right:18px;
+    text-align:center;
+    color:#cbd5e1;
+    font-size:12px;
+    opacity:0;
+    transition:.5s ease;
+    z-index:20;
+}
+
+.message.show{
+    opacity:1;
+}
+
 /* FILES */
 
 .files{
@@ -94,8 +113,8 @@ body::after{
     color:white;
     font-weight:600;
     opacity:0;
-    transform:translateY(15px);
-    transition:.4s ease;
+    transform:translateY(20px);
+    transition:.7s ease;
     position:relative;
     overflow:hidden;
 }
@@ -119,7 +138,7 @@ body::after{
 }
 
 .file.show::before{
-    animation:shine 1.2s linear;
+    animation:shine 1.8s linear;
 }
 
 @keyframes shine{
@@ -131,7 +150,8 @@ body::after{
 .file.active{
     border-color:#4f46e5;
     background:#1e1b4b;
-    box-shadow:0 0 30px rgba(79,70,229,.35);
+    box-shadow:
+    0 0 35px rgba(79,70,229,.35);
 }
 
 .icon{
@@ -141,16 +161,16 @@ body::after{
     margin-right:16px;
 }
 
-.py{
-    background:linear-gradient(135deg,#38bdf8,#facc15);
+.txt{
+    background:#64748b;
 }
 
 .json{
     background:#22c55e;
 }
 
-.txt{
-    background:#64748b;
+.py{
+    background:linear-gradient(135deg,#38bdf8,#facc15);
 }
 
 /* MOUSE */
@@ -173,10 +193,10 @@ body::after{
     opacity:0;
     pointer-events:none;
     transition:
-    left .65s cubic-bezier(.2,.9,.2,1),
-    top .65s cubic-bezier(.2,.9,.2,1),
-    transform .12s ease,
-    opacity .25s ease;
+    left 1s cubic-bezier(.2,.9,.2,1),
+    top 1s cubic-bezier(.2,.9,.2,1),
+    transform .15s ease,
+    opacity .3s ease;
     filter:drop-shadow(0 0 10px rgba(255,255,255,.55));
 }
 
@@ -231,15 +251,15 @@ body::after{
     overflow:hidden;
     font-family:'Fira Code', monospace;
     font-size:12px;
-    line-height:1.8;
+    line-height:1.9;
     color:white;
 }
 
 .line{
     display:flex;
     opacity:0;
-    transform:translateY(6px);
-    animation:lineIn .15s ease forwards;
+    transform:translateY(8px);
+    animation:lineIn .25s ease forwards;
 }
 
 @keyframes lineIn{
@@ -256,8 +276,6 @@ body::after{
     margin-right:14px;
     user-select:none;
 }
-
-/* COLORS */
 
 .keyword{
     color:#c084fc;
@@ -293,7 +311,7 @@ body::after{
     flex-direction:column;
     justify-content:center;
     align-items:center;
-    gap:24px;
+    gap:26px;
 }
 
 .runScreen.show{
@@ -311,7 +329,7 @@ body::after{
     font-weight:700;
     box-shadow:
     0 0 30px rgba(79,70,229,.35);
-    transition:.12s ease;
+    transition:.15s ease;
 }
 
 .runBtn.press{
@@ -322,7 +340,7 @@ body::after{
 
 .terminal{
     width:325px;
-    height:200px;
+    height:220px;
     background:#020617;
     border:1px solid #1e293b;
     border-radius:22px;
@@ -350,10 +368,10 @@ body::after{
     font-family:'Fira Code', monospace;
     color:#4ade80;
     font-size:13px;
-    line-height:1.8;
+    line-height:1.9;
     white-space:pre-line;
     opacity:0;
-    animation:fade .18s ease forwards;
+    animation:fade .4s ease forwards;
 }
 
 @keyframes fade{
@@ -377,8 +395,8 @@ body::after{
     align-items:center;
     padding:0 16px;
     opacity:0;
-    transform:translateY(25px);
-    transition:.35s ease;
+    transform:translateY(30px);
+    transition:.45s ease;
 }
 
 .subscribeBox.show{
@@ -425,24 +443,6 @@ body::after{
 
 .subscribeBtn.subscribed{
     background:#27272a;
-}
-
-/* TEXT */
-
-.message{
-    position:absolute;
-    top:18px;
-    left:18px;
-    right:18px;
-    text-align:center;
-    color:#cbd5e1;
-    font-size:12px;
-    opacity:0;
-    transition:.3s ease;
-}
-
-.message.show{
-    opacity:1;
 }
 
 </style>
@@ -587,27 +587,25 @@ document.getElementById("subscribeBtn");
 const message =
 document.getElementById("message");
 
-/* FILE ANIMATION */
+/* FILES */
 
 setTimeout(()=>{
     txtFile.classList.add("show");
-},250);
+},400);
 
 setTimeout(()=>{
     jsonFile.classList.add("show");
-},500);
+},950);
 
 setTimeout(()=>{
     pyFile.classList.add("show");
-},750);
-
-/* MESSAGE */
+},1500);
 
 setTimeout(()=>{
     message.classList.add("show");
-},800);
+},1700);
 
-/* MOUSE MOVE */
+/* MOUSE */
 
 function moveMouseTo(element,x,y){
 
@@ -624,11 +622,9 @@ function moveMouseTo(element,x,y){
     (rect.top - frameRect.top + y) + "px";
 }
 
-/* CLICK */
-
 function clickMouse(callback){
 
-    mouse.style.transform = "scale(.78)";
+    mouse.style.transform = "scale(.75)";
 
     setTimeout(()=>{
 
@@ -636,7 +632,7 @@ function clickMouse(callback){
 
         if(callback) callback();
 
-    },120);
+    },180);
 }
 
 /* OPEN FILE */
@@ -645,7 +641,7 @@ setTimeout(()=>{
 
     mouse.style.opacity = "1";
 
-    moveMouseTo(pyFile,120,35);
+    moveMouseTo(pyFile,120,36);
 
     setTimeout(()=>{
 
@@ -653,15 +649,15 @@ setTimeout(()=>{
 
             pyFile.classList.add("active");
 
-            setTimeout(openEditor,220);
+            setTimeout(openEditor,500);
 
         });
 
-    },650);
+    },1200);
 
-},1700);
+},2800);
 
-/* OPEN EDITOR */
+/* EDITOR */
 
 function openEditor(){
 
@@ -674,7 +670,7 @@ function openEditor(){
     typeCode();
 }
 
-/* FAST CODE */
+/* CODE */
 
 const code = [
 
@@ -708,14 +704,14 @@ function typeCode(){
 
             codeBox.appendChild(row);
 
-        },index * 55);
+        },index * 260);
 
     });
 
-    setTimeout(showRunScreen,520);
+    setTimeout(showRunScreen,2200);
 }
 
-/* RUN SCREEN */
+/* RUN */
 
 function showRunScreen(){
 
@@ -735,13 +731,13 @@ function showRunScreen(){
 
                 runBtn.classList.add("press");
 
-                setTimeout(showOutput,150);
+                setTimeout(showOutput,450);
 
             });
 
-        },550);
+        },1200);
 
-    },200);
+    },500);
 }
 
 /* OUTPUT */
@@ -750,7 +746,9 @@ function showOutput(){
 
     terminal.classList.add("show");
 
-    termBody.innerHTML = `
+    setTimeout(()=>{
+
+        termBody.innerHTML = `
 
 > python shop.py
 
@@ -764,7 +762,9 @@ Shop Loaded Successfully
 
 `;
 
-    setTimeout(showSubscribe,600);
+    },500);
+
+    setTimeout(showSubscribe,2600);
 }
 
 /* SUBSCRIBE */
@@ -789,9 +789,9 @@ function showSubscribe(){
 
             });
 
-        },650);
+        },1200);
 
-    },350);
+    },700);
 }
 
 </script>
