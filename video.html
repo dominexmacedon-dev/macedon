@@ -6,8 +6,6 @@
 
 <title>video.html</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-
 <style>
 
 *{
@@ -26,7 +24,7 @@ body{
     font-family:Inter,sans-serif;
 }
 
-/* BACKGROUND */
+/* PREMIUM BG */
 
 body::before,
 body::after{
@@ -34,24 +32,25 @@ body::after{
     position:absolute;
     border-radius:50%;
     filter:blur(120px);
+    z-index:0;
 }
 
 body::before{
-    width:320px;
-    height:320px;
+    width:340px;
+    height:340px;
     background:#2563eb;
-    top:-120px;
+    top:-140px;
     left:-120px;
-    opacity:.13;
+    opacity:.18;
 }
 
 body::after{
-    width:280px;
-    height:280px;
+    width:320px;
+    height:320px;
     background:#7c3aed;
-    right:-100px;
-    bottom:-100px;
-    opacity:.11;
+    right:-120px;
+    bottom:-120px;
+    opacity:.16;
 }
 
 /* FRAME */
@@ -65,92 +64,102 @@ body::after{
     position:relative;
     border:1px solid #1e293b;
     box-shadow:
-    0 0 70px rgba(0,0,0,.7),
-    inset 0 0 30px rgba(255,255,255,.03);
+    0 0 70px rgba(0,0,0,.75),
+    inset 0 0 35px rgba(255,255,255,.03);
 }
 
 /* HEADER */
 
 .header{
     position:absolute;
-    top:18px;
-    left:22px;
-    right:22px;
-    z-index:20;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+    top:28px;
+    left:24px;
+    right:24px;
+    text-align:center;
+    z-index:5;
+    opacity:0;
+    transform:translateY(15px);
+    animation:fadeTop .8s ease forwards;
 }
 
-.title{
+.match{
     color:white;
-    font-size:14px;
-    font-weight:700;
+    font-size:34px;
+    font-weight:800;
+    line-height:1.15;
+    letter-spacing:-1px;
 }
 
-.status{
+.sub{
+    margin-top:10px;
     color:#94a3b8;
-    font-size:11px;
+    font-size:13px;
     letter-spacing:.4px;
 }
 
-/* FILES */
+@keyframes fadeTop{
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
 
-.files{
+/* VS SECTION */
+
+.vsWrap{
     position:absolute;
-    inset:0;
+    top:160px;
+    left:0;
+    width:100%;
     display:flex;
-    flex-direction:column;
     justify-content:center;
     align-items:center;
-    gap:18px;
+    gap:24px;
 }
 
-.file{
-    width:285px;
-    height:72px;
-    border-radius:22px;
-    background:#111827;
+/* TEAM CARD */
+
+.team{
+    width:140px;
+    height:180px;
+    border-radius:28px;
+    background:rgba(17,24,39,.95);
     border:1px solid #1e293b;
     display:flex;
+    flex-direction:column;
     align-items:center;
-    padding:0 22px;
-    color:white;
-    font-weight:600;
-    opacity:0;
-    transform:translateY(16px);
-    transition:.8s ease;
+    justify-content:center;
     position:relative;
     overflow:hidden;
+    opacity:0;
+    transform:translateY(30px);
+    animation:cardIn .9s ease forwards;
+    backdrop-filter:blur(12px);
 }
 
-.file.show{
-    opacity:1;
-    transform:translateY(0);
+.team.right{
+    animation-delay:.25s;
 }
 
-.file.active{
-    border-color:#4f46e5;
-    background:#1d1b4f;
-    box-shadow:
-    0 0 30px rgba(79,70,229,.35);
+@keyframes cardIn{
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
 
-.file::before{
+.team::before{
     content:"";
     position:absolute;
     inset:0;
     background:linear-gradient(
-        90deg,
+        120deg,
         transparent,
         rgba(255,255,255,.08),
         transparent
     );
-    transform:translateX(-120%);
-}
-
-.file.show::before{
-    animation:shine 1.8s linear;
+    transform:translateX(-150%);
+    animation:shine 4s linear infinite;
 }
 
 @keyframes shine{
@@ -159,350 +168,160 @@ body::after{
     }
 }
 
-.icon{
-    width:18px;
-    height:18px;
-    border-radius:5px;
-    margin-right:16px;
+/* LOGOS */
+
+.logo{
+    width:82px;
+    height:82px;
+    object-fit:contain;
+    filter:drop-shadow(0 0 18px rgba(255,255,255,.15));
+    animation:float 3s ease-in-out infinite;
 }
 
-.txt{
-    background:#64748b;
+.right .logo{
+    animation-delay:.6s;
 }
 
-.json{
-    background:#22c55e;
-}
-
-.py{
-    background:linear-gradient(135deg,#38bdf8,#facc15);
-}
-
-/* MOUSE */
-
-.mouse{
-    position:absolute;
-    width:24px;
-    height:24px;
-    background:white;
-    clip-path:polygon(
-        0 0,
-        0 100%,
-        30% 72%,
-        48% 100%,
-        58% 92%,
-        40% 60%,
-        100% 60%
-    );
-    z-index:200;
-    opacity:0;
-    pointer-events:none;
-    transition:
-    left 1s cubic-bezier(.2,.9,.2,1),
-    top 1s cubic-bezier(.2,.9,.2,1),
-    transform .15s ease,
-    opacity .3s ease;
-    filter:drop-shadow(0 0 10px rgba(255,255,255,.55));
-}
-
-/* EDITOR */
-
-.editor{
-    position:absolute;
-    inset:0;
-    background:#0b1220;
-    display:none;
-    flex-direction:column;
-}
-
-.editor.show{
-    display:flex;
-}
-
-/* TOPBAR */
-
-.topbar{
-    height:56px;
-    background:#111827;
-    border-bottom:1px solid #1e293b;
-    display:flex;
-    align-items:center;
-    padding:0 18px;
-}
-
-.dot{
-    width:10px;
-    height:10px;
-    border-radius:50%;
-    margin-right:6px;
-}
-
-.red{background:#ef4444;}
-.yellow{background:#facc15;}
-.green{background:#22c55e;}
-
-.filename{
-    margin-left:12px;
-    color:#e2e8f0;
-    font-size:14px;
-    font-weight:600;
-}
-
-/* CODE */
-
-.code{
-    flex:1;
-    padding:22px 18px;
-    overflow:hidden;
-    font-family:'Fira Code', monospace;
-    font-size:12px;
-    line-height:2;
-    color:white;
-}
-
-.line{
-    display:flex;
-    min-height:24px;
-}
-
-.num{
-    width:34px;
-    color:#475569;
-    text-align:right;
-    margin-right:14px;
-    user-select:none;
-    flex-shrink:0;
-}
-
-.text{
-    white-space:pre-wrap;
-    word-break:break-word;
-}
-
-/* COLORS */
-
-.keyword{
-    color:#c084fc;
-}
-
-.func{
-    color:#4ade80;
-}
-
-.string{
-    color:#facc15;
-}
-
-.variable{
-    color:#38bdf8;
-}
-
-.number{
-    color:#fb7185;
-}
-
-.comment{
-    color:#64748b;
-}
-
-/* CURSOR */
-
-.cursor{
-    display:inline-block;
-    width:8px;
-    height:15px;
-    background:white;
-    margin-left:2px;
-    vertical-align:middle;
-    animation:blink .7s infinite;
-}
-
-@keyframes blink{
+@keyframes float{
     50%{
-        opacity:0;
+        transform:translateY(-6px);
     }
 }
 
-/* RUN */
+.teamName{
+    margin-top:16px;
+    color:white;
+    font-size:15px;
+    font-weight:700;
+    text-align:center;
+}
 
-.runScreen{
+/* VS */
+
+.vs{
+    color:white;
+    font-size:26px;
+    font-weight:800;
+    opacity:0;
+    transform:scale(.7);
+    animation:vsIn .7s ease forwards;
+    animation-delay:.45s;
+}
+
+@keyframes vsIn{
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+/* TIME CARD */
+
+.timeCard{
     position:absolute;
-    inset:0;
-    background:#0f172a;
-    display:none;
+    left:24px;
+    right:24px;
+    top:410px;
+    height:92px;
+    border-radius:26px;
+    background:rgba(17,24,39,.96);
+    border:1px solid #1e293b;
+    display:flex;
+    flex-direction:column;
     justify-content:center;
     align-items:center;
-    flex-direction:column;
-}
-
-.runScreen.show{
-    display:flex;
-}
-
-.runBtn{
-    width:205px;
-    height:72px;
-    border:none;
-    border-radius:24px;
-    background:linear-gradient(135deg,#2563eb,#7c3aed);
-    color:white;
-    font-size:21px;
-    font-weight:700;
-    transition:.15s ease;
-    box-shadow:
-    0 0 35px rgba(79,70,229,.35);
-}
-
-.runBtn.press{
-    transform:scale(.92);
-}
-
-/* TERMINAL */
-
-.terminal{
-    position:absolute;
-    inset:0;
-    background:#020617;
-    display:none;
-    flex-direction:column;
     opacity:0;
-    transform:scale(.96);
-    transition:.35s ease;
+    transform:translateY(25px);
+    animation:fadeCard .9s ease forwards;
+    animation-delay:.9s;
 }
 
-.terminal.show{
-    display:flex;
-    opacity:1;
-    transform:scale(1);
-}
-
-.terminalTop{
-    height:48px;
-    background:#111827;
-    border-bottom:1px solid #1e293b;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 16px;
-}
-
-.termTitle{
-    color:#94a3b8;
-    font-size:12px;
-}
-
-.termBody{
-    flex:1;
-    padding:22px;
-    font-family:'Fira Code', monospace;
-    font-size:14px;
-    line-height:2;
-    overflow:hidden;
-}
-
-.termLine{
-    opacity:0;
-    transform:translateY(8px);
-    animation:show .22s ease forwards;
-}
-
-@keyframes show{
+@keyframes fadeCard{
     to{
         opacity:1;
         transform:translateY(0);
     }
 }
 
-.redText{
-    color:#fb7185;
+.timeTitle{
+    color:#94a3b8;
+    font-size:12px;
+    letter-spacing:.5px;
 }
 
-.blueText{
+.time{
+    margin-top:8px;
+    color:white;
+    font-size:28px;
+    font-weight:800;
+    letter-spacing:-1px;
+}
+
+.uk{
+    margin-top:4px;
     color:#38bdf8;
+    font-size:12px;
+    font-weight:600;
 }
 
-.greenText{
-    color:#4ade80;
-}
+/* PREDICTION */
 
-.yellowText{
-    color:#facc15;
-}
-
-.purpleText{
-    color:#c084fc;
-}
-
-.white{
-    color:#e2e8f0;
-}
-
-/* FOLLOW */
-
-.followCard{
+.predict{
     position:absolute;
-    inset:0;
-    background:#0f172a;
+    left:24px;
+    right:24px;
+    bottom:120px;
+    height:95px;
+    border-radius:28px;
+    background:linear-gradient(
+        135deg,
+        rgba(37,99,235,.18),
+        rgba(124,58,237,.18)
+    );
+    border:1px solid rgba(99,102,241,.35);
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
     opacity:0;
-    pointer-events:none;
-    transition:.7s ease;
+    transform:translateY(20px);
+    animation:fadeCard .9s ease forwards;
+    animation-delay:1.35s;
 }
 
-.followCard.show{
-    opacity:1;
-    pointer-events:auto;
-}
-
-.profile{
-    width:92px;
-    height:92px;
-    border-radius:50%;
-    object-fit:cover;
-    border:3px solid #334155;
-    margin-bottom:18px;
-}
-
-.name{
-    color:white;
-    font-size:23px;
-    font-weight:800;
-}
-
-.handle{
-    color:#94a3b8;
-    font-size:14px;
-    margin-top:6px;
-}
-
-.followText{
+.predictTitle{
     color:#cbd5e1;
-    font-size:13px;
-    margin-top:20px;
-    margin-bottom:24px;
+    font-size:12px;
+    letter-spacing:.4px;
 }
 
-.followBtn{
-    width:150px;
-    height:48px;
-    border:none;
-    border-radius:16px;
-    background:linear-gradient(
-        135deg,
-        #111111,
-        #ff0050
-    );
-    color:white;
-    font-size:15px;
-    font-weight:700;
-    transition:.15s ease;
+.predictText{
+    margin-top:10px;
+    font-size:26px;
+    font-weight:800;
+    color:#60a5fa;
+    text-shadow:0 0 22px rgba(96,165,250,.4);
 }
 
-.followBtn.done{
-    background:#27272a;
+/* GLOW PULSE */
+
+.glow{
+    position:absolute;
+    width:160px;
+    height:160px;
+    border-radius:50%;
+    background:rgba(37,99,235,.18);
+    filter:blur(70px);
+    top:180px;
+    left:110px;
+    animation:pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse{
+    50%{
+        transform:scale(1.15);
+        opacity:.7;
+    }
 }
 
 </style>
@@ -512,434 +331,99 @@ body::after{
 
 <div class="frame">
 
+    <div class="glow"></div>
+
     <!-- HEADER -->
 
- 
+    <div class="header">
 
-    <!-- FILES -->
-
-    <div class="files" id="files">
-
-        <div class="file" id="txtFile">
-            <div class="icon txt"></div>
-            message.txt
+        <div class="match">
+            Man City<br>
+            VS<br>
+            Crystal Palace
         </div>
 
-        <div class="file" id="jsonFile">
-            <div class="icon json"></div>
-            colors.json
-        </div>
-
-        <div class="file" id="pyFile">
-            <div class="icon py"></div>
-            duplicate.py
+        <div class="sub">
+            Tonight • UK Time
         </div>
 
     </div>
 
-    <!-- MOUSE -->
+    <!-- VS -->
 
-    <div class="mouse" id="mouse"></div>
+    <div class="vsWrap">
 
-    <!-- EDITOR -->
+        <!-- MAN CITY -->
 
-    <div class="editor" id="editor">
+        <div class="team left">
 
-        <div class="topbar">
+            <img
+                class="logo"
+                src="https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg"
+            >
 
-            <div style="display:flex;align-items:center;">
-
-                <div class="dot red"></div>
-                <div class="dot yellow"></div>
-                <div class="dot green"></div>
-
-                <div class="filename">
-                    duplicate.py
-                </div>
-
+            <div class="teamName">
+                Manchester City
             </div>
 
         </div>
 
-        <div class="code" id="code"></div>
+        <!-- VS -->
 
-    </div>
+        <div class="vs">
+            VS
+        </div>
 
-    <!-- RUN -->
+        <!-- PALACE -->
 
-    <div class="runScreen" id="runScreen">
+        <div class="team right">
 
-        <button class="runBtn" id="runBtn">
-            Run Python
-        </button>
+            <img
+                class="logo"
+                src="https://upload.wikimedia.org/wikipedia/en/a/a2/Crystal_Palace_FC_logo_%282022%29.svg"
+            >
 
-    </div>
-
-    <!-- TERMINAL -->
-
-    <div class="terminal" id="terminal">
-
-        <div class="terminalTop">
-
-            <div style="display:flex;align-items:center;">
-
-                <div class="dot red"></div>
-                <div class="dot yellow"></div>
-                <div class="dot green"></div>
-
-            </div>
-
-            <div class="termTitle">
-                terminal — python duplicate.py
+            <div class="teamName">
+                Crystal Palace
             </div>
 
         </div>
 
-        <div class="termBody" id="termBody"></div>
+    </div>
+
+    <!-- TIME -->
+
+    <div class="timeCard">
+
+        <div class="timeTitle">
+            MATCH STARTS
+        </div>
+
+        <div class="time">
+            7:00 PM
+        </div>
+
+        <div class="uk">
+            United Kingdom Time
+        </div>
 
     </div>
 
-    <!-- FOLLOW -->
+    <!-- PREDICTION -->
 
-    <div class="followCard" id="followCard">
+    <div class="predict">
 
-        <img
-            src="dominex-macedon.png"
-            class="profile"
-        >
-
-        <div class="name">
-            Dominex Macedon
+        <div class="predictTitle">
+            PREDICTION
         </div>
 
-        <div class="handle">
-            @dominexmacedon
+        <div class="predictText">
+            Man City Will Win 💙
         </div>
-
-        <div class="followText">
-            Follow for more premium coding videos
-        </div>
-
-        <button class="followBtn" id="followBtn">
-            Follow
-        </button>
 
     </div>
 
 </div>
-
-<script>
-
-/* ELEMENTS */
-
-const txtFile = document.getElementById("txtFile");
-const jsonFile = document.getElementById("jsonFile");
-const pyFile = document.getElementById("pyFile");
-
-const mouse = document.getElementById("mouse");
-
-const files = document.getElementById("files");
-
-const editor = document.getElementById("editor");
-
-const codeBox = document.getElementById("code");
-
-const runScreen = document.getElementById("runScreen");
-
-const runBtn = document.getElementById("runBtn");
-
-const terminal = document.getElementById("terminal");
-
-const termBody = document.getElementById("termBody");
-
-const followCard =
-document.getElementById("followCard");
-
-const followBtn =
-document.getElementById("followBtn");
-
-/* FILES */
-
-setTimeout(()=>{
-    txtFile.classList.add("show");
-},400);
-
-setTimeout(()=>{
-    jsonFile.classList.add("show");
-},950);
-
-setTimeout(()=>{
-    pyFile.classList.add("show");
-},1500);
-
-/* MOUSE */
-
-function moveMouseTo(element,x,y){
-
-    const rect = element.getBoundingClientRect();
-
-    const frameRect =
-    document.querySelector(".frame")
-    .getBoundingClientRect();
-
-    mouse.style.left =
-    (rect.left - frameRect.left + x) + "px";
-
-    mouse.style.top =
-    (rect.top - frameRect.top + y) + "px";
-}
-
-function clickMouse(callback){
-
-    mouse.style.transform = "scale(.72)";
-
-    setTimeout(()=>{
-
-        mouse.style.transform = "scale(1)";
-
-        if(callback) callback();
-
-    },180);
-}
-
-/* OPEN FILE */
-
-setTimeout(()=>{
-
-    mouse.style.opacity = "1";
-
-    moveMouseTo(pyFile,120,36);
-
-    setTimeout(()=>{
-
-        clickMouse(()=>{
-
-            pyFile.classList.add("active");
-
-            setTimeout(openEditor,650);
-
-        });
-
-    },1400);
-
-},3000);
-
-/* OPEN EDITOR */
-
-function openEditor(){
-
-    files.style.display = "none";
-
-    editor.classList.add("show");
-
-    mouse.style.opacity = "0";
-
-    typeCode();
-}
-
-/* CODE */
-
-const lines = [
-
-`<span class="comment"># duplication program</span>`,
-
-`<span class="variable">message</span> = <span class="string">"I love her so much"</span>`,
-
-`<span class="variable">colors</span> = [<span class="string">"red"</span>, <span class="string">"blue"</span>, <span class="string">"green"</span>, <span class="string">"yellow"</span>, <span class="string">"purple"</span>]`,
-
-`<span class="keyword">for</span> color <span class="keyword">in</span> colors:`,
-
-`    print(color, message * <span class="number">5</span>)`
-
-];
-
-function typeCode(){
-
-    let line = 0;
-
-    function nextLine(){
-
-        if(line >= lines.length){
-
-            setTimeout(showRunScreen,1800);
-
-            return;
-        }
-
-        const row =
-        document.createElement("div");
-
-        row.className = "line";
-
-        const num =
-        document.createElement("div");
-
-        num.className = "num";
-
-        num.innerText = line + 1;
-
-        const text =
-        document.createElement("div");
-
-        text.className = "text";
-
-        row.appendChild(num);
-
-        row.appendChild(text);
-
-        codeBox.appendChild(row);
-
-        const html = lines[line];
-
-        let i = 0;
-
-        function type(){
-
-            if(i <= html.length){
-
-                text.innerHTML =
-                html.substring(0,i) +
-                '<span class="cursor"></span>';
-
-                i++;
-
-                setTimeout(type,10);
-
-            }else{
-
-                text.innerHTML = html;
-
-                line++;
-
-                setTimeout(nextLine,450);
-
-            }
-        }
-
-        type();
-    }
-
-    nextLine();
-}
-
-/* RUN */
-
-function showRunScreen(){
-
-    editor.style.display = "none";
-
-    runScreen.classList.add("show");
-
-    mouse.style.opacity = "1";
-
-    setTimeout(()=>{
-
-        moveMouseTo(runBtn,100,36);
-
-        setTimeout(()=>{
-
-            clickMouse(()=>{
-
-                runBtn.classList.add("press");
-
-                setTimeout(showOutput,650);
-
-            });
-
-        },1200);
-
-    },500);
-}
-
-/* TERMINAL */
-
-function addLine(html){
-
-    const line =
-    document.createElement("div");
-
-    line.className = "termLine";
-
-    line.innerHTML = html;
-
-    termBody.appendChild(line);
-}
-
-function showOutput(){
-
-    terminal.classList.add("show");
-
-    setTimeout(()=>{
-
-        addLine('<span class="white">> python duplicate.py</span>');
-
-    },250);
-
-    setTimeout(()=>{
-
-        addLine('<span class="white">Running duplication program...</span>');
-
-    },650);
-
-    setTimeout(()=>{
-
-        addLine('<span class="redText">I love her so much I love her so much I love her so much I love her so much I love her so much</span>');
-
-        addLine('<span class="blueText">I love her so much I love her so much I love her so much I love her so much I love her so much</span>');
-
-        addLine('<span class="greenText">I love her so much I love her so much I love her so much I love her so much I love her so much</span>');
-
-        addLine('<span class="yellowText">I love her so much I love her so much I love her so much I love her so much I love her so much</span>');
-
-        addLine('<span class="purpleText">I love her so much I love her so much I love her so much I love her so much I love her so much</span>');
-
-    },1200);
-
-    setTimeout(()=>{
-
-        addLine('<span class="white">Execution completed successfully</span>');
-
-    },1450);
-
-    setTimeout(showFollow,3500);
-}
-
-/* FOLLOW */
-
-function showFollow(){
-
-    terminal.style.opacity = "0";
-
-    setTimeout(()=>{
-
-        terminal.style.display = "none";
-
-        followCard.classList.add("show");
-
-        setTimeout(()=>{
-
-            moveMouseTo(followBtn,74,24);
-
-            setTimeout(()=>{
-
-                clickMouse(()=>{
-
-                    followBtn.innerText =
-                    "Following";
-
-                    followBtn.classList
-                    .add("done");
-
-                });
-
-            },1200);
-
-        },700);
-
-    },600);
-}
-
-</script>
 
 </body>
 </html>
