@@ -26,20 +26,19 @@ body{
     font-family:Inter,sans-serif;
 }
 
-/* PREMIUM BG */
+/* BACKGROUND */
 
 body::before,
 body::after{
     content:"";
     position:absolute;
     border-radius:50%;
-    filter:blur(120px);
-    z-index:0;
+    filter:blur(130px);
 }
 
 body::before{
-    width:340px;
-    height:340px;
+    width:320px;
+    height:320px;
     background:#2563eb;
     top:-120px;
     left:-120px;
@@ -47,12 +46,12 @@ body::before{
 }
 
 body::after{
-    width:320px;
-    height:320px;
+    width:280px;
+    height:280px;
     background:#7c3aed;
-    right:-120px;
-    bottom:-120px;
-    opacity:.14;
+    right:-100px;
+    bottom:-100px;
+    opacity:.12;
 }
 
 /* FRAME */
@@ -66,8 +65,30 @@ body::after{
     position:relative;
     border:1px solid #1e293b;
     box-shadow:
-    0 0 60px rgba(0,0,0,.7),
+    0 0 70px rgba(0,0,0,.7),
     inset 0 0 30px rgba(255,255,255,.03);
+}
+
+/* TOP MESSAGE */
+
+.message{
+    position:absolute;
+    top:18px;
+    left:18px;
+    right:18px;
+    text-align:center;
+    color:#cbd5e1;
+    font-size:12px;
+    opacity:0;
+    transform:translateY(-8px);
+    transition:.6s ease;
+    z-index:30;
+    letter-spacing:.3px;
+}
+
+.message.show{
+    opacity:1;
+    transform:translateY(0);
 }
 
 /* FILES */
@@ -83,7 +104,7 @@ body::after{
 }
 
 .file{
-    width:285px;
+    width:286px;
     height:72px;
     border-radius:22px;
     background:#111827;
@@ -93,16 +114,23 @@ body::after{
     padding:0 22px;
     color:white;
     font-weight:600;
-    opacity:0;
-    transform:translateY(16px);
-    transition:.45s ease;
     position:relative;
     overflow:hidden;
+    opacity:0;
+    transform:translateY(18px);
+    transition:.8s ease;
 }
 
 .file.show{
     opacity:1;
     transform:translateY(0);
+}
+
+.file.active{
+    border-color:#4f46e5;
+    background:#1d1b4f;
+    box-shadow:
+    0 0 35px rgba(79,70,229,.35);
 }
 
 .file::before{
@@ -119,20 +147,13 @@ body::after{
 }
 
 .file.show::before{
-    animation:shine 1.2s linear;
+    animation:shine 2s linear;
 }
 
 @keyframes shine{
     to{
         transform:translateX(250%);
     }
-}
-
-.file.active{
-    border-color:#4f46e5;
-    background:#1e1b4b;
-    box-shadow:
-    0 0 30px rgba(79,70,229,.35);
 }
 
 .icon{
@@ -142,16 +163,16 @@ body::after{
     margin-right:16px;
 }
 
-.py{
-    background:linear-gradient(135deg,#38bdf8,#facc15);
-}
-
 .txt{
     background:#64748b;
 }
 
 .json{
     background:#22c55e;
+}
+
+.py{
+    background:linear-gradient(135deg,#38bdf8,#facc15);
 }
 
 /* MOUSE */
@@ -174,11 +195,11 @@ body::after{
     opacity:0;
     pointer-events:none;
     transition:
-    left .75s cubic-bezier(.2,.9,.2,1),
-    top .75s cubic-bezier(.2,.9,.2,1),
-    transform .12s ease,
-    opacity .3s ease;
-    filter:drop-shadow(0 0 10px rgba(255,255,255,.5));
+    left 1.15s cubic-bezier(.18,.9,.2,1),
+    top 1.15s cubic-bezier(.18,.9,.2,1),
+    transform .16s ease,
+    opacity .35s ease;
+    filter:drop-shadow(0 0 10px rgba(255,255,255,.55));
 }
 
 /* EDITOR */
@@ -232,22 +253,12 @@ body::after{
     overflow:hidden;
     font-family:'Fira Code', monospace;
     font-size:12px;
-    line-height:1.9;
+    line-height:1.95;
     color:white;
 }
 
 .line{
     display:flex;
-    opacity:0;
-    transform:translateY(5px);
-    animation:lineIn .18s ease forwards;
-}
-
-@keyframes lineIn{
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
 }
 
 .num{
@@ -258,24 +269,53 @@ body::after{
     user-select:none;
 }
 
+.text{
+    position:relative;
+    white-space:pre;
+}
+
+/* COLORS */
+
 .keyword{
     color:#c084fc;
-}
-
-.variable{
-    color:#38bdf8;
-}
-
-.string{
-    color:#facc15;
 }
 
 .func{
     color:#4ade80;
 }
 
+.string{
+    color:#facc15;
+}
+
+.variable{
+    color:#38bdf8;
+}
+
+.number{
+    color:#fb7185;
+}
+
 .comment{
     color:#64748b;
+}
+
+/* CURSOR */
+
+.cursor{
+    display:inline-block;
+    width:8px;
+    height:15px;
+    background:white;
+    margin-left:2px;
+    vertical-align:middle;
+    animation:blink .8s infinite;
+}
+
+@keyframes blink{
+    50%{
+        opacity:0;
+    }
 }
 
 /* RUN SCREEN */
@@ -285,9 +325,9 @@ body::after{
     inset:0;
     background:#0f172a;
     display:none;
-    flex-direction:column;
     justify-content:center;
     align-items:center;
+    flex-direction:column;
     gap:26px;
 }
 
@@ -296,17 +336,17 @@ body::after{
 }
 
 .runBtn{
-    width:200px;
-    height:70px;
+    width:205px;
+    height:72px;
     border:none;
-    border-radius:22px;
+    border-radius:24px;
     background:linear-gradient(135deg,#2563eb,#7c3aed);
     color:white;
     font-size:21px;
     font-weight:700;
     box-shadow:
-    0 0 30px rgba(79,70,229,.35);
-    transition:.12s ease;
+    0 0 35px rgba(79,70,229,.35);
+    transition:.15s ease;
 }
 
 .runBtn.press{
@@ -316,14 +356,16 @@ body::after{
 /* TERMINAL */
 
 .terminal{
-    width:325px;
-    height:220px;
+    width:330px;
+    height:235px;
     background:#020617;
-    border:1px solid #1e293b;
-    border-radius:22px;
+    border-radius:24px;
     overflow:hidden;
+    border:1px solid #1e293b;
     display:none;
     flex-direction:column;
+    box-shadow:
+    0 0 35px rgba(0,0,0,.45);
 }
 
 .terminal.show{
@@ -331,59 +373,56 @@ body::after{
 }
 
 .terminalTop{
-    height:40px;
+    height:42px;
     background:#111827;
     border-bottom:1px solid #1e293b;
     display:flex;
     align-items:center;
+    justify-content:space-between;
     padding:0 14px;
+}
+
+.termTitle{
+    color:#94a3b8;
+    font-size:12px;
 }
 
 .termBody{
     flex:1;
-    padding:18px;
+    padding:16px;
     font-family:'Fira Code', monospace;
+    color:#4ade80;
     font-size:13px;
-    line-height:1.9;
-    white-space:pre-line;
+    line-height:1.85;
     overflow:hidden;
 }
 
-.outputLine{
+.termLine{
     opacity:0;
     transform:translateY(6px);
-    animation:outputIn .2s ease forwards;
-    font-weight:500;
+    animation:termFade .35s ease forwards;
 }
 
-@keyframes outputIn{
+@keyframes termFade{
     to{
         opacity:1;
         transform:translateY(0);
     }
 }
 
-/* COLORS */
-
-.c1{color:#ff6b6b;}
-.c2{color:#ffd166;}
-.c3{color:#06d6a0;}
-.c4{color:#4cc9f0;}
-.c5{color:#c77dff;}
-.c6{color:#f72585;}
-
 /* FOLLOW CARD */
 
 .followCard{
     position:absolute;
     inset:0;
-    background:#0b1220;
     display:flex;
     justify-content:center;
     align-items:center;
+    flex-direction:column;
+    background:#0f172a;
     opacity:0;
     pointer-events:none;
-    transition:.5s ease;
+    transition:.8s ease;
 }
 
 .followCard.show{
@@ -391,32 +430,15 @@ body::after{
     pointer-events:auto;
 }
 
-.followBox{
-    width:320px;
-    background:rgba(17,24,39,.98);
-    border:1px solid #334155;
-    border-radius:28px;
-    padding:22px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    transform:translateY(20px);
-    animation:cardIn .45s ease forwards;
-}
-
-@keyframes cardIn{
-    to{
-        transform:translateY(0);
-    }
-}
-
 .profile{
-    width:86px;
-    height:86px;
+    width:90px;
+    height:90px;
     border-radius:50%;
     object-fit:cover;
     border:3px solid #334155;
     margin-bottom:18px;
+    box-shadow:
+    0 0 30px rgba(255,255,255,.08);
 }
 
 .name{
@@ -425,7 +447,7 @@ body::after{
     font-weight:800;
 }
 
-.username{
+.handle{
     color:#94a3b8;
     font-size:14px;
     margin-top:6px;
@@ -434,25 +456,29 @@ body::after{
 .followText{
     color:#cbd5e1;
     font-size:13px;
-    text-align:center;
-    margin-top:18px;
-    line-height:1.7;
+    margin-top:20px;
+    margin-bottom:24px;
 }
 
 .followBtn{
-    width:180px;
-    height:52px;
+    width:150px;
+    height:48px;
     border:none;
     border-radius:16px;
-    margin-top:22px;
-    background:linear-gradient(135deg,#ec4899,#8b5cf6);
+    background:linear-gradient(
+        135deg,
+        #111111,
+        #ff0050
+    );
     color:white;
-    font-size:16px;
     font-weight:700;
-    transition:.12s ease;
+    font-size:15px;
+    transition:.15s ease;
+    box-shadow:
+    0 0 24px rgba(255,0,80,.25);
 }
 
-.followBtn.followed{
+.followBtn.done{
     background:#27272a;
 }
 
@@ -463,23 +489,27 @@ body::after{
 
 <div class="frame">
 
+    <div class="message" id="message">
+        Building duplication program...
+    </div>
+
     <!-- FILES -->
 
     <div class="files" id="files">
 
         <div class="file" id="txtFile">
             <div class="icon txt"></div>
-            feelings.txt
+            notes.txt
         </div>
 
         <div class="file" id="jsonFile">
             <div class="icon json"></div>
-            emotions.json
+            colors.json
         </div>
 
         <div class="file" id="pyFile">
             <div class="icon py"></div>
-            love.py
+            duplicate.py
         </div>
 
     </div>
@@ -494,12 +524,14 @@ body::after{
 
         <div class="topbar">
 
-            <div class="dot red"></div>
-            <div class="dot yellow"></div>
-            <div class="dot green"></div>
+            <div style="display:flex;align-items:center;">
+                <div class="dot red"></div>
+                <div class="dot yellow"></div>
+                <div class="dot green"></div>
 
-            <div class="filename">
-                love.py
+                <div class="filename">
+                    duplicate.py
+                </div>
             </div>
 
         </div>
@@ -513,16 +545,22 @@ body::after{
     <div class="runScreen" id="runScreen">
 
         <button class="runBtn" id="runBtn">
-            Run Program
+            Run Python
         </button>
 
         <div class="terminal" id="terminal">
 
             <div class="terminalTop">
 
-                <div class="dot red"></div>
-                <div class="dot yellow"></div>
-                <div class="dot green"></div>
+                <div style="display:flex;align-items:center;">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+
+                <div class="termTitle">
+                    terminal — python duplicate.py
+                </div>
 
             </div>
 
@@ -536,31 +574,26 @@ body::after{
 
     <div class="followCard" id="followCard">
 
-        <div class="followBox">
+        <img
+            src="dominex-macedon.png"
+            class="profile"
+        >
 
-            <img
-                src="dominex-macedon.png"
-                class="profile"
-            >
-
-            <div class="name">
-                Dominex Macedon
-            </div>
-
-            <div class="username">
-                @dominexmacedon
-            </div>
-
-            <div class="followText">
-                Enjoyed this coding animation?<br>
-                Follow the TikTok account for more premium coding videos.
-            </div>
-
-            <button class="followBtn" id="followBtn">
-                Follow Account
-            </button>
-
+        <div class="name">
+            Dominex Macedon
         </div>
+
+        <div class="handle">
+            @dominexmacedon
+        </div>
+
+        <div class="followText">
+            Follow my TikTok account for more coding videos
+        </div>
+
+        <button class="followBtn" id="followBtn">
+            Follow
+        </button>
 
     </div>
 
@@ -574,9 +607,9 @@ const txtFile = document.getElementById("txtFile");
 const jsonFile = document.getElementById("jsonFile");
 const pyFile = document.getElementById("pyFile");
 
-const mouse = document.getElementById("mouse");
-
 const files = document.getElementById("files");
+
+const mouse = document.getElementById("mouse");
 
 const editor = document.getElementById("editor");
 
@@ -596,19 +629,26 @@ document.getElementById("followCard");
 const followBtn =
 document.getElementById("followBtn");
 
+const message =
+document.getElementById("message");
+
 /* FILES */
 
 setTimeout(()=>{
     txtFile.classList.add("show");
-},300);
+},400);
 
 setTimeout(()=>{
     jsonFile.classList.add("show");
-},650);
+},900);
 
 setTimeout(()=>{
     pyFile.classList.add("show");
-},1000);
+},1450);
+
+setTimeout(()=>{
+    message.classList.add("show");
+},1700);
 
 /* MOUSE */
 
@@ -627,11 +667,9 @@ function moveMouseTo(element,x,y){
     (rect.top - frameRect.top + y) + "px";
 }
 
-/* CLICK */
-
 function clickMouse(callback){
 
-    mouse.style.transform = "scale(.78)";
+    mouse.style.transform = "scale(.74)";
 
     setTimeout(()=>{
 
@@ -639,7 +677,7 @@ function clickMouse(callback){
 
         if(callback) callback();
 
-    },130);
+    },180);
 }
 
 /* OPEN FILE */
@@ -648,7 +686,7 @@ setTimeout(()=>{
 
     mouse.style.opacity = "1";
 
-    moveMouseTo(pyFile,118,36);
+    moveMouseTo(pyFile,120,36);
 
     setTimeout(()=>{
 
@@ -656,13 +694,13 @@ setTimeout(()=>{
 
             pyFile.classList.add("active");
 
-            setTimeout(openEditor,350);
+            setTimeout(openEditor,600);
 
         });
 
-    },850);
+    },1400);
 
-},2100);
+},2900);
 
 /* OPEN EDITOR */
 
@@ -677,56 +715,98 @@ function openEditor(){
     typeCode();
 }
 
-/* PROFESSIONAL TYPING */
+/* CODE */
 
-const code = [
+const codeLines = [
 
-`<span class="comment"># Love Program</span>`,
+`<span class="comment"># Python duplication program</span>`,
 
 `<span class="variable">message</span> = <span class="string">"I love her so much"</span>`,
 
-`<span class="variable">colors</span> = [`,
-`    <span class="string">"red"</span>,`,
-`    <span class="string">"yellow"</span>,`,
-`    <span class="string">"cyan"</span>,`,
-`    <span class="string">"green"</span>,`,
-`    <span class="string">"purple"</span>`,
-`]`,
+`<span class="variable">colors</span> = [<span class="string">"Red"</span>, <span class="string">"Blue"</span>, <span class="string">"Purple"</span>]`,
 
 `<span class="keyword">for</span> color <span class="keyword">in</span> colors:`,
 
-`    print(color, message)`,
-
-`print(<span class="string">"Completed Successfully"</span>)`
+`    print(color, message * <span class="number">3</span>)`
 
 ];
 
+function stripHTML(html){
+
+    const temp = document.createElement("div");
+
+    temp.innerHTML = html;
+
+    return temp.textContent;
+}
+
 function typeCode(){
 
-    code.forEach((line,index)=>{
+    let lineIndex = 0;
 
-        setTimeout(()=>{
+    function typeNextLine(){
 
-            const row =
-            document.createElement("div");
+        if(lineIndex >= codeLines.length){
 
-            row.className = "line";
+            setTimeout(showRunScreen,1500);
 
-            row.innerHTML = `
-                <div class="num">${index + 1}</div>
-                <div>${line}</div>
-            `;
+            return;
+        }
 
-            codeBox.appendChild(row);
+        const row =
+        document.createElement("div");
 
-            codeBox.scrollTop =
-            codeBox.scrollHeight;
+        row.className = "line";
 
-        }, index * 140);
+        const num =
+        document.createElement("div");
 
-    });
+        num.className = "num";
 
-    setTimeout(showRunScreen,2400);
+        num.innerText = lineIndex + 1;
+
+        const text =
+        document.createElement("div");
+
+        text.className = "text";
+
+        row.appendChild(num);
+
+        row.appendChild(text);
+
+        codeBox.appendChild(row);
+
+        const html = codeLines[lineIndex];
+
+        let i = 0;
+
+        function typeChar(){
+
+            if(i <= html.length){
+
+                text.innerHTML =
+                html.substring(0,i) +
+                '<span class="cursor"></span>';
+
+                i++;
+
+                setTimeout(typeChar,8);
+
+            }else{
+
+                text.innerHTML = html;
+
+                lineIndex++;
+
+                setTimeout(typeNextLine,320);
+
+            }
+        }
+
+        typeChar();
+    }
+
+    typeNextLine();
 }
 
 /* RUN */
@@ -741,7 +821,7 @@ function showRunScreen(){
 
     setTimeout(()=>{
 
-        moveMouseTo(runBtn,100,35);
+        moveMouseTo(runBtn,100,36);
 
         setTimeout(()=>{
 
@@ -749,29 +829,16 @@ function showRunScreen(){
 
                 runBtn.classList.add("press");
 
-                setTimeout(showOutput,260);
+                setTimeout(showOutput,700);
 
             });
 
-        },850);
+        },1200);
 
-    },250);
+    },450);
 }
 
 /* OUTPUT */
-
-function addOutput(text,className){
-
-    const line =
-    document.createElement("div");
-
-    line.className =
-    "outputLine " + className;
-
-    line.innerText = text;
-
-    termBody.appendChild(line);
-}
 
 function showOutput(){
 
@@ -779,33 +846,36 @@ function showOutput(){
 
     const outputs = [
 
-        [" > python love.py ",""],
-        ["",""],
-
-        ["I love her so much","c1"],
-        ["I love her so much","c2"],
-        ["I love her so much","c3"],
-        ["I love her so much","c4"],
-        ["I love her so much","c5"],
-        ["I love her so much","c6"],
-
-        ["",""],
-
-        ["Completed Successfully","c3"]
+        "> python duplicate.py",
+        "",
+        "Running duplication program...",
+        "",
+        "[Red] I love her so much I love her so much I love her so much",
+        "[Blue] I love her so much I love her so much I love her so much",
+        "[Purple] I love her so much I love her so much I love her so much",
+        "",
+        "Execution completed successfully"
 
     ];
 
-    outputs.forEach((item,index)=>{
+    outputs.forEach((text,index)=>{
 
         setTimeout(()=>{
 
-            addOutput(item[0], item[1]);
+            const line =
+            document.createElement("div");
 
-        }, index * 300);
+            line.className = "termLine";
+
+            line.innerText = text;
+
+            termBody.appendChild(line);
+
+        },index * 450);
 
     });
 
-    setTimeout(showFollowCard,4200);
+    setTimeout(showFollowCard,6200);
 }
 
 /* FOLLOW */
@@ -820,9 +890,11 @@ function showFollowCard(){
 
         followCard.classList.add("show");
 
+        mouse.style.opacity = "1";
+
         setTimeout(()=>{
 
-            moveMouseTo(followBtn,90,28);
+            moveMouseTo(followBtn,75,24);
 
             setTimeout(()=>{
 
@@ -832,15 +904,15 @@ function showFollowCard(){
                     "Following";
 
                     followBtn.classList
-                    .add("followed");
+                    .add("done");
 
                 });
 
-            },900);
+            },1400);
 
-        },600);
+        },700);
 
-    },450);
+    },700);
 }
 
 </script>
