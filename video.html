@@ -26,7 +26,7 @@ body{
     font-family:Inter,sans-serif;
 }
 
-/* BG */
+/* PREMIUM BG */
 
 body::before,
 body::after{
@@ -38,20 +38,20 @@ body::after{
 }
 
 body::before{
-    width:320px;
-    height:320px;
+    width:340px;
+    height:340px;
     background:#2563eb;
     top:-120px;
     left:-120px;
-    opacity:.15;
+    opacity:.14;
 }
 
 body::after{
-    width:280px;
-    height:280px;
+    width:320px;
+    height:320px;
     background:#7c3aed;
-    right:-100px;
-    bottom:-100px;
+    right:-120px;
+    bottom:-120px;
     opacity:.14;
 }
 
@@ -68,25 +68,6 @@ body::after{
     box-shadow:
     0 0 60px rgba(0,0,0,.7),
     inset 0 0 30px rgba(255,255,255,.03);
-}
-
-/* MESSAGE */
-
-.message{
-    position:absolute;
-    top:18px;
-    left:18px;
-    right:18px;
-    text-align:center;
-    color:#cbd5e1;
-    font-size:12px;
-    opacity:0;
-    transition:.5s ease;
-    z-index:20;
-}
-
-.message.show{
-    opacity:1;
 }
 
 /* FILES */
@@ -113,8 +94,8 @@ body::after{
     color:white;
     font-weight:600;
     opacity:0;
-    transform:translateY(20px);
-    transition:.7s ease;
+    transform:translateY(16px);
+    transition:.45s ease;
     position:relative;
     overflow:hidden;
 }
@@ -138,7 +119,7 @@ body::after{
 }
 
 .file.show::before{
-    animation:shine 1.8s linear;
+    animation:shine 1.2s linear;
 }
 
 @keyframes shine{
@@ -151,7 +132,7 @@ body::after{
     border-color:#4f46e5;
     background:#1e1b4b;
     box-shadow:
-    0 0 35px rgba(79,70,229,.35);
+    0 0 30px rgba(79,70,229,.35);
 }
 
 .icon{
@@ -161,16 +142,16 @@ body::after{
     margin-right:16px;
 }
 
+.py{
+    background:linear-gradient(135deg,#38bdf8,#facc15);
+}
+
 .txt{
     background:#64748b;
 }
 
 .json{
     background:#22c55e;
-}
-
-.py{
-    background:linear-gradient(135deg,#38bdf8,#facc15);
 }
 
 /* MOUSE */
@@ -193,11 +174,11 @@ body::after{
     opacity:0;
     pointer-events:none;
     transition:
-    left 1s cubic-bezier(.2,.9,.2,1),
-    top 1s cubic-bezier(.2,.9,.2,1),
-    transform .15s ease,
+    left .75s cubic-bezier(.2,.9,.2,1),
+    top .75s cubic-bezier(.2,.9,.2,1),
+    transform .12s ease,
     opacity .3s ease;
-    filter:drop-shadow(0 0 10px rgba(255,255,255,.55));
+    filter:drop-shadow(0 0 10px rgba(255,255,255,.5));
 }
 
 /* EDITOR */
@@ -258,8 +239,8 @@ body::after{
 .line{
     display:flex;
     opacity:0;
-    transform:translateY(8px);
-    animation:lineIn .25s ease forwards;
+    transform:translateY(5px);
+    animation:lineIn .18s ease forwards;
 }
 
 @keyframes lineIn{
@@ -281,27 +262,23 @@ body::after{
     color:#c084fc;
 }
 
-.func{
-    color:#4ade80;
+.variable{
+    color:#38bdf8;
 }
 
 .string{
     color:#facc15;
 }
 
-.variable{
-    color:#38bdf8;
-}
-
-.number{
-    color:#fb7185;
+.func{
+    color:#4ade80;
 }
 
 .comment{
     color:#64748b;
 }
 
-/* RUN */
+/* RUN SCREEN */
 
 .runScreen{
     position:absolute;
@@ -329,7 +306,7 @@ body::after{
     font-weight:700;
     box-shadow:
     0 0 30px rgba(79,70,229,.35);
-    transition:.15s ease;
+    transition:.12s ease;
 }
 
 .runBtn.press{
@@ -364,84 +341,118 @@ body::after{
 
 .termBody{
     flex:1;
-    padding:16px;
+    padding:18px;
     font-family:'Fira Code', monospace;
-    color:#4ade80;
     font-size:13px;
     line-height:1.9;
     white-space:pre-line;
-    opacity:0;
-    animation:fade .4s ease forwards;
+    overflow:hidden;
 }
 
-@keyframes fade{
+.outputLine{
+    opacity:0;
+    transform:translateY(6px);
+    animation:outputIn .2s ease forwards;
+    font-weight:500;
+}
+
+@keyframes outputIn{
     to{
         opacity:1;
+        transform:translateY(0);
     }
 }
 
-/* SUBSCRIBE */
+/* COLORS */
 
-.subscribeBox{
+.c1{color:#ff6b6b;}
+.c2{color:#ffd166;}
+.c3{color:#06d6a0;}
+.c4{color:#4cc9f0;}
+.c5{color:#c77dff;}
+.c6{color:#f72585;}
+
+/* FOLLOW CARD */
+
+.followCard{
     position:absolute;
-    left:18px;
-    right:18px;
-    bottom:22px;
-    height:86px;
-    background:rgba(17,24,39,.96);
-    border:1px solid #334155;
-    border-radius:24px;
+    inset:0;
+    background:#0b1220;
     display:flex;
+    justify-content:center;
     align-items:center;
-    padding:0 16px;
     opacity:0;
-    transform:translateY(30px);
-    transition:.45s ease;
+    pointer-events:none;
+    transition:.5s ease;
 }
 
-.subscribeBox.show{
+.followCard.show{
     opacity:1;
-    transform:translateY(0);
+    pointer-events:auto;
+}
+
+.followBox{
+    width:320px;
+    background:rgba(17,24,39,.98);
+    border:1px solid #334155;
+    border-radius:28px;
+    padding:22px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    transform:translateY(20px);
+    animation:cardIn .45s ease forwards;
+}
+
+@keyframes cardIn{
+    to{
+        transform:translateY(0);
+    }
 }
 
 .profile{
-    width:54px;
-    height:54px;
+    width:86px;
+    height:86px;
     border-radius:50%;
     object-fit:cover;
-    margin-right:14px;
-    border:2px solid #334155;
+    border:3px solid #334155;
+    margin-bottom:18px;
 }
 
-.channel{
-    flex:1;
-}
-
-.channelName{
+.name{
     color:white;
-    font-weight:700;
-    font-size:15px;
+    font-size:22px;
+    font-weight:800;
 }
 
-.handle{
+.username{
     color:#94a3b8;
-    font-size:12px;
-    margin-top:3px;
-}
-
-.subscribeBtn{
-    width:118px;
-    height:44px;
-    border:none;
-    border-radius:14px;
-    background:#ff0000;
-    color:white;
-    font-weight:700;
     font-size:14px;
-    transition:.15s ease;
+    margin-top:6px;
 }
 
-.subscribeBtn.subscribed{
+.followText{
+    color:#cbd5e1;
+    font-size:13px;
+    text-align:center;
+    margin-top:18px;
+    line-height:1.7;
+}
+
+.followBtn{
+    width:180px;
+    height:52px;
+    border:none;
+    border-radius:16px;
+    margin-top:22px;
+    background:linear-gradient(135deg,#ec4899,#8b5cf6);
+    color:white;
+    font-size:16px;
+    font-weight:700;
+    transition:.12s ease;
+}
+
+.followBtn.followed{
     background:#27272a;
 }
 
@@ -452,27 +463,23 @@ body::after{
 
 <div class="frame">
 
-    <div class="message" id="message">
-        Building a Python Shop Program...
-    </div>
-
     <!-- FILES -->
 
     <div class="files" id="files">
 
         <div class="file" id="txtFile">
             <div class="icon txt"></div>
-            products.txt
+            feelings.txt
         </div>
 
         <div class="file" id="jsonFile">
             <div class="icon json"></div>
-            shop-data.json
+            emotions.json
         </div>
 
         <div class="file" id="pyFile">
             <div class="icon py"></div>
-            shop.py
+            love.py
         </div>
 
     </div>
@@ -492,7 +499,7 @@ body::after{
             <div class="dot green"></div>
 
             <div class="filename">
-                shop.py
+                love.py
             </div>
 
         </div>
@@ -525,30 +532,35 @@ body::after{
 
     </div>
 
-    <!-- SUBSCRIBE -->
+    <!-- FOLLOW -->
 
-    <div class="subscribeBox" id="subscribeBox">
+    <div class="followCard" id="followCard">
 
-        <img
-            src="dominex-macedon.png"
-            class="profile"
-        >
+        <div class="followBox">
 
-        <div class="channel">
+            <img
+                src="dominex-macedon.png"
+                class="profile"
+            >
 
-            <div class="channelName">
+            <div class="name">
                 Dominex Macedon
             </div>
 
-            <div class="handle">
-                @DominexMacedon
+            <div class="username">
+                @dominexmacedon
             </div>
 
-        </div>
+            <div class="followText">
+                Enjoyed this coding animation?<br>
+                Follow the TikTok account for more premium coding videos.
+            </div>
 
-        <button class="subscribeBtn" id="subscribeBtn">
-            Subscribe
-        </button>
+            <button class="followBtn" id="followBtn">
+                Follow Account
+            </button>
+
+        </div>
 
     </div>
 
@@ -578,32 +590,25 @@ const terminal = document.getElementById("terminal");
 
 const termBody = document.getElementById("termBody");
 
-const subscribeBox =
-document.getElementById("subscribeBox");
+const followCard =
+document.getElementById("followCard");
 
-const subscribeBtn =
-document.getElementById("subscribeBtn");
-
-const message =
-document.getElementById("message");
+const followBtn =
+document.getElementById("followBtn");
 
 /* FILES */
 
 setTimeout(()=>{
     txtFile.classList.add("show");
-},400);
+},300);
 
 setTimeout(()=>{
     jsonFile.classList.add("show");
-},950);
+},650);
 
 setTimeout(()=>{
     pyFile.classList.add("show");
-},1500);
-
-setTimeout(()=>{
-    message.classList.add("show");
-},1700);
+},1000);
 
 /* MOUSE */
 
@@ -622,9 +627,11 @@ function moveMouseTo(element,x,y){
     (rect.top - frameRect.top + y) + "px";
 }
 
+/* CLICK */
+
 function clickMouse(callback){
 
-    mouse.style.transform = "scale(.75)";
+    mouse.style.transform = "scale(.78)";
 
     setTimeout(()=>{
 
@@ -632,7 +639,7 @@ function clickMouse(callback){
 
         if(callback) callback();
 
-    },180);
+    },130);
 }
 
 /* OPEN FILE */
@@ -641,7 +648,7 @@ setTimeout(()=>{
 
     mouse.style.opacity = "1";
 
-    moveMouseTo(pyFile,120,36);
+    moveMouseTo(pyFile,118,36);
 
     setTimeout(()=>{
 
@@ -649,15 +656,15 @@ setTimeout(()=>{
 
             pyFile.classList.add("active");
 
-            setTimeout(openEditor,500);
+            setTimeout(openEditor,350);
 
         });
 
-    },1200);
+    },850);
 
-},2800);
+},2100);
 
-/* EDITOR */
+/* OPEN EDITOR */
 
 function openEditor(){
 
@@ -670,19 +677,27 @@ function openEditor(){
     typeCode();
 }
 
-/* CODE */
+/* PROFESSIONAL TYPING */
 
 const code = [
 
-`<span class="comment"># Python Shop Program</span>`,
+`<span class="comment"># Love Program</span>`,
 
-`<span class="variable">products</span> = [<span class="string">"Keyboard"</span>, <span class="string">"Mouse"</span>, <span class="string">"Laptop"</span>]`,
+`<span class="variable">message</span> = <span class="string">"I love her so much"</span>`,
 
-`<span class="keyword">for</span> item <span class="keyword">in</span> products:`,
+`<span class="variable">colors</span> = [`,
+`    <span class="string">"red"</span>,`,
+`    <span class="string">"yellow"</span>,`,
+`    <span class="string">"cyan"</span>,`,
+`    <span class="string">"green"</span>,`,
+`    <span class="string">"purple"</span>`,
+`]`,
 
-`    print(<span class="string">"Product:"</span>, item)`,
+`<span class="keyword">for</span> color <span class="keyword">in</span> colors:`,
 
-`print(<span class="string">"Shop Loaded Successfully"</span>)`
+`    print(color, message)`,
+
+`print(<span class="string">"Completed Successfully"</span>)`
 
 ];
 
@@ -704,11 +719,14 @@ function typeCode(){
 
             codeBox.appendChild(row);
 
-        },index * 260);
+            codeBox.scrollTop =
+            codeBox.scrollHeight;
+
+        }, index * 140);
 
     });
 
-    setTimeout(showRunScreen,2200);
+    setTimeout(showRunScreen,2400);
 }
 
 /* RUN */
@@ -731,67 +749,98 @@ function showRunScreen(){
 
                 runBtn.classList.add("press");
 
-                setTimeout(showOutput,450);
+                setTimeout(showOutput,260);
 
             });
 
-        },1200);
+        },850);
 
-    },500);
+    },250);
 }
 
 /* OUTPUT */
+
+function addOutput(text,className){
+
+    const line =
+    document.createElement("div");
+
+    line.className =
+    "outputLine " + className;
+
+    line.innerText = text;
+
+    termBody.appendChild(line);
+}
 
 function showOutput(){
 
     terminal.classList.add("show");
 
-    setTimeout(()=>{
+    const outputs = [
 
-        termBody.innerHTML = `
+        [" > python love.py ",""],
+        ["",""],
 
-> python shop.py
+        ["I love her so much","c1"],
+        ["I love her so much","c2"],
+        ["I love her so much","c3"],
+        ["I love her so much","c4"],
+        ["I love her so much","c5"],
+        ["I love her so much","c6"],
 
-Loading products...
+        ["",""],
 
-Product: Keyboard
-Product: Mouse
-Product: Laptop
+        ["Completed Successfully","c3"]
 
-Shop Loaded Successfully
+    ];
 
-`;
-
-    },500);
-
-    setTimeout(showSubscribe,2600);
-}
-
-/* SUBSCRIBE */
-
-function showSubscribe(){
-
-    subscribeBox.classList.add("show");
-
-    setTimeout(()=>{
-
-        moveMouseTo(subscribeBtn,62,22);
+    outputs.forEach((item,index)=>{
 
         setTimeout(()=>{
 
-            clickMouse(()=>{
+            addOutput(item[0], item[1]);
 
-                subscribeBtn.innerText =
-                "Subscribed";
+        }, index * 300);
 
-                subscribeBtn.classList
-                .add("subscribed");
+    });
 
-            });
+    setTimeout(showFollowCard,4200);
+}
 
-        },1200);
+/* FOLLOW */
 
-    },700);
+function showFollowCard(){
+
+    runScreen.style.opacity = "0";
+
+    setTimeout(()=>{
+
+        runScreen.style.display = "none";
+
+        followCard.classList.add("show");
+
+        setTimeout(()=>{
+
+            moveMouseTo(followBtn,90,28);
+
+            setTimeout(()=>{
+
+                clickMouse(()=>{
+
+                    followBtn.innerText =
+                    "Following";
+
+                    followBtn.classList
+                    .add("followed");
+
+                });
+
+            },900);
+
+        },600);
+
+    },450);
 }
 
 </script>
