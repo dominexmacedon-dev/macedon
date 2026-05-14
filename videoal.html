@@ -3,10 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>video.html</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
 
 <style>
 
@@ -17,381 +16,195 @@
 }
 
 body{
-    background:#020617;
     height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
+    background:#050814;
     overflow:hidden;
     font-family:Inter,sans-serif;
 }
 
-/* BACKGROUND */
-
+/* BACKGROUND GLOW */
 body::before,
 body::after{
     content:"";
     position:absolute;
-    border-radius:50%;
+    width:500px;
+    height:500px;
     filter:blur(140px);
+    border-radius:50%;
 }
 
 body::before{
-    width:460px;
-    height:460px;
-    background:#2563eb;
+    background:#22c55e;
     top:-180px;
-    left:-150px;
-    opacity:.16;
+    left:-160px;
+    opacity:.18;
 }
 
 body::after{
-    width:460px;
-    height:460px;
-    background:#7c3aed;
-    right:-180px;
-    bottom:-180px;
+    background:#3b82f6;
+    bottom:-200px;
+    right:-160px;
     opacity:.15;
 }
 
-/* FRAME */
-
-.frame{
-    width:1000px;
-    height:580px;
-    background:#0f172a;
-    border-radius:26px;
-    overflow:hidden;
-    position:relative;
-    border:1px solid #1e293b;
+/* PHONE FRAME */
+.phone{
+    width:360px;
+    height:720px;
+    background:#0b1220;
+    border-radius:40px;
+    border:2px solid #1f2937;
     box-shadow:
-    0 0 80px rgba(0,0,0,.75),
-    inset 0 0 40px rgba(255,255,255,.03);
+        0 0 80px rgba(0,0,0,.8),
+        inset 0 0 25px rgba(255,255,255,.04);
+    position:relative;
+    overflow:hidden;
 }
 
-/* HERO */
+/* STATUS BAR */
+.status{
+    height:28px;
+    background:#0a0f1d;
+}
 
-.hero{
+/* SCREEN */
+.screen{
     position:absolute;
     inset:0;
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
-    z-index:20;
-    transition:1s ease;
 }
 
-.hero.hide{
-    opacity:0;
-    transform:scale(1.08);
-    pointer-events:none;
-}
-
+/* ANDROID LOGO */
 .logo{
-    width:130px;
-    height:130px;
-    object-fit:contain;
-    filter:
-    drop-shadow(0 0 35px rgba(59,130,246,.4));
-    animation:logoFloat 4s ease-in-out infinite;
+    width:120px;
+    height:120px;
+    filter:drop-shadow(0 0 25px rgba(34,197,94,.6));
+    animation:float 2.5s ease-in-out infinite;
 }
 
-@keyframes logoFloat{
-    50%{
-        transform:translateY(-10px);
-    }
+@keyframes float{
+    50%{ transform:translateY(-8px); }
 }
 
-.heroTitle{
-    margin-top:28px;
-    color:white;
-    font-size:52px;
+/* TEXT */
+.title{
+    margin-top:18px;
+    font-size:34px;
     font-weight:900;
+    color:#a3ffb5;
+    text-shadow:0 0 20px rgba(34,197,94,.6);
     letter-spacing:-1px;
 }
 
-.heroSub{
-    margin-top:12px;
+.subtitle{
+    margin-top:8px;
+    font-size:13px;
     color:#94a3b8;
-    font-size:15px;
 }
 
-/* EDITOR */
-
-.editor{
-    position:absolute;
-    inset:0;
-    background:#0b1220;
-    display:none;
-    flex-direction:column;
-}
-
-.editor.show{
+/* LOADING DOTS */
+.loader{
+    margin-top:26px;
     display:flex;
-}
-
-/* TOPBAR */
-
-.topbar{
-    height:58px;
-    background:#111827;
-    border-bottom:1px solid #1e293b;
-    display:flex;
-    align-items:center;
-    padding:0 20px;
+    gap:6px;
 }
 
 .dot{
-    width:11px;
-    height:11px;
+    width:10px;
+    height:10px;
     border-radius:50%;
-    margin-right:7px;
+    background:#22c55e;
+    animation:bounce 1s infinite ease-in-out;
 }
 
-.red{background:#ef4444;}
-.yellow{background:#facc15;}
-.green{background:#22c55e;}
+.dot:nth-child(2){ animation-delay:.2s; }
+.dot:nth-child(3){ animation-delay:.4s; }
 
-.filename{
-    margin-left:14px;
-    color:#e2e8f0;
-    font-size:14px;
-    font-weight:700;
+@keyframes bounce{
+    50%{ transform:translateY(-6px); opacity:.4; }
 }
 
-/* CODE */
-
-.code{
-    flex:1;
-    padding:24px;
-    font-family:'Fira Code', monospace;
-    font-size:15px;
-    line-height:2;
-    color:white;
-    position:relative;
-}
-
-.line{
-    display:flex;
-    min-height:30px;
-}
-
-.num{
-    width:42px;
-    text-align:right;
-    margin-right:18px;
-    color:#475569;
-    user-select:none;
-}
-
-.text{
-    position:relative;
-}
-
-/* COLORS */
-
-.keyword{
-    color:#c084fc;
-}
-
-.variable{
+/* BOOT TEXT */
+.boot{
+    position:absolute;
+    bottom:80px;
+    text-align:center;
+    font-size:12px;
     color:#38bdf8;
+    opacity:.8;
 }
 
-.string{
-    color:#facc15;
-}
-
-.number{
-    color:#fb7185;
-}
-
-.func{
-    color:#4ade80;
-}
-
-.comment{
-    color:#64748b;
-}
-
-/* CURSOR */
-
-.cursor{
-    width:9px;
-    height:18px;
-    background:white;
-    display:inline-block;
-    margin-left:2px;
-    animation:blink .7s infinite;
-}
-
-@keyframes blink{
-    50%{
-        opacity:0;
-    }
-}
-
-/* POINTER */
-
-.pointer{
+/* OWNER TEXT */
+.owner{
     position:absolute;
-    width:18px;
-    height:18px;
-    background:white;
-    clip-path:polygon(
-        0 0,
-        0 100%,
-        35% 75%,
-        52% 100%,
-        62% 92%,
-        48% 62%,
-        100% 62%
-    );
-    z-index:50;
-    filter:drop-shadow(0 0 12px rgba(255,255,255,.6));
-    transition:
-    left .7s cubic-bezier(.2,.9,.2,1),
-    top .7s cubic-bezier(.2,.9,.2,1),
-    opacity .4s ease;
-    opacity:0;
-}
-
-/* EXPLAIN CARD */
-
-.explain{
-    position:absolute;
-    width:310px;
-    min-height:130px;
-    right:30px;
-    top:100px;
-    border-radius:24px;
-    padding:22px;
-    background:rgba(15,23,42,.96);
-    border:1px solid #334155;
-    backdrop-filter:blur(18px);
-    box-shadow:
-    0 0 40px rgba(0,0,0,.45);
-    z-index:40;
-    opacity:0;
-    transform:translateY(20px);
-    transition:.45s ease;
-}
-
-.explain.show{
-    opacity:1;
-    transform:translateY(0);
-}
-
-.explainTitle{
-    font-size:13px;
-    font-weight:800;
-    letter-spacing:.5px;
-    margin-bottom:14px;
-}
-
-.blueTitle{
-    color:#60a5fa;
-}
-
-.purpleTitle{
-    color:#c084fc;
-}
-
-.greenTitle{
-    color:#4ade80;
-}
-
-.explainText{
-    color:#cbd5e1;
+    bottom:30px;
     font-size:14px;
-    line-height:1.8;
-    min-height:70px;
+    font-weight:800;
+    color:#ffffff;
+    text-shadow:0 0 18px rgba(59,130,246,.8);
+    animation:glow 2s infinite alternate;
 }
 
-/* GLOW */
-
-.glow{
-    position:absolute;
-    border-radius:14px;
-    pointer-events:none;
-    opacity:0;
-    transition:.35s ease;
+@keyframes glow{
+    from{ text-shadow:0 0 10px rgba(59,130,246,.6); }
+    to{ text-shadow:0 0 25px rgba(34,197,94,.9); }
 }
 
-.glow.show{
-    opacity:1;
+/* FADE */
+.fadeOut{
+    animation:fadeOut 1.5s forwards;
 }
 
-.glow1{
-    border:2px solid #38bdf8;
-    box-shadow:
-    0 0 30px rgba(56,189,248,.45);
+@keyframes fadeOut{
+    to{ opacity:0; transform:scale(1.1); }
 }
 
-.glow2{
-    border:2px solid #c084fc;
-    box-shadow:
-    0 0 30px rgba(192,132,252,.45);
-}
-
-.glow3{
-    border:2px solid #4ade80;
-    box-shadow:
-    0 0 30px rgba(74,222,128,.45);
-}
-
-/* CONSOLE */
-
-.console{
+/* BOOT COMPLETED */
+.done{
     position:absolute;
     inset:0;
-    background:#020617;
-    display:none;
-    flex-direction:column;
-    z-index:100;
-}
-
-.console.show{
     display:flex;
-}
-
-.consoleTop{
-    height:58px;
-    background:#111827;
-    border-bottom:1px solid #1e293b;
-    display:flex;
+    justify-content:center;
     align-items:center;
-    padding:0 20px;
-}
-
-.consoleTitle{
-    margin-left:14px;
-    color:#cbd5e1;
-    font-size:14px;
-    font-weight:700;
-}
-
-.consoleBody{
-    flex:1;
-    padding:26px;
-    font-family:'Fira Code', monospace;
-    font-size:15px;
-    line-height:2.1;
-    color:#4ade80;
-}
-
-.output{
+    flex-direction:column;
+    background:#050814;
     opacity:0;
-    transform:translateY(5px);
-    animation:fade .14s ease forwards;
+    pointer-events:none;
 }
 
-@keyframes fade{
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
+.done.show{
+    animation:showUp 1s forwards;
+}
+
+@keyframes showUp{
+    to{ opacity:1; }
+}
+
+.androidText{
+    font-size:42px;
+    font-weight:900;
+    color:#22c55e;
+    text-shadow:0 0 30px rgba(34,197,94,.8);
+}
+
+.madeBy{
+    margin-top:10px;
+    color:#94a3b8;
+    font-size:14px;
+}
+
+.dominex{
+    margin-top:18px;
+    font-size:18px;
+    font-weight:900;
+    color:#60a5fa;
+    text-shadow:0 0 25px rgba(96,165,250,.7);
 }
 
 </style>
@@ -399,123 +212,44 @@ body::after{
 
 <body>
 
-<div class="frame">
+<div class="phone">
 
-    <!-- HERO -->
+    <div class="status"></div>
 
-    <div class="hero" id="hero">
+    <!-- BOOT SCREEN -->
+    <div class="screen" id="boot">
 
-        <img
-            class="logo"
-            src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg"
-        >
+        <img class="logo"
+        src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Android_robot.svg">
 
-        <div class="heroTitle">
-            Python Touring
+        <div class="title">ANDROID</div>
+
+        <div class="subtitle">Starting system services...</div>
+
+        <div class="loader">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
         </div>
 
-        <div class="heroSub">
-            Premium Python Learning Animation
+        <div class="boot">
+            Optimizing apps • Loading kernel • Initializing UI
         </div>
 
-    </div>
-
-    <!-- EDITOR -->
-
-    <div class="editor" id="editor">
-
-        <div class="topbar">
-
-            <div class="dot red"></div>
-            <div class="dot yellow"></div>
-            <div class="dot green"></div>
-
-            <div class="filename">
-                tutorial.py
-            </div>
-
-        </div>
-
-        <div class="code" id="code">
-
-            <!-- POINTER -->
-
-            <div class="pointer" id="pointer"></div>
-
-            <!-- EXPLAIN -->
-
-            <div class="explain" id="explain">
-
-                <div
-                    class="explainTitle blueTitle"
-                    id="explainTitle"
-                >
-                    VARIABLE
-                </div>
-
-                <div
-                    class="explainText"
-                    id="explainText"
-                ></div>
-
-            </div>
-
-            <!-- GLOWS -->
-
-            <div
-                class="glow glow1"
-                id="glow1"
-                style="
-                top:88px;
-                left:72px;
-                width:320px;
-                height:38px;
-                "
-            ></div>
-
-            <div
-                class="glow glow2"
-                id="glow2"
-                style="
-                top:148px;
-                left:72px;
-                width:560px;
-                height:38px;
-                "
-            ></div>
-
-            <div
-                class="glow glow3"
-                id="glow3"
-                style="
-                top:268px;
-                left:92px;
-                width:360px;
-                height:38px;
-                "
-            ></div>
-
+        <div class="owner">
+            Dominex Macedon
         </div>
 
     </div>
 
-    <!-- CONSOLE -->
+    <!-- DONE SCREEN -->
+    <div class="done" id="done">
 
-    <div class="console" id="console">
+        <div class="androidText">ANDROID READY</div>
 
-        <div class="consoleTop">
+        <div class="madeBy">System Boot Complete</div>
 
-            <div class="dot red"></div>
-            <div class="dot yellow"></div>
-            <div class="dot green"></div>
-
-            <div class="consoleTitle">
-                Python Console
-            </div>
-
-        </div>
-
-        <div class="consoleBody" id="consoleBody"></div>
+        <div class="dominex">Owned by Dominex Macedon</div>
 
     </div>
 
@@ -523,330 +257,26 @@ body::after{
 
 <script>
 
-/* ELEMENTS */
+const boot =
+document.getElementById("boot");
 
-const hero =
-document.getElementById("hero");
+const done =
+document.getElementById("done");
 
-const editor =
-document.getElementById("editor");
-
-const codeBox =
-document.getElementById("code");
-
-const pointer =
-document.getElementById("pointer");
-
-const explain =
-document.getElementById("explain");
-
-const explainTitle =
-document.getElementById("explainTitle");
-
-const explainText =
-document.getElementById("explainText");
-
-const glow1 =
-document.getElementById("glow1");
-
-const glow2 =
-document.getElementById("glow2");
-
-const glow3 =
-document.getElementById("glow3");
-
-const consoleBox =
-document.getElementById("console");
-
-const consoleBody =
-document.getElementById("consoleBody");
-
-/* START */
+/* BOOT SEQUENCE */
 
 setTimeout(()=>{
 
-    hero.classList.add("hide");
+    boot.classList.add("fadeOut");
 
-    setTimeout(()=>{
+},4200);
 
-        editor.classList.add("show");
+setTimeout(()=>{
 
-        startTyping();
+    boot.style.display = "none";
+    done.classList.add("show");
 
-    },700);
-
-},2200);
-
-/* CODE */
-
-const lines = [
-
-`<span class="comment"># Python Tutorial By Dominex Macedon</span>`,
-
-`<span id="variableLine"><span class="variable">name</span> = <span class="string">"Dominex Macedon"</span></span>`,
-
-`<span id="arrayLine"><span class="variable">numbers</span> = [<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>]</span>`,
-
-`<span class="keyword">for</span> item <span class="keyword">in</span> numbers:`,
-
-`    <span id="printLine"><span class="func">print</span>(<span class="string">"Value:"</span>, item)</span>`,
-
-`<span class="func">print</span>(<span class="string">"Welcome"</span>, name)`
-
-];
-
-let lineIndex = 0;
-
-function startTyping(){
-
-    typeLine();
-}
-
-function typeLine(){
-
-    if(lineIndex >= lines.length){
-
-        setTimeout(startTour,400);
-
-        return;
-    }
-
-    const row =
-    document.createElement("div");
-
-    row.className = "line";
-
-    row.innerHTML = `
-        <div class="num">${lineIndex + 1}</div>
-        <div class="text"></div>
-    `;
-
-    codeBox.appendChild(row);
-
-    const text =
-    row.querySelector(".text");
-
-    const html = lines[lineIndex];
-
-    let i = 0;
-
-    function typeChar(){
-
-        text.innerHTML =
-        html.substring(0,i) +
-        '<span class="cursor"></span>';
-
-        i++;
-
-        if(i <= html.length){
-
-            setTimeout(typeChar,4);
-
-        }else{
-
-            text.innerHTML = html;
-
-            lineIndex++;
-
-            setTimeout(typeLine,90);
-
-        }
-    }
-
-    typeChar();
-}
-
-/* TYPING EFFECT */
-
-function typeExplanation(text,callback){
-
-    explainText.innerHTML = "";
-
-    let i = 0;
-
-    function type(){
-
-        explainText.innerHTML += text.charAt(i);
-
-        i++;
-
-        if(i < text.length){
-
-            setTimeout(type,22);
-
-        }else{
-
-            if(callback) callback();
-
-        }
-    }
-
-    type();
-}
-
-/* TOUR */
-
-function startTour(){
-
-    const variable =
-    document.getElementById("variableLine");
-
-    const array =
-    document.getElementById("arrayLine");
-
-    const printLine =
-    document.getElementById("printLine");
-
-    const codeRect =
-    codeBox.getBoundingClientRect();
-
-    explain.classList.add("show");
-
-    /* VARIABLE */
-
-    const v =
-    variable.getBoundingClientRect();
-
-    pointer.style.opacity = "1";
-
-    pointer.style.left =
-    (v.left - codeRect.left + 10) + "px";
-
-    pointer.style.top =
-    (v.top - codeRect.top + 8) + "px";
-
-    glow1.classList.add("show");
-
-    explainTitle.className =
-    "explainTitle blueTitle";
-
-    explainTitle.innerText =
-    "VARIABLE";
-
-    typeExplanation(
-        "This variable stores the name 'Dominex Macedon'. Variables are used to save data that can be reused later inside Python programs."
-    );
-
-    /* ARRAY */
-
-    setTimeout(()=>{
-
-        glow1.classList.remove("show");
-
-        const a =
-        array.getBoundingClientRect();
-
-        pointer.style.left =
-        (a.left - codeRect.left + 10) + "px";
-
-        pointer.style.top =
-        (a.top - codeRect.top + 8) + "px";
-
-        glow2.classList.add("show");
-
-        explainTitle.className =
-        "explainTitle purpleTitle";
-
-        explainTitle.innerText =
-        "ARRAY / LIST";
-
-        typeExplanation(
-            "This Python list keeps multiple values together. Dominex Macedon uses arrays to organize grouped data efficiently."
-        );
-
-    },3500);
-
-    /* PRINT */
-
-    setTimeout(()=>{
-
-        glow2.classList.remove("show");
-
-        const p =
-        printLine.getBoundingClientRect();
-
-        pointer.style.left =
-        (p.left - codeRect.left + 10) + "px";
-
-        pointer.style.top =
-        (p.top - codeRect.top + 8) + "px";
-
-        glow3.classList.add("show");
-
-        explainTitle.className =
-        "explainTitle greenTitle";
-
-        explainTitle.innerText =
-        "print() FUNCTION";
-
-        typeExplanation(
-            "The print() function displays output inside the console. It helps Dominex Macedon show values and program results clearly."
-        );
-
-    },7000);
-
-    /* CONSOLE */
-
-    setTimeout(()=>{
-
-        pointer.style.opacity = "0";
-
-        glow3.classList.remove("show");
-
-        editor.style.display = "none";
-
-        consoleBox.classList.add("show");
-
-        showConsole();
-
-    },10800);
-}
-
-/* CONSOLE */
-
-function showConsole(){
-
-    const outputs = [
-
-        "> python tutorial.py",
-
-        "",
-
-        "Value: 10",
-
-        "Value: 20",
-
-        "Value: 30",
-
-        "Value: 40",
-
-        "",
-
-        "Welcome Dominex Macedon",
-
-        "",
-
-        "Program finished successfully"
-
-    ];
-
-    outputs.forEach((text,index)=>{
-
-        setTimeout(()=>{
-
-            const line =
-            document.createElement("div");
-
-            line.className = "output";
-
-            line.innerText = text;
-
-            consoleBody.appendChild(line);
-
-        },index * 70);
-
-    });
-}
+},5600);
 
 </script>
 
