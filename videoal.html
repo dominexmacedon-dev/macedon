@@ -315,6 +315,12 @@ body::after{
     transform:translateY(0) scale(1);
 }
 
+.explain.hide{
+    opacity:0;
+    transform:translateY(-20px) scale(.92);
+    pointer-events:none;
+}
+
 .box1{
     top:95px;
     right:32px;
@@ -332,7 +338,7 @@ body::after{
 }
 
 .box2{
-    top:320px;
+    top:95px;
     right:32px;
 
     background:linear-gradient(
@@ -746,7 +752,18 @@ function showTour(){
         "Variables store information inside Python programs. Here, the value 'Dominex' is saved into the variable called name."
     );
 
-    /* PRINT */
+    /* HIDE FIRST EXPLANATION */
+
+    setTimeout(()=>{
+
+        box1.classList.remove("show");
+        box1.classList.add("hide");
+
+        varTarget.classList.remove("highlightBlue");
+
+    },3200);
+
+    /* SHOW SECOND EXPLANATION */
 
     setTimeout(()=>{
 
@@ -759,11 +776,11 @@ function showTour(){
             "print() quickly displays output in the terminal. Python executes this instantly and shows the result below."
         );
 
-    },2600);
+    },3800);
 
     /* TERMINAL */
 
-    setTimeout(showTerminal,6200);
+    setTimeout(showTerminal,7600);
 }
 
 /* TERMINAL */
