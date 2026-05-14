@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>video.html</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Fira+Code:wght@400&display=swap" rel="stylesheet">
 
 <style>
 
@@ -18,11 +18,11 @@
 body{
     height:100vh;
     overflow:hidden;
+    background:#050814;
+    font-family:Inter,sans-serif;
     display:flex;
     justify-content:center;
     align-items:center;
-    background:#050814;
-    font-family:Inter,sans-serif;
 }
 
 /* BACKGROUND GLOW */
@@ -30,28 +30,27 @@ body::before,
 body::after{
     content:"";
     position:absolute;
-    width:520px;
-    height:520px;
-    filter:blur(150px);
+    width:600px;
+    height:600px;
+    filter:blur(160px);
     border-radius:50%;
 }
 
 body::before{
     background:#22c55e;
-    top:-180px;
-    left:-180px;
+    top:-200px;
+    left:-200px;
     opacity:.18;
 }
 
 body::after{
     background:#3b82f6;
-    bottom:-200px;
-    right:-200px;
-    opacity:.16;
+    bottom:-220px;
+    right:-220px;
+    opacity:.15;
 }
 
-/* ===== INTRO ===== */
-
+/* INTRO */
 .intro{
     position:absolute;
     inset:0;
@@ -63,124 +62,123 @@ body::after{
     z-index:50;
 }
 
-.androidLogo{
-    width:180px;
-    height:180px;
+.intro img{
+    width:160px;
     filter:drop-shadow(0 0 40px rgba(34,197,94,.7));
-    animation:zoomIn 2s ease forwards;
+    animation:pop 1.8s ease forwards;
 }
 
-@keyframes zoomIn{
-    from{ transform:scale(0.3); opacity:0; }
+@keyframes pop{
+    from{ transform:scale(.3); opacity:0; }
     to{ transform:scale(1); opacity:1; }
 }
 
 .introText{
     margin-top:20px;
-    font-size:22px;
     color:#a3ffb5;
-    font-weight:800;
-    text-shadow:0 0 20px rgba(34,197,94,.6);
-    animation:fadeIn 2s ease forwards;
+    font-size:20px;
+    font-weight:900;
+    text-shadow:0 0 25px rgba(34,197,94,.6);
 }
 
-@keyframes fadeIn{
-    from{ opacity:0; }
-    to{ opacity:1; }
-}
-
-/* ===== MAIN FRAME ===== */
-
+/* MAIN */
 .main{
-    position:absolute;
-    inset:0;
     display:none;
-}
-
-/* FLOATING TEXT */
-.floatText{
-    position:absolute;
-    color:#38bdf8;
-    font-size:13px;
-    opacity:.18;
-    font-weight:700;
-    animation:floatUp 10s linear infinite;
-}
-
-@keyframes floatUp{
-    from{ transform:translateY(80px); }
-    to{ transform:translateY(-800px); }
+    width:100%;
+    height:100%;
+    position:relative;
 }
 
 /* PHONE */
 .phone{
-    width:360px;
-    height:720px;
-    background:#0b1220;
-    border-radius:40px;
-    border:2px solid #1f2937;
     position:absolute;
+    left:10%;
     top:50%;
-    left:50%;
-    transform:translate(-50%,-50%) rotate(-10deg) scale(.6);
+    transform:translateY(-50%) rotate(-8deg);
+    width:340px;
+    height:700px;
+    border-radius:40px;
+    background:#0b1220;
+    border:2px solid #1f2937;
     box-shadow:0 0 90px rgba(0,0,0,.8);
     overflow:hidden;
-    animation:flyIn 3s ease forwards, floatMove 6s ease-in-out infinite;
+    animation:floatPhone 5s ease-in-out infinite;
 }
 
-@keyframes flyIn{
-    to{
-        transform:translate(-50%,-50%) rotate(0deg) scale(1);
-    }
+@keyframes floatPhone{
+    0%{ transform:translateY(-50%) rotate(-8deg); }
+    50%{ transform:translateY(-53%) rotate(-3deg); }
+    100%{ transform:translateY(-50%) rotate(-8deg); }
 }
 
-@keyframes floatMove{
-    0%{ transform:translate(-50%,-50%) rotate(0deg); }
-    50%{ transform:translate(-48%,-52%) rotate(2deg); }
-    100%{ transform:translate(-50%,-50%) rotate(0deg); }
-}
-
-/* SCREEN */
+/* PHONE SCREEN */
 .screen{
     position:absolute;
     inset:0;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
+    padding:20px;
+    font-family:'Fira Code', monospace;
+    color:#4ade80;
+    font-size:12px;
+    overflow:hidden;
 }
 
-/* BOOT TEXT */
-.bootText{
-    color:#22c55e;
+/* SYSTEM LOG */
+.log{
+    line-height:1.8;
+}
+
+/* RIGHT PANEL */
+.panel{
+    position:absolute;
+    right:6%;
+    top:50%;
+    transform:translateY(-50%);
+    width:420px;
+    color:white;
+}
+
+/* TYPE TEXT */
+.typeBox{
+    font-size:14px;
+    line-height:1.9;
+    color:#38bdf8;
+    text-shadow:0 0 18px rgba(56,189,248,.4);
+    min-height:200px;
+}
+
+/* CURSOR */
+.cursor{
+    display:inline-block;
+    width:8px;
+    height:14px;
+    background:white;
+    margin-left:3px;
+    animation:blink .7s infinite;
+}
+
+@keyframes blink{
+    50%{ opacity:0; }
+}
+
+/* TITLE */
+.title{
     font-size:26px;
     font-weight:900;
-    text-shadow:0 0 25px rgba(34,197,94,.7);
-}
-
-/* SYSTEM TEXT INSIDE PHONE */
-.sys{
-    position:absolute;
-    bottom:60px;
-    font-size:11px;
-    color:#38bdf8;
-    opacity:.8;
-    text-align:center;
-    width:100%;
+    color:#22c55e;
+    margin-bottom:12px;
+    text-shadow:0 0 25px rgba(34,197,94,.6);
 }
 
 /* OWNER */
 .owner{
-    position:absolute;
-    bottom:20px;
-    font-size:14px;
+    margin-top:30px;
+    font-size:18px;
     font-weight:900;
     color:#60a5fa;
-    text-shadow:0 0 20px rgba(96,165,250,.8);
+    text-shadow:0 0 25px rgba(96,165,250,.7);
 }
 
-/* ===== FINAL ===== */
-
+/* FINAL */
 .final{
     position:absolute;
     inset:0;
@@ -189,6 +187,7 @@ body::after{
     align-items:center;
     flex-direction:column;
     opacity:0;
+    background:#050814;
 }
 
 .final.show{
@@ -199,19 +198,16 @@ body::after{
     to{ opacity:1; }
 }
 
-.finalText{
-    font-size:42px;
-    font-weight:900;
+.final h1{
     color:#22c55e;
-    text-shadow:0 0 35px rgba(34,197,94,.8);
+    font-size:42px;
+    text-shadow:0 0 30px rgba(34,197,94,.8);
 }
 
-.dom{
-    margin-top:10px;
-    font-size:18px;
-    font-weight:800;
+.final p{
     color:#60a5fa;
-    text-shadow:0 0 25px rgba(96,165,250,.7);
+    margin-top:10px;
+    font-weight:800;
 }
 
 </style>
@@ -221,83 +217,106 @@ body::after{
 
 <!-- INTRO -->
 <div class="intro" id="intro">
-
-    <img class="androidLogo"
-    src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Android_robot.svg">
-
-    <div class="introText">ANDROID SYSTEM INITIALIZING</div>
-
+    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Android_robot.svg">
+    <div class="introText">ANDROID SYSTEM PRESENTATION</div>
 </div>
 
 <!-- MAIN -->
 <div class="main" id="main">
 
-    <!-- floating system text -->
-    <div class="floatText" style="left:60px;bottom:-50px;">Kernel Boot</div>
-    <div class="floatText" style="left:300px;bottom:-200px;animation-delay:2s;">UI Engine</div>
-    <div class="floatText" style="left:700px;bottom:-100px;animation-delay:4s;">System Services</div>
-
     <!-- PHONE -->
-    <div class="phone" id="phone">
-
-        <div class="screen">
-
-            <div class="bootText">ANDROID BOOTING...</div>
-
-            <div class="sys">
-                Loading system modules<br>
-                Initializing hardware layer<br>
-                Optimizing performance
-            </div>
-
-            <div class="owner">Dominex Macedon</div>
-
-        </div>
-
+    <div class="phone">
+        <div class="screen" id="log"></div>
     </div>
 
-    <!-- FINAL -->
-    <div class="final" id="final">
-
-        <div class="finalText">ANDROID READY</div>
-        <div class="dom">Owned by Dominex Macedon</div>
-
+    <!-- RIGHT PANEL -->
+    <div class="panel">
+        <div class="title">Android Boot Architecture</div>
+        <div class="typeBox" id="typeBox"></div>
+        <div class="owner">Dominex Macedon</div>
     </div>
 
 </div>
 
+<!-- FINAL -->
+<div class="final" id="final">
+    <h1>ANDROID READY</h1>
+    <p>Owned by Dominex Macedon</p>
+</div>
+
 <script>
 
-const intro =
-document.getElementById("intro");
+const intro = document.getElementById("intro");
+const main = document.getElementById("main");
+const log = document.getElementById("log");
+const typeBox = document.getElementById("typeBox");
+const final = document.getElementById("final");
 
-const main =
-document.getElementById("main");
-
-const final =
-document.getElementById("final");
-
-/* INTRO -> MAIN */
+/* INTRO */
 setTimeout(()=>{
-
     intro.style.opacity="0";
     intro.style.transition="1s ease";
-
 },2500);
 
 setTimeout(()=>{
-
     intro.style.display="none";
     main.style.display="block";
-
+    start();
 },3500);
 
-/* FINAL SCREEN */
-setTimeout(()=>{
+/* TYPE TEXT (RIGHT SIDE) */
+const text =
+`Android Boot Process Explanation:
 
-    final.classList.add("show");
+1. Kernel Initialization starts system hardware setup.
+2. Hardware Abstraction Layer loads device drivers.
+3. System Server starts core services.
+4. UI Framework renders system interface.
+5. Boot completed successfully.`;
 
-},8500);
+let i=0;
+
+function typeText(){
+
+    typeBox.innerHTML =
+    text.substring(0,i) + "<span class='cursor'></span>";
+
+    i++;
+
+    if(i <= text.length){
+        setTimeout(typeText,25);
+    }
+}
+
+function start(){
+
+    /* PHONE LOGS */
+    const logs = [
+        "Bootloader initialized...",
+        "Kernel loading...",
+        "Mounting system partition...",
+        "Starting system services...",
+        "Optimizing applications...",
+        "Android runtime started..."
+    ];
+
+    logs.forEach((t,idx)=>{
+        setTimeout(()=>{
+            const div = document.createElement("div");
+            div.textContent = "> " + t;
+            log.appendChild(div);
+        },idx*600);
+    });
+
+    /* TYPE EXPLANATION */
+    setTimeout(typeText,800);
+
+    /* FINAL SCREEN */
+    setTimeout(()=>{
+        main.style.display="none";
+        final.classList.add("show");
+    },7000);
+}
 
 </script>
 
