@@ -37,36 +37,76 @@ body::after{
 }
 
 body::before{
-    width:340px;
-    height:340px;
+    width:420px;
+    height:420px;
     background:#facc15;
-    top:-140px;
-    left:-120px;
-    opacity:.15;
+    top:-180px;
+    left:-150px;
+    opacity:.12;
 }
 
 body::after{
-    width:320px;
-    height:320px;
+    width:400px;
+    height:400px;
     background:#2563eb;
-    right:-120px;
-    bottom:-120px;
+    right:-180px;
+    bottom:-180px;
     opacity:.14;
 }
 
 /* FRAME */
 
 .frame{
-    width:390px;
-    height:690px;
-    background:#0f172a;
-    border-radius:34px;
-    overflow:hidden;
-    position:relative;
+    width:980px;
+    height:560px;
+    background:#0b1220;
     border:1px solid #1e293b;
+    position:relative;
+    overflow:hidden;
     box-shadow:
-    0 0 70px rgba(0,0,0,.75),
-    inset 0 0 30px rgba(255,255,255,.03);
+    0 0 80px rgba(0,0,0,.7),
+    inset 0 0 40px rgba(255,255,255,.03);
+}
+
+/* FLOATING TEXT */
+
+.float{
+    position:absolute;
+    color:white;
+    opacity:.05;
+    font-weight:800;
+    letter-spacing:1px;
+    animation:float 12s linear infinite;
+    pointer-events:none;
+}
+
+.float.one{
+    left:60px;
+    bottom:-40px;
+    font-size:20px;
+}
+
+.float.two{
+    left:720px;
+    bottom:-120px;
+    font-size:18px;
+    animation-delay:3s;
+}
+
+.float.three{
+    left:430px;
+    bottom:-220px;
+    font-size:22px;
+    animation-delay:6s;
+}
+
+@keyframes float{
+    from{
+        transform:translateY(0);
+    }
+    to{
+        transform:translateY(-760px);
+    }
 }
 
 /* HERO */
@@ -78,50 +118,48 @@ body::after{
     flex-direction:column;
     justify-content:center;
     align-items:center;
-    z-index:5;
-    transition:.8s ease;
+    z-index:10;
+    transition:1s ease;
 }
 
 .hero.hide{
     opacity:0;
     transform:scale(1.08);
-    pointer-events:none;
 }
 
 .jsLogo{
-    width:110px;
-    height:110px;
-    border-radius:28px;
+    width:130px;
+    height:130px;
     background:#facc15;
-    color:#111827;
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:52px;
+    color:#111827;
+    font-size:58px;
     font-weight:900;
     box-shadow:
     0 0 45px rgba(250,204,21,.35);
-    animation:float 3s ease-in-out infinite;
+    animation:logoFloat 3s ease-in-out infinite;
 }
 
-@keyframes float{
+@keyframes logoFloat{
     50%{
-        transform:translateY(-8px);
+        transform:translateY(-10px);
     }
 }
 
 .heroTitle{
     margin-top:28px;
-    font-size:40px;
-    font-weight:900;
     color:white;
-    letter-spacing:-1px;
+    font-size:58px;
+    font-weight:900;
+    letter-spacing:-2px;
 }
 
 .heroSub{
     margin-top:12px;
     color:#94a3b8;
-    font-size:14px;
+    font-size:16px;
 }
 
 /* EDITOR */
@@ -129,9 +167,9 @@ body::after{
 .editor{
     position:absolute;
     inset:0;
-    background:#0b1220;
     display:none;
     flex-direction:column;
+    background:#0b1220;
 }
 
 .editor.show{
@@ -161,34 +199,45 @@ body::after{
 .green{background:#22c55e;}
 
 .filename{
-    margin-left:12px;
-    color:#e2e8f0;
+    margin-left:14px;
+    color:#cbd5e1;
     font-size:14px;
     font-weight:600;
 }
 
+/* CONTENT */
+
+.content{
+    flex:1;
+    display:flex;
+}
+
 /* CODE */
 
+.codeWrap{
+    width:62%;
+    border-right:1px solid #1e293b;
+    padding:22px;
+    position:relative;
+}
+
 .code{
-    flex:1;
-    padding:18px;
-    overflow:hidden;
     font-family:'Fira Code', monospace;
-    font-size:12px;
-    line-height:1.9;
+    font-size:14px;
+    line-height:2;
     color:white;
 }
 
 .line{
     display:flex;
-    min-height:24px;
+    min-height:28px;
 }
 
 .num{
-    width:34px;
+    width:38px;
     color:#475569;
     text-align:right;
-    margin-right:14px;
+    margin-right:18px;
     user-select:none;
 }
 
@@ -197,7 +246,7 @@ body::after{
     white-space:pre-wrap;
 }
 
-/* CODE COLORS */
+/* COLORS */
 
 .keyword{
     color:#c084fc;
@@ -223,13 +272,45 @@ body::after{
     color:#fb7185;
 }
 
+/* INFO PANEL */
+
+.side{
+    flex:1;
+    padding:28px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.sideTitle{
+    color:#facc15;
+    font-size:13px;
+    font-weight:800;
+    letter-spacing:1px;
+}
+
+.sideHeading{
+    margin-top:16px;
+    color:white;
+    font-size:36px;
+    font-weight:900;
+    line-height:1.2;
+}
+
+.sideText{
+    margin-top:18px;
+    color:#94a3b8;
+    font-size:15px;
+    line-height:1.9;
+}
+
 /* CURSOR */
 
 .cursor{
-    width:8px;
-    height:16px;
-    background:white;
     display:inline-block;
+    width:8px;
+    height:18px;
+    background:white;
     margin-left:2px;
     animation:blink .7s infinite;
 }
@@ -248,7 +329,7 @@ body::after{
     background:#020617;
     display:none;
     flex-direction:column;
-    z-index:30;
+    z-index:40;
 }
 
 .terminal.show{
@@ -256,7 +337,7 @@ body::after{
 }
 
 .terminalTop{
-    height:52px;
+    height:56px;
     background:#111827;
     border-bottom:1px solid #1e293b;
     display:flex;
@@ -273,18 +354,17 @@ body::after{
 
 .termBody{
     flex:1;
-    padding:22px;
+    padding:28px;
     font-family:'Fira Code', monospace;
-    font-size:14px;
+    font-size:16px;
     line-height:2;
     color:#4ade80;
-    overflow:hidden;
 }
 
 .output{
     opacity:0;
     transform:translateY(5px);
-    animation:fade .15s ease forwards;
+    animation:fade .12s ease forwards;
 }
 
 @keyframes fade{
@@ -292,42 +372,6 @@ body::after{
         opacity:1;
         transform:translateY(0);
     }
-}
-
-/* INFO CARD */
-
-.info{
-    position:absolute;
-    left:18px;
-    right:18px;
-    bottom:18px;
-    background:rgba(17,24,39,.96);
-    border:1px solid #334155;
-    border-radius:24px;
-    padding:18px;
-    z-index:20;
-    opacity:0;
-    transform:translateY(25px);
-    transition:.5s ease;
-}
-
-.info.show{
-    opacity:1;
-    transform:translateY(0);
-}
-
-.infoTitle{
-    color:#facc15;
-    font-size:13px;
-    font-weight:800;
-    letter-spacing:.5px;
-}
-
-.infoText{
-    margin-top:10px;
-    color:#cbd5e1;
-    font-size:13px;
-    line-height:1.7;
 }
 
 /* END CARD */
@@ -352,74 +396,89 @@ body::after{
 }
 
 .profile{
-    width:110px;
-    height:110px;
+    width:120px;
+    height:120px;
     border-radius:50%;
     object-fit:cover;
     border:4px solid #334155;
     box-shadow:
     0 0 40px rgba(59,130,246,.25);
-    animation:float 3s ease-in-out infinite;
 }
 
 .name{
-    margin-top:22px;
-    font-size:30px;
-    font-weight:900;
+    margin-top:24px;
     color:white;
-    letter-spacing:-1px;
+    font-size:40px;
+    font-weight:900;
 }
 
 .handle{
-    margin-top:8px;
+    margin-top:10px;
     color:#94a3b8;
-    font-size:15px;
+    font-size:18px;
 }
 
-.follow{
-    margin-top:26px;
-    width:180px;
-    height:56px;
+/* FOLLOW AREA */
+
+.followWrap{
+    margin-top:34px;
+    position:relative;
+}
+
+.followBtn{
+    width:210px;
+    height:62px;
     border:none;
-    border-radius:18px;
     background:linear-gradient(
         135deg,
         #2563eb,
         #7c3aed
     );
     color:white;
-    font-size:16px;
+    font-size:17px;
     font-weight:800;
     box-shadow:
     0 0 35px rgba(99,102,241,.35);
+    transition:.15s ease;
+}
+
+.followBtn.followed{
+    background:#27272a;
+}
+
+/* MOUSE */
+
+.mouse{
+    position:absolute;
+    width:24px;
+    height:24px;
+    background:white;
+    clip-path:polygon(
+        0 0,
+        0 100%,
+        30% 72%,
+        48% 100%,
+        58% 92%,
+        40% 60%,
+        100% 60%
+    );
+    z-index:999;
+    opacity:0;
+    pointer-events:none;
+    transition:
+    left .9s cubic-bezier(.2,.9,.2,1),
+    top .9s cubic-bezier(.2,.9,.2,1),
+    transform .15s ease,
+    opacity .3s ease;
+    filter:drop-shadow(0 0 10px rgba(255,255,255,.55));
 }
 
 .endText{
-    margin-top:22px;
+    margin-top:24px;
     color:#cbd5e1;
-    font-size:14px;
+    font-size:15px;
     text-align:center;
-    line-height:1.7;
-}
-
-/* FLOAT TEXT */
-
-.floatText{
-    position:absolute;
-    color:white;
-    font-size:12px;
-    opacity:.08;
-    font-weight:700;
-    animation:move 12s linear infinite;
-}
-
-@keyframes move{
-    from{
-        transform:translateY(20px);
-    }
-    to{
-        transform:translateY(-760px);
-    }
+    line-height:1.8;
 }
 
 </style>
@@ -431,17 +490,9 @@ body::after{
 
     <!-- FLOATING TEXT -->
 
-    <div class="floatText" style="left:20px;bottom:-20px;">
-        JavaScript
-    </div>
-
-    <div class="floatText" style="left:280px;bottom:-180px;animation-delay:2s;">
-        Async
-    </div>
-
-    <div class="floatText" style="left:140px;bottom:-320px;animation-delay:4s;">
-        Functions
-    </div>
+    <div class="float one">JavaScript</div>
+    <div class="float two">Functions</div>
+    <div class="float three">Interactive UI</div>
 
     <!-- HERO -->
 
@@ -456,7 +507,7 @@ body::after{
         </div>
 
         <div class="heroSub">
-            Fast • Powerful • Interactive
+            Interactive • Powerful • Modern
         </div>
 
     </div>
@@ -477,7 +528,40 @@ body::after{
 
         </div>
 
-        <div class="code" id="code"></div>
+        <div class="content">
+
+            <!-- CODE -->
+
+            <div class="codeWrap">
+
+                <div class="code" id="code"></div>
+
+            </div>
+
+            <!-- SIDE -->
+
+            <div class="side">
+
+                <div class="sideTitle">
+                    ABOUT JAVASCRIPT
+                </div>
+
+                <div class="sideHeading">
+                    Fast & Interactive Web Experiences
+                </div>
+
+                <div class="sideText">
+                    JavaScript powers websites, applications,
+                    APIs, games, animations, and modern UI
+                    interactions across the internet.
+                    <br><br>
+                    It runs directly in the browser and makes
+                    websites dynamic and responsive.
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 
@@ -501,22 +585,6 @@ body::after{
 
     </div>
 
-    <!-- INFO -->
-
-    <div class="info" id="info">
-
-        <div class="infoTitle">
-            ABOUT JAVASCRIPT
-        </div>
-
-        <div class="infoText">
-            JavaScript is one of the world's most popular programming languages. 
-            It powers interactive websites, web apps, animations, APIs, games, 
-            and modern user experiences across the internet.
-        </div>
-
-    </div>
-
     <!-- END -->
 
     <div class="endCard" id="endCard">
@@ -534,9 +602,13 @@ body::after{
             @DominexMacedon
         </div>
 
-        <button class="follow">
-            Follow Account
-        </button>
+        <div class="followWrap">
+
+            <button class="followBtn" id="followBtn">
+                Follow Account
+            </button>
+
+        </div>
 
         <div class="endText">
             Thanks for watching ✨<br>
@@ -544,6 +616,10 @@ body::after{
         </div>
 
     </div>
+
+    <!-- MOUSE -->
+
+    <div class="mouse" id="mouse"></div>
 
 </div>
 
@@ -566,11 +642,14 @@ document.getElementById("terminal");
 const termBody =
 document.getElementById("termBody");
 
-const info =
-document.getElementById("info");
-
 const endCard =
 document.getElementById("endCard");
+
+const mouse =
+document.getElementById("mouse");
+
+const followBtn =
+document.getElementById("followBtn");
 
 /* START */
 
@@ -584,9 +663,9 @@ setTimeout(()=>{
 
         startTyping();
 
-    },700);
+    },800);
 
-},2400);
+},2600);
 
 /* CODE */
 
@@ -612,6 +691,8 @@ const lines = [
 
 let lineIndex = 0;
 
+/* REALISTIC TYPING */
+
 function startTyping(){
 
     typeLine();
@@ -621,7 +702,7 @@ function typeLine(){
 
     if(lineIndex >= lines.length){
 
-        setTimeout(showTerminal,700);
+        setTimeout(showTerminal,900);
 
         return;
     }
@@ -655,7 +736,7 @@ function typeLine(){
 
         if(i <= html.length){
 
-            setTimeout(typeChar,8);
+            setTimeout(typeChar,5);
 
         }else{
 
@@ -663,7 +744,7 @@ function typeLine(){
 
             lineIndex++;
 
-            setTimeout(typeLine,120);
+            setTimeout(typeLine,140);
 
         }
     }
@@ -704,17 +785,11 @@ function showTerminal(){
 
             termBody.appendChild(line);
 
-        },index * 120);
+        },index * 90);
 
     });
 
-    setTimeout(()=>{
-
-        info.classList.add("show");
-
-    },900);
-
-    setTimeout(showEnd,4200);
+    setTimeout(showEnd,3200);
 }
 
 /* END */
@@ -725,9 +800,59 @@ function showEnd(){
 
     terminal.style.display = "none";
 
-    info.style.display = "none";
-
     endCard.classList.add("show");
+
+    setTimeout(()=>{
+
+        mouse.style.opacity = "1";
+
+        moveMouseTo(followBtn,120,30);
+
+        setTimeout(()=>{
+
+            clickMouse(()=>{
+
+                followBtn.innerText =
+                "Following";
+
+                followBtn.classList
+                .add("followed");
+
+            });
+
+        },1100);
+
+    },700);
+}
+
+/* MOUSE */
+
+function moveMouseTo(element,x,y){
+
+    const rect = element.getBoundingClientRect();
+
+    const frameRect =
+    document.querySelector(".frame")
+    .getBoundingClientRect();
+
+    mouse.style.left =
+    (rect.left - frameRect.left + x) + "px";
+
+    mouse.style.top =
+    (rect.top - frameRect.top + y) + "px";
+}
+
+function clickMouse(callback){
+
+    mouse.style.transform = "scale(.78)";
+
+    setTimeout(()=>{
+
+        mouse.style.transform = "scale(1)";
+
+        if(callback) callback();
+
+    },180);
 }
 
 </script>
