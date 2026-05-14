@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>video.html</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Fira+Code:wght@400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
 
 <style>
 
@@ -18,196 +18,165 @@
 body{
     height:100vh;
     overflow:hidden;
-    background:#050814;
+    background:#040712;
     font-family:Inter,sans-serif;
-    display:flex;
-    justify-content:center;
-    align-items:center;
 }
 
-/* BACKGROUND GLOW */
+/* SOFT PREMIUM GLOW BACKGROUND */
 body::before,
 body::after{
     content:"";
     position:absolute;
-    width:600px;
-    height:600px;
-    filter:blur(160px);
+    width:700px;
+    height:700px;
     border-radius:50%;
+    filter:blur(180px);
 }
 
 body::before{
-    background:#22c55e;
-    top:-200px;
-    left:-200px;
-    opacity:.18;
+    background:#3b82f6;
+    top:-260px;
+    left:-240px;
+    opacity:.20;
 }
 
 body::after{
-    background:#3b82f6;
-    bottom:-220px;
-    right:-220px;
-    opacity:.15;
+    background:#22c55e;
+    bottom:-260px;
+    right:-240px;
+    opacity:.16;
 }
 
-/* INTRO */
-.intro{
+/* CANVAS */
+.canvas{
     position:absolute;
     inset:0;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    background:#050814;
-    z-index:50;
-}
-
-.intro img{
-    width:160px;
-    filter:drop-shadow(0 0 40px rgba(34,197,94,.7));
-    animation:pop 1.8s ease forwards;
-}
-
-@keyframes pop{
-    from{ transform:scale(.3); opacity:0; }
-    to{ transform:scale(1); opacity:1; }
-}
-
-.introText{
-    margin-top:20px;
-    color:#a3ffb5;
-    font-size:20px;
-    font-weight:900;
-    text-shadow:0 0 25px rgba(34,197,94,.6);
-}
-
-/* MAIN */
-.main{
-    display:none;
-    width:100%;
-    height:100%;
-    position:relative;
-}
-
-/* PHONE */
-.phone{
-    position:absolute;
-    left:10%;
-    top:50%;
-    transform:translateY(-50%) rotate(-8deg);
-    width:340px;
-    height:700px;
-    border-radius:40px;
-    background:#0b1220;
-    border:2px solid #1f2937;
-    box-shadow:0 0 90px rgba(0,0,0,.8);
-    overflow:hidden;
-    animation:floatPhone 5s ease-in-out infinite;
-}
-
-@keyframes floatPhone{
-    0%{ transform:translateY(-50%) rotate(-8deg); }
-    50%{ transform:translateY(-53%) rotate(-3deg); }
-    100%{ transform:translateY(-50%) rotate(-8deg); }
-}
-
-/* PHONE SCREEN */
-.screen{
-    position:absolute;
-    inset:0;
-    padding:20px;
-    font-family:'Fira Code', monospace;
-    color:#4ade80;
-    font-size:12px;
     overflow:hidden;
 }
 
-/* SYSTEM LOG */
-.log{
-    line-height:1.8;
-}
-
-/* RIGHT PANEL */
-.panel{
+/* FLOATING MATH PARTICLES */
+.m{
     position:absolute;
-    right:6%;
-    top:50%;
-    transform:translateY(-50%);
-    width:420px;
-    color:white;
-}
-
-/* TYPE TEXT */
-.typeBox{
-    font-size:14px;
-    line-height:1.9;
-    color:#38bdf8;
-    text-shadow:0 0 18px rgba(56,189,248,.4);
-    min-height:200px;
-}
-
-/* CURSOR */
-.cursor{
-    display:inline-block;
-    width:8px;
-    height:14px;
-    background:white;
-    margin-left:3px;
-    animation:blink .7s infinite;
-}
-
-@keyframes blink{
-    50%{ opacity:0; }
-}
-
-/* TITLE */
-.title{
-    font-size:26px;
-    font-weight:900;
-    color:#22c55e;
-    margin-bottom:12px;
-    text-shadow:0 0 25px rgba(34,197,94,.6);
-}
-
-/* OWNER */
-.owner{
-    margin-top:30px;
+    color:#7dd3fc;
     font-size:18px;
     font-weight:900;
-    color:#60a5fa;
-    text-shadow:0 0 25px rgba(96,165,250,.7);
+    opacity:0;
+    text-shadow:0 0 22px rgba(125,211,252,.9);
+    animation:rise 5.5s linear forwards;
+    will-change: transform, opacity;
 }
 
-/* FINAL */
-.final{
+@keyframes rise{
+    0%{
+        transform:translateY(0) scale(.2);
+        opacity:0;
+    }
+    15%{
+        opacity:1;
+    }
+    100%{
+        transform:translateY(-260px) scale(1.6);
+        opacity:0;
+    }
+}
+
+/* EXPLOSION FORMULAS */
+.formula{
+    position:absolute;
+    color:#86efac;
+    font-size:24px;
+    font-weight:900;
+    text-shadow:0 0 28px rgba(34,197,94,.9);
+    opacity:0;
+    transform:scale(.2);
+    animation:expand 2.4s ease forwards;
+    will-change: transform, opacity;
+}
+
+@keyframes expand{
+    0%{
+        transform:scale(.2);
+        opacity:0;
+    }
+    40%{
+        opacity:1;
+    }
+    100%{
+        transform:scale(1.8);
+        opacity:0;
+    }
+}
+
+/* CENTER TITLE */
+.center{
     position:absolute;
     inset:0;
     display:flex;
+    flex-direction:column;
     justify-content:center;
     align-items:center;
-    flex-direction:column;
+    pointer-events:none;
+}
+
+.title{
+    font-size:38px;
+    font-weight:900;
+    color:#4ade80;
+    text-shadow:0 0 40px rgba(74,222,128,.6);
     opacity:0;
-    background:#050814;
+    animation:showTitle 2s forwards;
+    animation-delay:5.8s;
 }
 
-.final.show{
-    animation:show 1.5s forwards;
+.sub{
+    margin-top:12px;
+    font-size:14px;
+    color:#38bdf8;
+    opacity:0;
+    animation:fade 2s forwards;
+    animation-delay:6.2s;
 }
 
-@keyframes show{
+@keyframes showTitle{
+    to{
+        opacity:1;
+        transform:scale(1.08);
+    }
+}
+
+@keyframes fade{
     to{ opacity:1; }
 }
 
-.final h1{
-    color:#22c55e;
-    font-size:42px;
-    text-shadow:0 0 30px rgba(34,197,94,.8);
+/* OWNER BRAND */
+.owner{
+    position:absolute;
+    bottom:40px;
+    width:100%;
+    text-align:center;
+    font-size:18px;
+    font-weight:900;
+    color:#93c5fd;
+    text-shadow:0 0 30px rgba(147,197,253,.8);
+    opacity:0;
+    animation:fade 2s forwards;
+    animation-delay:7s;
 }
 
-.final p{
-    color:#60a5fa;
-    margin-top:10px;
-    font-weight:800;
+/* subtle glow waves */
+.wave{
+    position:absolute;
+    width:300px;
+    height:300px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,.08);
+    animation:wave 6s infinite;
+    opacity:.3;
+}
+
+@keyframes wave{
+    0%{ transform:scale(.3); opacity:.3; }
+    100%{ transform:scale(2.5); opacity:0; }
 }
 
 </style>
@@ -215,108 +184,83 @@ body::after{
 
 <body>
 
-<!-- INTRO -->
-<div class="intro" id="intro">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Android_robot.svg">
-    <div class="introText">ANDROID SYSTEM PRESENTATION</div>
+<div class="canvas" id="canvas"></div>
+
+<div class="center">
+    <div class="title">MATHEMATICAL UNIVERSE</div>
+    <div class="sub">Numbers • Equations • Infinite Motion</div>
 </div>
 
-<!-- MAIN -->
-<div class="main" id="main">
-
-    <!-- PHONE -->
-    <div class="phone">
-        <div class="screen" id="log"></div>
-    </div>
-
-    <!-- RIGHT PANEL -->
-    <div class="panel">
-        <div class="title">Android Boot Architecture</div>
-        <div class="typeBox" id="typeBox"></div>
-        <div class="owner">Dominex Macedon</div>
-    </div>
-
-</div>
-
-<!-- FINAL -->
-<div class="final" id="final">
-    <h1>ANDROID READY</h1>
-    <p>Owned by Dominex Macedon</p>
-</div>
+<div class="owner">Dominex Macedon</div>
 
 <script>
 
-const intro = document.getElementById("intro");
-const main = document.getElementById("main");
-const log = document.getElementById("log");
-const typeBox = document.getElementById("typeBox");
-const final = document.getElementById("final");
+const canvas = document.getElementById("canvas");
 
-/* INTRO */
-setTimeout(()=>{
-    intro.style.opacity="0";
-    intro.style.transition="1s ease";
-},2500);
+const symbols = [
+"1","2","3","4","5","6","7","8","9","0",
+"x","y","z","+","-","×","÷","=",
+"π","√","∞","∑","∫"
+];
 
-setTimeout(()=>{
-    intro.style.display="none";
-    main.style.display="block";
-    start();
-},3500);
+const formulas = [
+"x = y + z",
+"E = mc²",
+"a² + b² = c²",
+"π ≈ 3.14159",
+"∞ → ∞",
+"f(x) = x² + 2x + 1"
+];
 
-/* TYPE TEXT (RIGHT SIDE) */
-const text =
-`Android Boot Process Explanation:
+/* FLOATING SYMBOLS */
+function createMath(){
 
-1. Kernel Initialization starts system hardware setup.
-2. Hardware Abstraction Layer loads device drivers.
-3. System Server starts core services.
-4. UI Framework renders system interface.
-5. Boot completed successfully.`;
+    const el = document.createElement("div");
+    el.className = "m";
+    el.innerText = symbols[Math.floor(Math.random()*symbols.length)];
 
-let i=0;
+    el.style.left = Math.random()*window.innerWidth + "px";
+    el.style.top = window.innerHeight + "px";
+    el.style.fontSize = (14 + Math.random()*28) + "px";
 
-function typeText(){
+    canvas.appendChild(el);
 
-    typeBox.innerHTML =
-    text.substring(0,i) + "<span class='cursor'></span>";
-
-    i++;
-
-    if(i <= text.length){
-        setTimeout(typeText,25);
-    }
+    setTimeout(()=> el.remove(),5500);
 }
 
-function start(){
+/* FORMULA BURSTS */
+function createFormula(){
 
-    /* PHONE LOGS */
-    const logs = [
-        "Bootloader initialized...",
-        "Kernel loading...",
-        "Mounting system partition...",
-        "Starting system services...",
-        "Optimizing applications...",
-        "Android runtime started..."
-    ];
+    const el = document.createElement("div");
+    el.className = "formula";
+    el.innerText = formulas[Math.floor(Math.random()*formulas.length)];
 
-    logs.forEach((t,idx)=>{
-        setTimeout(()=>{
-            const div = document.createElement("div");
-            div.textContent = "> " + t;
-            log.appendChild(div);
-        },idx*600);
-    });
+    el.style.left = Math.random()*window.innerWidth + "px";
+    el.style.top = Math.random()*window.innerHeight + "px";
 
-    /* TYPE EXPLANATION */
-    setTimeout(typeText,800);
+    canvas.appendChild(el);
 
-    /* FINAL SCREEN */
-    setTimeout(()=>{
-        main.style.display="none";
-        final.classList.add("show");
-    },7000);
+    setTimeout(()=> el.remove(),2400);
 }
+
+/* BACKGROUND WAVES */
+function createWave(){
+
+    const w = document.createElement("div");
+    w.className = "wave";
+
+    w.style.left = Math.random()*window.innerWidth + "px";
+    w.style.top = Math.random()*window.innerHeight + "px";
+
+    canvas.appendChild(w);
+
+    setTimeout(()=> w.remove(),6000);
+}
+
+/* LOOPS */
+setInterval(createMath,90);
+setInterval(createFormula,800);
+setInterval(createWave,1200);
 
 </script>
 
