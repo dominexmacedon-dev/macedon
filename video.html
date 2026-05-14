@@ -6,7 +6,7 @@
 
 <title>video.html</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
 
@@ -33,26 +33,25 @@ body::after{
     content:"";
     position:absolute;
     border-radius:50%;
-    filter:blur(130px);
-    z-index:0;
+    filter:blur(120px);
 }
 
 body::before{
-    width:360px;
-    height:360px;
-    background:#38bdf8;
+    width:340px;
+    height:340px;
+    background:#facc15;
     top:-140px;
     left:-120px;
-    opacity:.18;
+    opacity:.15;
 }
 
 body::after{
-    width:340px;
-    height:340px;
-    background:#8b5cf6;
+    width:320px;
+    height:320px;
+    background:#2563eb;
     right:-120px;
     bottom:-120px;
-    opacity:.16;
+    opacity:.14;
 }
 
 /* FRAME */
@@ -66,362 +65,360 @@ body::after{
     position:relative;
     border:1px solid #1e293b;
     box-shadow:
-    0 0 80px rgba(0,0,0,.75),
-    inset 0 0 35px rgba(255,255,255,.03);
+    0 0 70px rgba(0,0,0,.75),
+    inset 0 0 30px rgba(255,255,255,.03);
 }
 
-/* GLOW */
+/* HERO */
 
-.glow1,
-.glow2{
+.hero{
     position:absolute;
-    border-radius:50%;
-    filter:blur(80px);
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    z-index:5;
+    transition:.8s ease;
 }
 
-.glow1{
-    width:180px;
-    height:180px;
-    background:#2563eb;
-    top:170px;
-    left:40px;
-    opacity:.35;
-    animation:pulse 5s ease-in-out infinite;
+.hero.hide{
+    opacity:0;
+    transform:scale(1.08);
+    pointer-events:none;
 }
 
-.glow2{
-    width:180px;
-    height:180px;
-    background:#7c3aed;
-    bottom:100px;
-    right:40px;
-    opacity:.28;
-    animation:pulse 5s ease-in-out infinite;
-    animation-delay:2s;
+.jsLogo{
+    width:110px;
+    height:110px;
+    border-radius:28px;
+    background:#facc15;
+    color:#111827;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:52px;
+    font-weight:900;
+    box-shadow:
+    0 0 45px rgba(250,204,21,.35);
+    animation:float 3s ease-in-out infinite;
 }
 
-@keyframes pulse{
+@keyframes float{
     50%{
-        transform:scale(1.15);
-        opacity:.55;
+        transform:translateY(-8px);
     }
 }
 
-/* HEADER */
-
-.header{
-    position:absolute;
-    top:28px;
-    left:20px;
-    right:20px;
-    text-align:center;
-    z-index:5;
-    animation:fadeDown 1s ease forwards;
-}
-
-.mainTitle{
-    font-size:38px;
+.heroTitle{
+    margin-top:28px;
+    font-size:40px;
     font-weight:900;
-    line-height:1.05;
     color:white;
-    letter-spacing:-1.8px;
-    text-shadow:0 0 25px rgba(255,255,255,.1);
+    letter-spacing:-1px;
 }
 
-.mainTitle span:nth-child(1){
-    color:#7dd3fc;
+.heroSub{
+    margin-top:12px;
+    color:#94a3b8;
+    font-size:14px;
 }
 
-.mainTitle span:nth-child(2){
+/* EDITOR */
+
+.editor{
+    position:absolute;
+    inset:0;
+    background:#0b1220;
+    display:none;
+    flex-direction:column;
+}
+
+.editor.show{
+    display:flex;
+}
+
+/* TOPBAR */
+
+.topbar{
+    height:56px;
+    background:#111827;
+    border-bottom:1px solid #1e293b;
+    display:flex;
+    align-items:center;
+    padding:0 18px;
+}
+
+.dot{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    margin-right:6px;
+}
+
+.red{background:#ef4444;}
+.yellow{background:#facc15;}
+.green{background:#22c55e;}
+
+.filename{
+    margin-left:12px;
+    color:#e2e8f0;
+    font-size:14px;
+    font-weight:600;
+}
+
+/* CODE */
+
+.code{
+    flex:1;
+    padding:18px;
+    overflow:hidden;
+    font-family:'Fira Code', monospace;
+    font-size:12px;
+    line-height:1.9;
+    color:white;
+}
+
+.line{
+    display:flex;
+    min-height:24px;
+}
+
+.num{
+    width:34px;
+    color:#475569;
+    text-align:right;
+    margin-right:14px;
+    user-select:none;
+}
+
+.text{
+    flex:1;
+    white-space:pre-wrap;
+}
+
+/* CODE COLORS */
+
+.keyword{
     color:#c084fc;
 }
 
-.subTitle{
-    margin-top:12px;
-    color:#94a3b8;
-    font-size:13px;
-    letter-spacing:.4px;
+.variable{
+    color:#38bdf8;
 }
 
-/* TEAMS */
+.string{
+    color:#facc15;
+}
 
-.teams{
+.func{
+    color:#4ade80;
+}
+
+.comment{
+    color:#64748b;
+}
+
+.number{
+    color:#fb7185;
+}
+
+/* CURSOR */
+
+.cursor{
+    width:8px;
+    height:16px;
+    background:white;
+    display:inline-block;
+    margin-left:2px;
+    animation:blink .7s infinite;
+}
+
+@keyframes blink{
+    50%{
+        opacity:0;
+    }
+}
+
+/* TERMINAL */
+
+.terminal{
     position:absolute;
-    top:170px;
-    width:100%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:20px;
-    z-index:4;
+    inset:0;
+    background:#020617;
+    display:none;
+    flex-direction:column;
+    z-index:30;
 }
 
-.team{
-    width:145px;
-    height:205px;
-    background:rgba(15,23,42,.92);
-    border:1px solid #1e293b;
-    border-radius:30px;
-    backdrop-filter:blur(14px);
+.terminal.show{
+    display:flex;
+}
+
+.terminalTop{
+    height:52px;
+    background:#111827;
+    border-bottom:1px solid #1e293b;
+    display:flex;
+    align-items:center;
+    padding:0 18px;
+}
+
+.terminalTitle{
+    margin-left:14px;
+    color:#cbd5e1;
+    font-size:14px;
+    font-weight:600;
+}
+
+.termBody{
+    flex:1;
+    padding:22px;
+    font-family:'Fira Code', monospace;
+    font-size:14px;
+    line-height:2;
+    color:#4ade80;
+    overflow:hidden;
+}
+
+.output{
+    opacity:0;
+    transform:translateY(5px);
+    animation:fade .15s ease forwards;
+}
+
+@keyframes fade{
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* INFO CARD */
+
+.info{
+    position:absolute;
+    left:18px;
+    right:18px;
+    bottom:18px;
+    background:rgba(17,24,39,.96);
+    border:1px solid #334155;
+    border-radius:24px;
+    padding:18px;
+    z-index:20;
+    opacity:0;
+    transform:translateY(25px);
+    transition:.5s ease;
+}
+
+.info.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.infoTitle{
+    color:#facc15;
+    font-size:13px;
+    font-weight:800;
+    letter-spacing:.5px;
+}
+
+.infoText{
+    margin-top:10px;
+    color:#cbd5e1;
+    font-size:13px;
+    line-height:1.7;
+}
+
+/* END CARD */
+
+.endCard{
+    position:absolute;
+    inset:0;
+    background:#020617;
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
-    position:relative;
-    overflow:hidden;
-    animation:floatCard 4s ease-in-out infinite;
+    opacity:0;
+    pointer-events:none;
+    transition:1s ease;
+    z-index:100;
 }
 
-.team.right{
-    animation-delay:2s;
+.endCard.show{
+    opacity:1;
+    pointer-events:auto;
 }
 
-@keyframes floatCard{
-    50%{
-        transform:translateY(-10px);
-    }
+.profile{
+    width:110px;
+    height:110px;
+    border-radius:50%;
+    object-fit:cover;
+    border:4px solid #334155;
+    box-shadow:
+    0 0 40px rgba(59,130,246,.25);
+    animation:float 3s ease-in-out infinite;
 }
 
-.team::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:linear-gradient(
-        120deg,
-        transparent,
-        rgba(255,255,255,.07),
-        transparent
-    );
-    transform:translateX(-160%);
-    animation:shine 4s linear infinite;
-}
-
-@keyframes shine{
-    to{
-        transform:translateX(250%);
-    }
-}
-
-.logo{
-    width:88px;
-    height:88px;
-    object-fit:contain;
-    filter:
-    drop-shadow(0 0 18px rgba(255,255,255,.18));
-    animation:logoFloat 3s ease-in-out infinite;
-}
-
-@keyframes logoFloat{
-    50%{
-        transform:translateY(-5px) scale(1.03);
-    }
-}
-
-.teamName{
-    margin-top:18px;
-    font-size:16px;
-    font-weight:800;
-    text-align:center;
-    color:white;
-    line-height:1.25;
-}
-
-/* VS */
-
-.vs{
+.name{
+    margin-top:22px;
     font-size:30px;
     font-weight:900;
     color:white;
-    text-shadow:0 0 20px rgba(255,255,255,.25);
-    animation:vsPulse 2s ease-in-out infinite;
-}
-
-@keyframes vsPulse{
-    50%{
-        transform:scale(1.12);
-    }
-}
-
-/* TIME */
-
-.timeBox{
-    position:absolute;
-    left:24px;
-    right:24px;
-    top:420px;
-    height:95px;
-    border-radius:28px;
-    background:rgba(17,24,39,.95);
-    border:1px solid #243244;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    z-index:5;
-    animation:fadeUp 1s ease forwards;
-}
-
-.timeTitle{
-    color:#94a3b8;
-    font-size:12px;
-    letter-spacing:.5px;
-}
-
-.time{
-    margin-top:8px;
-    font-size:34px;
-    font-weight:900;
     letter-spacing:-1px;
-    background:linear-gradient(90deg,#7dd3fc,#c084fc,#f472b6);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
 }
 
-.uk{
-    margin-top:4px;
-    color:#cbd5e1;
-    font-size:12px;
+.handle{
+    margin-top:8px;
+    color:#94a3b8;
+    font-size:15px;
 }
 
-/* PREDICTION */
-
-.predict{
-    position:absolute;
-    left:24px;
-    right:24px;
-    bottom:26px;
-    height:120px;
-    border-radius:30px;
-    background:
-    linear-gradient(
-        135deg,
-        rgba(37,99,235,.18),
-        rgba(168,85,247,.18)
-    );
-    border:1px solid rgba(99,102,241,.3);
-    backdrop-filter:blur(14px);
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    z-index:5;
-    overflow:hidden;
-    animation:fadeUp 1.2s ease forwards;
-}
-
-.predict::before{
-    content:"";
-    position:absolute;
-    inset:0;
+.follow{
+    margin-top:26px;
+    width:180px;
+    height:56px;
+    border:none;
+    border-radius:18px;
     background:linear-gradient(
-        120deg,
-        transparent,
-        rgba(255,255,255,.08),
-        transparent
+        135deg,
+        #2563eb,
+        #7c3aed
     );
-    transform:translateX(-180%);
-    animation:shine 5s linear infinite;
-}
-
-.predictTitle{
-    color:#cbd5e1;
-    font-size:12px;
-    letter-spacing:.5px;
-}
-
-.predictText{
-    margin-top:10px;
-    font-size:29px;
-    font-weight:900;
-    color:#7dd3fc;
-    text-shadow:0 0 25px rgba(125,211,252,.35);
-    animation:textFloat 3s ease-in-out infinite;
-}
-
-@keyframes textFloat{
-    50%{
-        transform:translateY(-4px);
-    }
-}
-
-/* PLAYERS */
-
-.players{
-    position:absolute;
-    top:535px;
-    width:100%;
-    display:flex;
-    justify-content:center;
-    gap:8px;
-    flex-wrap:wrap;
-    padding:0 24px;
-    z-index:5;
-}
-
-.player{
-    padding:8px 14px;
-    border-radius:999px;
-    font-size:11px;
-    font-weight:700;
     color:white;
-    animation:playerFloat 3s ease-in-out infinite;
+    font-size:16px;
+    font-weight:800;
+    box-shadow:
+    0 0 35px rgba(99,102,241,.35);
 }
 
-.player:nth-child(1){
-    background:#0ea5e9;
+.endText{
+    margin-top:22px;
+    color:#cbd5e1;
+    font-size:14px;
+    text-align:center;
+    line-height:1.7;
 }
 
-.player:nth-child(2){
-    background:#8b5cf6;
+/* FLOAT TEXT */
+
+.floatText{
+    position:absolute;
+    color:white;
+    font-size:12px;
+    opacity:.08;
+    font-weight:700;
+    animation:move 12s linear infinite;
 }
 
-.player:nth-child(3){
-    background:#ec4899;
-}
-
-.player:nth-child(4){
-    background:#14b8a6;
-}
-
-.player:nth-child(5){
-    background:#f97316;
-}
-
-.player:nth-child(6){
-    background:#3b82f6;
-}
-
-.player:nth-child(7){
-    background:#a855f7;
-}
-
-@keyframes playerFloat{
-    50%{
-        transform:translateY(-4px);
-    }
-}
-
-/* ANIMATIONS */
-
-@keyframes fadeDown{
+@keyframes move{
     from{
-        opacity:0;
-        transform:translateY(-20px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
-@keyframes fadeUp{
-    from{
-        opacity:0;
         transform:translateY(20px);
     }
     to{
-        opacity:1;
-        transform:translateY(0);
+        transform:translateY(-760px);
     }
 }
 
@@ -432,134 +429,308 @@ body::after{
 
 <div class="frame">
 
-    <div class="glow1"></div>
-    <div class="glow2"></div>
+    <!-- FLOATING TEXT -->
 
-    <!-- HEADER -->
+    <div class="floatText" style="left:20px;bottom:-20px;">
+        JavaScript
+    </div>
 
-    <div class="header">
+    <div class="floatText" style="left:280px;bottom:-180px;animation-delay:2s;">
+        Async
+    </div>
 
-        <div class="mainTitle">
-            <span>MAN CITY</span><br>
-            VS<br>
-            <span>CRYSTAL PALACE</span>
+    <div class="floatText" style="left:140px;bottom:-320px;animation-delay:4s;">
+        Functions
+    </div>
+
+    <!-- HERO -->
+
+    <div class="hero" id="hero">
+
+        <div class="jsLogo">
+            JS
         </div>
 
-        <div class="subTitle">
-            Tonight • UK Time • Premier League Clash
+        <div class="heroTitle">
+            JavaScript
+        </div>
+
+        <div class="heroSub">
+            Fast • Powerful • Interactive
         </div>
 
     </div>
 
-    <!-- TEAMS -->
+    <!-- EDITOR -->
 
-    <div class="teams">
+    <div class="editor" id="editor">
 
-        <!-- MAN CITY -->
+        <div class="topbar">
 
-        <div class="team">
+            <div class="dot red"></div>
+            <div class="dot yellow"></div>
+            <div class="dot green"></div>
 
-            <img
-                class="logo"
-                src="https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg"
-            >
-
-            <div class="teamName">
-                Manchester<br>City
+            <div class="filename">
+                app.js
             </div>
 
         </div>
 
-        <!-- VS -->
+        <div class="code" id="code"></div>
 
-        <div class="vs">
-            VS
-        </div>
+    </div>
 
-        <!-- PALACE -->
+    <!-- TERMINAL -->
 
-        <div class="team right">
+    <div class="terminal" id="terminal">
 
-            <img
-                class="logo"
-                src="https://upload.wikimedia.org/wikipedia/en/a/a2/Crystal_Palace_FC_logo_%282022%29.svg"
-            >
+        <div class="terminalTop">
 
-            <div class="teamName">
-                Crystal<br>Palace
+            <div class="dot red"></div>
+            <div class="dot yellow"></div>
+            <div class="dot green"></div>
+
+            <div class="terminalTitle">
+                JavaScript Console
             </div>
 
         </div>
 
-    </div>
-
-    <!-- TIME -->
-
-    <div class="timeBox">
-
-        <div class="timeTitle">
-            MATCH STARTS
-        </div>
-
-        <div class="time">
-            7:00 PM
-        </div>
-
-        <div class="uk">
-            United Kingdom Time
-        </div>
+        <div class="termBody" id="termBody"></div>
 
     </div>
 
-    <!-- PLAYERS -->
+    <!-- INFO -->
 
-    <div class="players">
+    <div class="info" id="info">
 
-        <div class="player">
-            Haaland
+        <div class="infoTitle">
+            ABOUT JAVASCRIPT
         </div>
 
-        <div class="player">
-            De Bruyne
-        </div>
-
-        <div class="player">
-            Foden
-        </div>
-
-        <div class="player">
-            Rodri
-        </div>
-
-        <div class="player">
-            Bernardo Silva
-        </div>
-
-        <div class="player">
-            Grealish
-        </div>
-
-        <div class="player">
-            Doku
+        <div class="infoText">
+            JavaScript is one of the world's most popular programming languages. 
+            It powers interactive websites, web apps, animations, APIs, games, 
+            and modern user experiences across the internet.
         </div>
 
     </div>
 
-    <!-- PREDICTION -->
+    <!-- END -->
 
-    <div class="predict">
+    <div class="endCard" id="endCard">
 
-        <div class="predictTitle">
-            MATCH PREDICTION
+        <img
+            src="dominex-macedon.png"
+            class="profile"
+        >
+
+        <div class="name">
+            Dominex Macedon
         </div>
 
-        <div class="predictText">
-            Man City Will Win 💙
+        <div class="handle">
+            @DominexMacedon
+        </div>
+
+        <button class="follow">
+            Follow Account
+        </button>
+
+        <div class="endText">
+            Thanks for watching ✨<br>
+            Follow for more premium coding videos
         </div>
 
     </div>
 
 </div>
+
+<script>
+
+/* ELEMENTS */
+
+const hero =
+document.getElementById("hero");
+
+const editor =
+document.getElementById("editor");
+
+const codeBox =
+document.getElementById("code");
+
+const terminal =
+document.getElementById("terminal");
+
+const termBody =
+document.getElementById("termBody");
+
+const info =
+document.getElementById("info");
+
+const endCard =
+document.getElementById("endCard");
+
+/* START */
+
+setTimeout(()=>{
+
+    hero.classList.add("hide");
+
+    setTimeout(()=>{
+
+        editor.classList.add("show");
+
+        startTyping();
+
+    },700);
+
+},2400);
+
+/* CODE */
+
+const lines = [
+
+`<span class="comment">// JavaScript Demo</span>`,
+
+`<span class="keyword">const</span> <span class="variable">frameworks</span> = [<span class="string">"React"</span>, <span class="string">"Vue"</span>, <span class="string">"Node.js"</span>];`,
+
+`<span class="keyword">function</span> <span class="func">showFrameworks</span>() {`,
+
+`    frameworks.forEach(item => {`,
+
+`        console.log(<span class="string">"JavaScript powers"</span>, item);`,
+
+`    });`,
+
+`}`,
+
+`showFrameworks();`
+
+];
+
+let lineIndex = 0;
+
+function startTyping(){
+
+    typeLine();
+}
+
+function typeLine(){
+
+    if(lineIndex >= lines.length){
+
+        setTimeout(showTerminal,700);
+
+        return;
+    }
+
+    const row =
+    document.createElement("div");
+
+    row.className = "line";
+
+    row.innerHTML = `
+        <div class="num">${lineIndex + 1}</div>
+        <div class="text"></div>
+    `;
+
+    codeBox.appendChild(row);
+
+    const text =
+    row.querySelector(".text");
+
+    const html = lines[lineIndex];
+
+    let i = 0;
+
+    function typeChar(){
+
+        text.innerHTML =
+        html.substring(0,i) +
+        '<span class="cursor"></span>';
+
+        i++;
+
+        if(i <= html.length){
+
+            setTimeout(typeChar,8);
+
+        }else{
+
+            text.innerHTML = html;
+
+            lineIndex++;
+
+            setTimeout(typeLine,120);
+
+        }
+    }
+
+    typeChar();
+}
+
+/* TERMINAL */
+
+function showTerminal(){
+
+    terminal.classList.add("show");
+
+    const outputs = [
+
+        "> node app.js",
+
+        "JavaScript powers React",
+
+        "JavaScript powers Vue",
+
+        "JavaScript powers Node.js",
+
+        "Execution completed successfully"
+
+    ];
+
+    outputs.forEach((text,index)=>{
+
+        setTimeout(()=>{
+
+            const line =
+            document.createElement("div");
+
+            line.className = "output";
+
+            line.innerText = text;
+
+            termBody.appendChild(line);
+
+        },index * 120);
+
+    });
+
+    setTimeout(()=>{
+
+        info.classList.add("show");
+
+    },900);
+
+    setTimeout(showEnd,4200);
+}
+
+/* END */
+
+function showEnd(){
+
+    editor.style.display = "none";
+
+    terminal.style.display = "none";
+
+    info.style.display = "none";
+
+    endCard.classList.add("show");
+}
+
+</script>
 
 </body>
 </html>
