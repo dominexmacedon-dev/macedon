@@ -33,25 +33,25 @@ body::after{
     content:"";
     position:absolute;
     border-radius:50%;
-    filter:blur(160px);
+    filter:blur(170px);
 }
 
 body::before{
-    width:520px;
-    height:520px;
+    width:560px;
+    height:560px;
     background:#2563eb;
-    left:-180px;
-    top:-180px;
-    opacity:.18;
+    left:-220px;
+    top:-220px;
+    opacity:.2;
 }
 
 body::after{
-    width:520px;
-    height:520px;
+    width:560px;
+    height:560px;
     background:#7c3aed;
-    right:-180px;
-    bottom:-180px;
-    opacity:.16;
+    right:-220px;
+    bottom:-220px;
+    opacity:.18;
 }
 
 /* FRAME */
@@ -59,49 +59,106 @@ body::after{
 .frame{
     width:1120px;
     height:640px;
+
     background:#0f172a;
+
     border:1px solid rgba(255,255,255,.06);
+
     border-radius:34px;
+
     overflow:hidden;
+
     position:relative;
 
     box-shadow:
     0 0 100px rgba(0,0,0,.75),
-    inset 0 0 30px rgba(255,255,255,.03);
+    inset 0 0 40px rgba(255,255,255,.03);
+
+    perspective:2000px;
 }
 
-/* FLOATING CAMERA */
+/* CINEMATIC CAMERA */
 
 .camera{
     position:absolute;
     inset:0;
-    animation:cameraMove 9s ease-in-out infinite;
+
     transform-style:preserve-3d;
+
+    animation:cinematic 14s cubic-bezier(.65,.05,.36,1) infinite;
 }
 
-@keyframes cameraMove{
+@keyframes cinematic{
 
     0%{
         transform:
-        perspective(1400px)
-        rotateY(-3deg)
+        rotateY(-5deg)
         rotateX(1deg)
+        translateX(-14px)
+        translateY(0px)
         scale(1);
     }
 
-    50%{
+    15%{
         transform:
-        perspective(1400px)
-        rotateY(3deg)
+        rotateY(-2deg)
+        rotateX(.5deg)
+        translateX(6px)
+        translateY(-4px)
+        scale(1.015);
+    }
+
+    28%{
+        transform:
+        rotateY(5deg)
         rotateX(-1deg)
+        translateX(22px)
+        translateY(6px)
+        scale(1.03);
+    }
+
+    40%{
+        transform:
+        rotateY(1deg)
+        rotateX(0deg)
+        translateX(0px)
+        translateY(-3px)
+        scale(1.01);
+    }
+
+    58%{
+        transform:
+        rotateY(-7deg)
+        rotateX(1.5deg)
+        translateX(-26px)
+        translateY(10px)
+        scale(1.04);
+    }
+
+    70%{
+        transform:
+        rotateY(4deg)
+        rotateX(-1deg)
+        translateX(16px)
+        translateY(-8px)
         scale(1.02);
+    }
+
+    85%{
+        transform:
+        rotateY(-1deg)
+        rotateX(.3deg)
+        translateX(-4px)
+        translateY(0px)
+        scale(1.01);
     }
 
     100%{
         transform:
-        perspective(1400px)
-        rotateY(-3deg)
+        rotateY(-5deg)
         rotateX(1deg)
+        translateX(-14px)
+        translateY(0px)
         scale(1);
     }
 }
@@ -111,22 +168,22 @@ body::after{
 .glow{
     position:absolute;
     border-radius:50%;
-    filter:blur(90px);
+    filter:blur(100px);
     opacity:.18;
-    animation:pulse 5s ease-in-out infinite;
+    animation:pulse 6s ease-in-out infinite;
 }
 
 .g1{
-    width:260px;
-    height:260px;
+    width:280px;
+    height:280px;
     background:#2563eb;
     top:20px;
     left:20px;
 }
 
 .g2{
-    width:260px;
-    height:260px;
+    width:280px;
+    height:280px;
     background:#7c3aed;
     right:20px;
     bottom:20px;
@@ -134,7 +191,7 @@ body::after{
 
 @keyframes pulse{
     50%{
-        transform:scale(1.15);
+        transform:scale(1.18);
     }
 }
 
@@ -147,43 +204,43 @@ body::after{
     flex-direction:column;
     justify-content:center;
     align-items:center;
-    transition:1s ease;
     z-index:20;
+    transition:1s ease;
 }
 
 .hero.hide{
     opacity:0;
-    transform:scale(1.1);
+    transform:scale(1.12);
     pointer-events:none;
 }
 
 .pythonLogo{
-    width:140px;
-    height:140px;
+    width:145px;
+    height:145px;
     object-fit:contain;
 
     filter:
-    drop-shadow(0 0 45px rgba(59,130,246,.45));
+    drop-shadow(0 0 45px rgba(59,130,246,.5));
 
     animation:float 4s ease-in-out infinite;
 }
 
 @keyframes float{
     50%{
-        transform:translateY(-12px);
+        transform:translateY(-14px);
     }
 }
 
 .heroTitle{
-    margin-top:26px;
+    margin-top:28px;
     color:white;
-    font-size:60px;
+    font-size:64px;
     font-weight:900;
     letter-spacing:-1px;
 }
 
 .heroSub{
-    margin-top:12px;
+    margin-top:14px;
     color:#7dd3fc;
     font-size:20px;
     font-weight:700;
@@ -205,54 +262,96 @@ body::after{
 }
 
 .chatCard{
-    width:470px;
-    height:560px;
+    width:480px;
+    height:565px;
 
     background:rgba(15,23,42,.88);
 
     border:1px solid rgba(255,255,255,.08);
 
-    border-radius:34px;
-
-    backdrop-filter:blur(20px);
+    border-radius:36px;
 
     overflow:hidden;
 
-    box-shadow:
-    0 0 50px rgba(0,0,0,.45),
-    inset 0 0 25px rgba(255,255,255,.03);
+    backdrop-filter:blur(24px);
 
-    animation:chatFloat 6s ease-in-out infinite;
+    box-shadow:
+    0 0 60px rgba(0,0,0,.45),
+    inset 0 0 30px rgba(255,255,255,.03);
+
+    transform-style:preserve-3d;
+
+    animation:flipFloat 10s cubic-bezier(.65,.05,.36,1) infinite;
 }
 
-@keyframes chatFloat{
+@keyframes flipFloat{
 
     0%{
         transform:
-        translateY(0px)
-        rotate(-1deg);
+        rotateY(-8deg)
+        rotateX(2deg)
+        translateX(-20px)
+        translateY(0px);
+    }
+
+    18%{
+        transform:
+        rotateY(-2deg)
+        rotateX(1deg)
+        translateX(10px)
+        translateY(-6px);
+    }
+
+    34%{
+        transform:
+        rotateY(9deg)
+        rotateX(-2deg)
+        translateX(26px)
+        translateY(8px);
     }
 
     50%{
         transform:
-        translateY(-12px)
-        rotate(1deg);
+        rotateY(2deg)
+        rotateX(0deg)
+        translateX(0px)
+        translateY(-4px);
+    }
+
+    68%{
+        transform:
+        rotateY(-10deg)
+        rotateX(2deg)
+        translateX(-30px)
+        translateY(10px);
+    }
+
+    84%{
+        transform:
+        rotateY(5deg)
+        rotateX(-1deg)
+        translateX(14px)
+        translateY(-6px);
     }
 
     100%{
         transform:
-        translateY(0px)
-        rotate(-1deg);
+        rotateY(-8deg)
+        rotateX(2deg)
+        translateX(-20px)
+        translateY(0px);
     }
 }
 
-/* CHAT HEADER */
+/* CHAT TOP */
 
 .chatTop{
     height:84px;
     border-bottom:1px solid rgba(255,255,255,.06);
+
     display:flex;
     align-items:center;
+
     padding:0 22px;
 }
 
@@ -267,7 +366,6 @@ body::after{
     height:52px;
     border-radius:50%;
     object-fit:cover;
-    border:2px solid rgba(255,255,255,.1);
 }
 
 .userInfo{
@@ -320,30 +418,26 @@ body::after{
     gap:18px;
 }
 
+/* MESSAGE */
+
 .message{
     max-width:78%;
+
     padding:16px 18px;
+
     border-radius:24px;
+
     line-height:1.7;
+
     font-size:15px;
+
     font-weight:500;
+
     opacity:0;
+
     transform:translateY(20px);
+
     animation:showMessage .5s ease forwards;
-}
-
-.bot{
-    align-self:flex-start;
-
-    background:linear-gradient(
-        135deg,
-        rgba(37,99,235,.26),
-        rgba(59,130,246,.18)
-    );
-
-    border:1px solid rgba(96,165,250,.25);
-
-    color:white;
 }
 
 .user{
@@ -351,11 +445,25 @@ body::after{
 
     background:linear-gradient(
         135deg,
-        rgba(124,58,237,.26),
+        rgba(124,58,237,.3),
         rgba(168,85,247,.18)
     );
 
-    border:1px solid rgba(192,132,252,.25);
+    border:1px solid rgba(192,132,252,.22);
+
+    color:white;
+}
+
+.bot{
+    align-self:flex-start;
+
+    background:linear-gradient(
+        135deg,
+        rgba(37,99,235,.28),
+        rgba(59,130,246,.18)
+    );
+
+    border:1px solid rgba(96,165,250,.22);
 
     color:white;
 }
@@ -367,49 +475,11 @@ body::after{
     }
 }
 
-/* TYPING */
-
-.typing{
-    display:flex;
-    align-items:center;
-    gap:6px;
-    margin-top:6px;
-    margin-left:6px;
-    opacity:0;
-    transition:.4s ease;
-}
-
-.typing.show{
-    opacity:1;
-}
-
-.typing span{
-    width:8px;
-    height:8px;
-    border-radius:50%;
-    background:#60a5fa;
-    animation:bounce 1s infinite;
-}
-
-.typing span:nth-child(2){
-    animation-delay:.15s;
-}
-
-.typing span:nth-child(3){
-    animation-delay:.3s;
-}
-
-@keyframes bounce{
-    50%{
-        transform:translateY(-5px);
-        opacity:.5;
-    }
-}
-
 /* INPUT */
 
 .chatInput{
     position:absolute;
+
     left:22px;
     right:22px;
     bottom:22px;
@@ -428,15 +498,26 @@ body::after{
     padding:0 22px;
 }
 
-.placeholder{
-    color:#64748b;
+.inputText{
+    color:white;
     font-size:15px;
+}
+
+.inputCursor{
+    width:8px;
+    height:18px;
+    background:#60a5fa;
+    display:inline-block;
+    margin-left:4px;
+    animation:blink .7s infinite;
 }
 
 .send{
     margin-left:auto;
+
     width:46px;
     height:46px;
+
     border-radius:50%;
 
     background:#2563eb;
@@ -451,6 +532,7 @@ body::after{
     font-weight:900;
 
     opacity:0;
+
     transform:scale(.7);
 
     transition:.4s ease;
@@ -466,9 +548,12 @@ body::after{
 .editor{
     position:absolute;
     inset:0;
+
     background:#0b1220;
+
     display:none;
     flex-direction:column;
+
     z-index:40;
 }
 
@@ -505,26 +590,28 @@ body::after{
     font-weight:700;
 }
 
-/* WORKSPACE */
+/* CODE */
 
 .workspace{
     flex:1;
     position:relative;
 }
 
-/* CODE */
-
 .code{
     position:absolute;
     left:0;
     top:0;
+
     width:58%;
     height:100%;
+
     padding:34px;
 
     font-family:'Fira Code', monospace;
+
     font-size:17px;
     line-height:2.2;
+
     color:white;
 }
 
@@ -561,6 +648,38 @@ body::after{
     color:#4ade80;
 }
 
+/* STAND OUT GLOW */
+
+.highlightBlue{
+    color:#7dd3fc !important;
+
+    font-size:22px;
+
+    font-weight:900;
+
+    text-shadow:
+    0 0 20px rgba(125,211,252,.95),
+    0 0 40px rgba(59,130,246,.9),
+    0 0 80px rgba(59,130,246,.6);
+
+    transform:scale(1.08);
+}
+
+.highlightGreen{
+    color:#86efac !important;
+
+    font-size:22px;
+
+    font-weight:900;
+
+    text-shadow:
+    0 0 20px rgba(134,239,172,.95),
+    0 0 40px rgba(34,197,94,.8),
+    0 0 80px rgba(34,197,94,.55);
+
+    transform:scale(1.08);
+}
+
 /* CURSOR */
 
 .cursor{
@@ -572,19 +691,15 @@ body::after{
     animation:blink .7s infinite;
 }
 
-@keyframes blink{
-    50%{
-        opacity:0;
-    }
-}
-
 /* EXPLAIN */
 
 .explain{
     position:absolute;
-    width:320px;
+
+    width:330px;
+
     right:30px;
-    top:120px;
+    top:110px;
 
     padding:28px;
 
@@ -593,7 +708,7 @@ body::after{
     background:linear-gradient(
         135deg,
         rgba(37,99,235,.28),
-        rgba(59,130,246,.14)
+        rgba(59,130,246,.16)
     );
 
     border:1px solid rgba(96,165,250,.22);
@@ -601,6 +716,7 @@ body::after{
     backdrop-filter:blur(14px);
 
     opacity:0;
+
     transform:translateY(20px) scale(.94);
 
     transition:.5s ease;
@@ -687,14 +803,20 @@ body::after{
 .ending{
     position:absolute;
     inset:0;
+
     background:#020617;
+
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
+
     opacity:0;
+
     pointer-events:none;
+
     transition:1s ease;
+
     z-index:100;
 }
 
@@ -704,16 +826,25 @@ body::after{
 
 .endTitle{
     color:white;
-    font-size:58px;
+    font-size:60px;
     font-weight:900;
     letter-spacing:-1px;
+
+    text-shadow:
+    0 0 40px rgba(255,255,255,.12);
 }
 
 .endSub{
     margin-top:16px;
+
     color:#60a5fa;
+
     font-size:24px;
+
     font-weight:800;
+
+    text-shadow:
+    0 0 30px rgba(96,165,250,.45);
 }
 
 </style>
@@ -788,23 +919,11 @@ body::after{
 
                 </div>
 
-                <div class="chatBody" id="chatBody">
-
-                </div>
-
-                <div class="typing" id="typing">
-
-                    <span></span>
-                    <span></span>
-                    <span></span>
-
-                </div>
+                <div class="chatBody" id="chatBody"></div>
 
                 <div class="chatInput">
 
-                    <div class="placeholder">
-                        Write a message...
-                    </div>
+                    <div class="inputText" id="inputText"></div>
 
                     <div class="send" id="sendBtn">
                         ↑
@@ -901,8 +1020,8 @@ document.getElementById("chatScene");
 const chatBody =
 document.getElementById("chatBody");
 
-const typing =
-document.getElementById("typing");
+const inputText =
+document.getElementById("inputText");
 
 const sendBtn =
 document.getElementById("sendBtn");
@@ -938,73 +1057,98 @@ setTimeout(()=>{
 
         chatScene.classList.add("show");
 
-        startConversation();
+        startTypingMessage();
 
     },900);
 
 },2400);
 
-/* CHAT */
+/* CHAT MESSAGE TYPING */
 
-const messages = [
+const userMessage =
+"Hey Dominex, can you teach me Python?";
 
-{
-    type:"user",
-    text:"Hey Dominex, can you teach me Python?"
-},
+let typeIndex = 0;
 
-{
-    type:"bot",
-    text:"Absolutely. Python is powerful, elegant, and beginner friendly."
-},
+function startTypingMessage(){
 
-{
-    type:"bot",
-    text:"Let me quickly create a simple Python program for you."
-}
+    function type(){
 
-];
+        inputText.innerHTML =
+        userMessage.substring(0,typeIndex) +
+        '<span class="inputCursor"></span>';
 
-let msgIndex = 0;
+        typeIndex++;
 
-function startConversation(){
+        if(typeIndex <= userMessage.length){
 
-    showNextMessage();
-}
+            if(typeIndex > 3){
+                sendBtn.classList.add("show");
+            }
 
-function showNextMessage(){
+            setTimeout(type,42);
 
-    if(msgIndex >= messages.length){
+        }else{
 
-        setTimeout(startEditor,1800);
-
-        return;
+            setTimeout(sendUserMessage,700);
+        }
     }
 
-    typing.classList.add("show");
+    type();
+}
 
-    setTimeout(()=>{
+/* SEND MESSAGE */
 
-        typing.classList.remove("show");
+function sendUserMessage(){
 
-        const msg =
-        document.createElement("div");
+    inputText.innerHTML = "";
 
-        msg.className =
-        `message ${messages[msgIndex].type}`;
+    const msg =
+    document.createElement("div");
 
-        msg.innerText =
-        messages[msgIndex].text;
+    msg.className =
+    "message user";
 
-        chatBody.appendChild(msg);
+    msg.innerText =
+    userMessage;
 
-        sendBtn.classList.add("show");
+    chatBody.appendChild(msg);
 
-        msgIndex++;
+    setTimeout(showBot1,1200);
+}
 
-        setTimeout(showNextMessage,1500);
+/* BOT MESSAGES */
 
-    },1600);
+function showBot1(){
+
+    const msg =
+    document.createElement("div");
+
+    msg.className =
+    "message bot";
+
+    msg.innerText =
+    "Absolutely. Python is powerful, elegant, and beginner friendly.";
+
+    chatBody.appendChild(msg);
+
+    setTimeout(showBot2,1700);
+}
+
+function showBot2(){
+
+    const msg =
+    document.createElement("div");
+
+    msg.className =
+    "message bot";
+
+    msg.innerText =
+    "Let me quickly create a Python program for you.";
+
+    chatBody.appendChild(msg);
+
+    setTimeout(startEditor,2200);
 }
 
 /* EDITOR */
@@ -1022,9 +1166,9 @@ const lines = [
 
 `<span class="comment"># Simple Python Program</span>`,
 
-`<span><span class="variable">name</span> = <span class="string">"Dominex"</span></span>`,
+`<span id="varTarget"><span class="variable">name</span> = <span class="string">"Dominex"</span></span>`,
 
-`<span><span class="func">print</span>(<span class="string">"Hello"</span>, name)</span>`
+`<span id="printTarget"><span class="func">print</span>(<span class="string">"Hello"</span>, name)</span>`
 
 ];
 
@@ -1034,7 +1178,7 @@ function typeCode(){
 
     if(lineIndex >= lines.length){
 
-        setTimeout(showExplain,600);
+        setTimeout(showExplain1,700);
 
         return;
     }
@@ -1084,14 +1228,19 @@ function typeCode(){
     type();
 }
 
-/* EXPLAIN */
+/* EXPLANATION */
 
-function showExplain(){
+function showExplain1(){
+
+    const target =
+    document.getElementById("varTarget");
+
+    target.classList.add("highlightBlue");
 
     explain.classList.add("show");
 
     typeExplain(
-        "Variables store information and print() displays output directly into the terminal window."
+        "Variables store information inside Python programs."
     );
 
     setTimeout(()=>{
@@ -1099,9 +1248,37 @@ function showExplain(){
         explain.classList.remove("show");
         explain.classList.add("hide");
 
-    },4200);
+        target.classList.remove("highlightBlue");
 
-    setTimeout(showTerminal,5200);
+    },3200);
+
+    setTimeout(showExplain2,3800);
+}
+
+function showExplain2(){
+
+    const target =
+    document.getElementById("printTarget");
+
+    explain.classList.remove("hide");
+
+    target.classList.add("highlightGreen");
+
+    explain.classList.add("show");
+
+    typeExplain(
+        "print() instantly displays output into the terminal."
+    );
+
+    setTimeout(()=>{
+
+        explain.classList.remove("show");
+
+        target.classList.remove("highlightGreen");
+
+    },3200);
+
+    setTimeout(showTerminal,4200);
 }
 
 function typeExplain(text){
@@ -1119,7 +1296,7 @@ function typeExplain(text){
 
         if(i < text.length){
 
-            setTimeout(write,24);
+            setTimeout(write,22);
         }
     }
 
@@ -1168,7 +1345,7 @@ function showTerminal(){
     setTimeout(showEnding,3200);
 }
 
-/* ENDING */
+/* END */
 
 function showEnding(){
 
