@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>video.html</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 
 <style>
 
@@ -17,11 +17,11 @@
 
 body{
     height:100vh;
+    overflow:hidden;
     display:flex;
     justify-content:center;
     align-items:center;
     background:#050814;
-    overflow:hidden;
     font-family:Inter,sans-serif;
 }
 
@@ -30,44 +30,114 @@ body::before,
 body::after{
     content:"";
     position:absolute;
-    width:500px;
-    height:500px;
-    filter:blur(140px);
+    width:520px;
+    height:520px;
+    filter:blur(150px);
     border-radius:50%;
 }
 
 body::before{
     background:#22c55e;
     top:-180px;
-    left:-160px;
+    left:-180px;
     opacity:.18;
 }
 
 body::after{
     background:#3b82f6;
     bottom:-200px;
-    right:-160px;
-    opacity:.15;
+    right:-200px;
+    opacity:.16;
 }
 
-/* PHONE FRAME */
+/* ===== INTRO ===== */
+
+.intro{
+    position:absolute;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    background:#050814;
+    z-index:50;
+}
+
+.androidLogo{
+    width:180px;
+    height:180px;
+    filter:drop-shadow(0 0 40px rgba(34,197,94,.7));
+    animation:zoomIn 2s ease forwards;
+}
+
+@keyframes zoomIn{
+    from{ transform:scale(0.3); opacity:0; }
+    to{ transform:scale(1); opacity:1; }
+}
+
+.introText{
+    margin-top:20px;
+    font-size:22px;
+    color:#a3ffb5;
+    font-weight:800;
+    text-shadow:0 0 20px rgba(34,197,94,.6);
+    animation:fadeIn 2s ease forwards;
+}
+
+@keyframes fadeIn{
+    from{ opacity:0; }
+    to{ opacity:1; }
+}
+
+/* ===== MAIN FRAME ===== */
+
+.main{
+    position:absolute;
+    inset:0;
+    display:none;
+}
+
+/* FLOATING TEXT */
+.floatText{
+    position:absolute;
+    color:#38bdf8;
+    font-size:13px;
+    opacity:.18;
+    font-weight:700;
+    animation:floatUp 10s linear infinite;
+}
+
+@keyframes floatUp{
+    from{ transform:translateY(80px); }
+    to{ transform:translateY(-800px); }
+}
+
+/* PHONE */
 .phone{
     width:360px;
     height:720px;
     background:#0b1220;
     border-radius:40px;
     border:2px solid #1f2937;
-    box-shadow:
-        0 0 80px rgba(0,0,0,.8),
-        inset 0 0 25px rgba(255,255,255,.04);
-    position:relative;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%) rotate(-10deg) scale(.6);
+    box-shadow:0 0 90px rgba(0,0,0,.8);
     overflow:hidden;
+    animation:flyIn 3s ease forwards, floatMove 6s ease-in-out infinite;
 }
 
-/* STATUS BAR */
-.status{
-    height:28px;
-    background:#0a0f1d;
+@keyframes flyIn{
+    to{
+        transform:translate(-50%,-50%) rotate(0deg) scale(1);
+    }
+}
+
+@keyframes floatMove{
+    0%{ transform:translate(-50%,-50%) rotate(0deg); }
+    50%{ transform:translate(-48%,-52%) rotate(2deg); }
+    100%{ transform:translate(-50%,-50%) rotate(0deg); }
 }
 
 /* SCREEN */
@@ -80,129 +150,66 @@ body::after{
     align-items:center;
 }
 
-/* ANDROID LOGO */
-.logo{
-    width:120px;
-    height:120px;
-    filter:drop-shadow(0 0 25px rgba(34,197,94,.6));
-    animation:float 2.5s ease-in-out infinite;
-}
-
-@keyframes float{
-    50%{ transform:translateY(-8px); }
-}
-
-/* TEXT */
-.title{
-    margin-top:18px;
-    font-size:34px;
-    font-weight:900;
-    color:#a3ffb5;
-    text-shadow:0 0 20px rgba(34,197,94,.6);
-    letter-spacing:-1px;
-}
-
-.subtitle{
-    margin-top:8px;
-    font-size:13px;
-    color:#94a3b8;
-}
-
-/* LOADING DOTS */
-.loader{
-    margin-top:26px;
-    display:flex;
-    gap:6px;
-}
-
-.dot{
-    width:10px;
-    height:10px;
-    border-radius:50%;
-    background:#22c55e;
-    animation:bounce 1s infinite ease-in-out;
-}
-
-.dot:nth-child(2){ animation-delay:.2s; }
-.dot:nth-child(3){ animation-delay:.4s; }
-
-@keyframes bounce{
-    50%{ transform:translateY(-6px); opacity:.4; }
-}
-
 /* BOOT TEXT */
-.boot{
+.bootText{
+    color:#22c55e;
+    font-size:26px;
+    font-weight:900;
+    text-shadow:0 0 25px rgba(34,197,94,.7);
+}
+
+/* SYSTEM TEXT INSIDE PHONE */
+.sys{
     position:absolute;
-    bottom:80px;
-    text-align:center;
-    font-size:12px;
+    bottom:60px;
+    font-size:11px;
     color:#38bdf8;
     opacity:.8;
+    text-align:center;
+    width:100%;
 }
 
-/* OWNER TEXT */
+/* OWNER */
 .owner{
     position:absolute;
-    bottom:30px;
+    bottom:20px;
     font-size:14px;
-    font-weight:800;
-    color:#ffffff;
-    text-shadow:0 0 18px rgba(59,130,246,.8);
-    animation:glow 2s infinite alternate;
+    font-weight:900;
+    color:#60a5fa;
+    text-shadow:0 0 20px rgba(96,165,250,.8);
 }
 
-@keyframes glow{
-    from{ text-shadow:0 0 10px rgba(59,130,246,.6); }
-    to{ text-shadow:0 0 25px rgba(34,197,94,.9); }
-}
+/* ===== FINAL ===== */
 
-/* FADE */
-.fadeOut{
-    animation:fadeOut 1.5s forwards;
-}
-
-@keyframes fadeOut{
-    to{ opacity:0; transform:scale(1.1); }
-}
-
-/* BOOT COMPLETED */
-.done{
+.final{
     position:absolute;
     inset:0;
     display:flex;
     justify-content:center;
     align-items:center;
     flex-direction:column;
-    background:#050814;
     opacity:0;
-    pointer-events:none;
 }
 
-.done.show{
-    animation:showUp 1s forwards;
+.final.show{
+    animation:show 1.5s forwards;
 }
 
-@keyframes showUp{
+@keyframes show{
     to{ opacity:1; }
 }
 
-.androidText{
+.finalText{
     font-size:42px;
     font-weight:900;
     color:#22c55e;
-    text-shadow:0 0 30px rgba(34,197,94,.8);
+    text-shadow:0 0 35px rgba(34,197,94,.8);
 }
 
-.madeBy{
+.dom{
     margin-top:10px;
-    color:#94a3b8;
-    font-size:14px;
-}
-
-.dominex{
-    margin-top:18px;
     font-size:18px;
-    font-weight:900;
+    font-weight:800;
     color:#60a5fa;
     text-shadow:0 0 25px rgba(96,165,250,.7);
 }
@@ -212,44 +219,48 @@ body::after{
 
 <body>
 
-<div class="phone">
+<!-- INTRO -->
+<div class="intro" id="intro">
 
-    <div class="status"></div>
+    <img class="androidLogo"
+    src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Android_robot.svg">
 
-    <!-- BOOT SCREEN -->
-    <div class="screen" id="boot">
+    <div class="introText">ANDROID SYSTEM INITIALIZING</div>
 
-        <img class="logo"
-        src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Android_robot.svg">
+</div>
 
-        <div class="title">ANDROID</div>
+<!-- MAIN -->
+<div class="main" id="main">
 
-        <div class="subtitle">Starting system services...</div>
+    <!-- floating system text -->
+    <div class="floatText" style="left:60px;bottom:-50px;">Kernel Boot</div>
+    <div class="floatText" style="left:300px;bottom:-200px;animation-delay:2s;">UI Engine</div>
+    <div class="floatText" style="left:700px;bottom:-100px;animation-delay:4s;">System Services</div>
 
-        <div class="loader">
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-        </div>
+    <!-- PHONE -->
+    <div class="phone" id="phone">
 
-        <div class="boot">
-            Optimizing apps • Loading kernel • Initializing UI
-        </div>
+        <div class="screen">
 
-        <div class="owner">
-            Dominex Macedon
+            <div class="bootText">ANDROID BOOTING...</div>
+
+            <div class="sys">
+                Loading system modules<br>
+                Initializing hardware layer<br>
+                Optimizing performance
+            </div>
+
+            <div class="owner">Dominex Macedon</div>
+
         </div>
 
     </div>
 
-    <!-- DONE SCREEN -->
-    <div class="done" id="done">
+    <!-- FINAL -->
+    <div class="final" id="final">
 
-        <div class="androidText">ANDROID READY</div>
-
-        <div class="madeBy">System Boot Complete</div>
-
-        <div class="dominex">Owned by Dominex Macedon</div>
+        <div class="finalText">ANDROID READY</div>
+        <div class="dom">Owned by Dominex Macedon</div>
 
     </div>
 
@@ -257,26 +268,36 @@ body::after{
 
 <script>
 
-const boot =
-document.getElementById("boot");
+const intro =
+document.getElementById("intro");
 
-const done =
-document.getElementById("done");
+const main =
+document.getElementById("main");
 
-/* BOOT SEQUENCE */
+const final =
+document.getElementById("final");
+
+/* INTRO -> MAIN */
+setTimeout(()=>{
+
+    intro.style.opacity="0";
+    intro.style.transition="1s ease";
+
+},2500);
 
 setTimeout(()=>{
 
-    boot.classList.add("fadeOut");
+    intro.style.display="none";
+    main.style.display="block";
 
-},4200);
+},3500);
 
+/* FINAL SCREEN */
 setTimeout(()=>{
 
-    boot.style.display = "none";
-    done.classList.add("show");
+    final.classList.add("show");
 
-},5600);
+},8500);
 
 </script>
 
