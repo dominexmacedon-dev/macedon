@@ -69,7 +69,7 @@ body::after{
     inset 0 0 40px rgba(255,255,255,.03);
 }
 
-/* FLOATING LIGHTS */
+/* GLOW */
 
 .glow{
     position:absolute;
@@ -209,13 +209,14 @@ body::after{
     position:absolute;
     left:0;
     top:0;
-    width:58%;
+    width:54%;
     height:100%;
     padding:32px;
     font-family:'Fira Code', monospace;
     font-size:16px;
     line-height:2.1;
     color:white;
+    z-index:5;
 }
 
 .line{
@@ -279,14 +280,13 @@ body::after{
 
 .explain{
     position:absolute;
-    right:30px;
-    width:340px;
+    width:320px;
     border-radius:24px;
     padding:24px;
     opacity:0;
     transform:translateY(25px) scale(.92);
     transition:.5s ease;
-    z-index:30;
+    z-index:40;
     backdrop-filter:blur(12px);
 }
 
@@ -296,25 +296,33 @@ body::after{
 }
 
 .box1{
-    top:90px;
+    top:95px;
+    right:32px;
+
     background:linear-gradient(
         135deg,
         rgba(37,99,235,.32),
         rgba(56,189,248,.18)
     );
+
     border:1px solid #3b82f6;
+
     box-shadow:
     0 0 35px rgba(37,99,235,.25);
 }
 
 .box2{
-    top:290px;
+    top:315px;
+    right:32px;
+
     background:linear-gradient(
         135deg,
         rgba(34,197,94,.28),
         rgba(74,222,128,.16)
     );
+
     border:1px solid #22c55e;
+
     box-shadow:
     0 0 35px rgba(34,197,94,.2);
 }
@@ -340,7 +348,14 @@ body::after{
     font-size:14px;
 }
 
-/* POINTER */
+/* POINTER GROUP */
+
+.pointerWrap{
+    position:absolute;
+    inset:0;
+    z-index:20;
+    pointer-events:none;
+}
 
 .pointer{
     position:absolute;
@@ -349,7 +364,6 @@ body::after{
     opacity:0;
     transition:.4s ease;
     transform-origin:left;
-    z-index:20;
 }
 
 .pointer.show{
@@ -521,6 +535,15 @@ body::after{
 
         <div class="workspace">
 
+            <!-- POINTERS BELOW BOXES -->
+
+            <div class="pointerWrap">
+
+                <div class="pointer p1" id="pointer1"></div>
+                <div class="pointer p2" id="pointer2"></div>
+
+            </div>
+
             <!-- CODE -->
 
             <div class="code" id="code"></div>
@@ -546,11 +569,6 @@ body::after{
                 <div class="explainText" id="text2"></div>
 
             </div>
-
-            <!-- POINTERS -->
-
-            <div class="pointer p1" id="pointer1"></div>
-            <div class="pointer p2" id="pointer2"></div>
 
         </div>
 
@@ -738,7 +756,7 @@ function drawPointer(
     targetElement.getBoundingClientRect();
 
     const targetX =
-    target.left - workspace.left + 10;
+    target.left - workspace.left + 15;
 
     const targetY =
     target.top - workspace.top + 18;
@@ -806,8 +824,8 @@ function showTour(){
 
     drawPointer(
         pointer1,
-        720,
-        150,
+        705,
+        165,
         varTarget
     );
 
@@ -824,8 +842,8 @@ function showTour(){
 
         drawPointer(
             pointer2,
-            720,
-            350,
+            705,
+            385,
             printTarget
         );
 
