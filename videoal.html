@@ -42,14 +42,14 @@ body::before{
     background:#2563eb;
     top:-160px;
     left:-120px;
-    opacity:.16;
+    opacity:.15;
 }
 
 body::after{
-    width:380px;
-    height:380px;
+    width:400px;
+    height:400px;
     background:#7c3aed;
-    bottom:-140px;
+    bottom:-160px;
     right:-120px;
     opacity:.14;
 }
@@ -60,10 +60,10 @@ body::after{
     width:980px;
     height:560px;
     background:#0f172a;
-    border-radius:28px;
+    border-radius:24px;
+    border:1px solid #1e293b;
     overflow:hidden;
     position:relative;
-    border:1px solid #1e293b;
     box-shadow:
     0 0 90px rgba(0,0,0,.75),
     inset 0 0 40px rgba(255,255,255,.03);
@@ -75,14 +75,14 @@ body::after{
     position:absolute;
     color:white;
     opacity:.05;
-    font-size:13px;
+    font-size:14px;
     font-weight:700;
     animation:float 12s linear infinite;
 }
 
 @keyframes float{
     from{
-        transform:translateY(60px);
+        transform:translateY(50px);
     }
     to{
         transform:translateY(-700px);
@@ -109,30 +109,30 @@ body::after{
 }
 
 .pythonLogo{
-    width:120px;
-    height:120px;
+    width:130px;
+    height:130px;
     object-fit:contain;
     filter:
-    drop-shadow(0 0 35px rgba(59,130,246,.35));
+    drop-shadow(0 0 40px rgba(59,130,246,.35));
     animation:logoFloat 4s ease-in-out infinite;
 }
 
 @keyframes logoFloat{
     50%{
-        transform:translateY(-8px);
+        transform:translateY(-10px);
     }
 }
 
 .heroTitle{
-    margin-top:26px;
+    margin-top:28px;
     color:white;
-    font-size:46px;
+    font-size:48px;
     font-weight:900;
     letter-spacing:-1px;
 }
 
 .heroSub{
-    margin-top:10px;
+    margin-top:12px;
     color:#94a3b8;
     font-size:15px;
 }
@@ -142,9 +142,9 @@ body::after{
 .editor{
     position:absolute;
     inset:0;
+    background:#0b1220;
     display:none;
     flex-direction:column;
-    background:#0b1220;
 }
 
 .editor.show{
@@ -184,20 +184,22 @@ body::after{
 
 .workspace{
     flex:1;
-    display:flex;
     position:relative;
 }
 
 /* CODE */
 
 .code{
-    width:62%;
+    position:absolute;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
     padding:24px;
     font-family:'Fira Code', monospace;
-    font-size:14px;
+    font-size:15px;
     line-height:2;
     color:white;
-    overflow:hidden;
 }
 
 .line{
@@ -207,9 +209,9 @@ body::after{
 
 .num{
     width:40px;
-    color:#475569;
     text-align:right;
     margin-right:18px;
+    color:#475569;
     user-select:none;
 }
 
@@ -235,12 +237,12 @@ body::after{
     color:#fb7185;
 }
 
-.comment{
-    color:#64748b;
-}
-
 .func{
     color:#4ade80;
+}
+
+.comment{
+    color:#64748b;
 }
 
 /* CURSOR */
@@ -260,76 +262,41 @@ body::after{
     }
 }
 
-/* TERMINAL */
+/* POINTER */
 
-.console{
-    width:38%;
-    border-left:1px solid #1e293b;
-    background:#020617;
-    display:flex;
-    flex-direction:column;
-    position:relative;
-}
-
-.consoleTop{
-    height:52px;
-    border-bottom:1px solid #1e293b;
-    background:#111827;
-    display:flex;
-    align-items:center;
-    padding:0 18px;
-}
-
-.consoleTitle{
-    margin-left:12px;
-    color:#cbd5e1;
-    font-size:13px;
-    font-weight:700;
-}
-
-.consoleBody{
-    flex:1;
-    padding:20px;
-    font-family:'Fira Code', monospace;
-    font-size:13px;
-    line-height:2;
-    color:#4ade80;
-    overflow:hidden;
-}
-
-.output{
+.pointer{
+    position:absolute;
+    width:0;
+    height:0;
+    border-left:14px solid transparent;
+    border-right:14px solid transparent;
+    border-bottom:24px solid white;
+    transform:rotate(-45deg);
+    filter:drop-shadow(0 0 10px rgba(255,255,255,.5));
+    z-index:50;
     opacity:0;
-    transform:translateY(4px);
-    animation:output .12s ease forwards;
+    transition:.5s ease;
 }
 
-@keyframes output{
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
-/* TOUR */
+/* TOUR BOX */
 
 .tour{
     position:absolute;
-    width:250px;
+    width:260px;
     background:rgba(15,23,42,.98);
     border-radius:22px;
     padding:18px;
-    border:1px solid;
     box-shadow:
-    0 0 40px rgba(0,0,0,.4);
+    0 0 40px rgba(0,0,0,.45);
     opacity:0;
-    transform:translateY(18px);
-    transition:.45s ease;
-    z-index:30;
+    transform:scale(.9);
+    transition:.4s ease;
+    z-index:40;
 }
 
 .tour.show{
     opacity:1;
-    transform:translateY(0);
+    transform:scale(1);
 }
 
 .tourTitle{
@@ -348,7 +315,7 @@ body::after{
 /* COLORS */
 
 .blue{
-    border-color:#2563eb;
+    border:1px solid #2563eb;
 }
 
 .blue .tourTitle{
@@ -356,7 +323,7 @@ body::after{
 }
 
 .purple{
-    border-color:#7c3aed;
+    border:1px solid #7c3aed;
 }
 
 .purple .tourTitle{
@@ -364,31 +331,11 @@ body::after{
 }
 
 .yellowBox{
-    border-color:#facc15;
+    border:1px solid #facc15;
 }
 
 .yellowBox .tourTitle{
     color:#fde047;
-}
-
-/* POINTER */
-
-.pointer{
-    position:absolute;
-    width:2px;
-    background:white;
-    opacity:.3;
-}
-
-.pointer::after{
-    content:"";
-    position:absolute;
-    bottom:-6px;
-    left:-4px;
-    width:10px;
-    height:10px;
-    border-radius:50%;
-    background:white;
 }
 
 /* HIGHLIGHT */
@@ -396,7 +343,6 @@ body::after{
 .highlight{
     position:absolute;
     border-radius:14px;
-    border:2px solid;
     opacity:0;
     transition:.35s ease;
     pointer-events:none;
@@ -407,18 +353,72 @@ body::after{
 }
 
 .hl1{
-    border-color:#38bdf8;
-    box-shadow:0 0 24px rgba(56,189,248,.35);
+    border:2px solid #38bdf8;
+    box-shadow:0 0 30px rgba(56,189,248,.35);
 }
 
 .hl2{
-    border-color:#c084fc;
-    box-shadow:0 0 24px rgba(192,132,252,.35);
+    border:2px solid #c084fc;
+    box-shadow:0 0 30px rgba(192,132,252,.35);
 }
 
 .hl3{
-    border-color:#facc15;
-    box-shadow:0 0 24px rgba(250,204,21,.35);
+    border:2px solid #facc15;
+    box-shadow:0 0 30px rgba(250,204,21,.35);
+}
+
+/* CONSOLE */
+
+.console{
+    position:absolute;
+    inset:0;
+    background:#020617;
+    display:none;
+    flex-direction:column;
+    z-index:100;
+}
+
+.console.show{
+    display:flex;
+}
+
+.consoleTop{
+    height:58px;
+    background:#111827;
+    border-bottom:1px solid #1e293b;
+    display:flex;
+    align-items:center;
+    padding:0 20px;
+}
+
+.consoleTitle{
+    margin-left:14px;
+    color:#cbd5e1;
+    font-size:14px;
+    font-weight:700;
+}
+
+.consoleBody{
+    flex:1;
+    padding:26px;
+    font-family:'Fira Code', monospace;
+    font-size:15px;
+    line-height:2.1;
+    color:#4ade80;
+    overflow:hidden;
+}
+
+.output{
+    opacity:0;
+    transform:translateY(5px);
+    animation:out .12s ease forwards;
+}
+
+@keyframes out{
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
 
 </style>
@@ -430,15 +430,19 @@ body::after{
 
     <!-- FLOAT -->
 
-    <div class="float" style="left:50px;bottom:-50px;">
+    <div class="float" style="left:60px;bottom:-40px;">
         Python
     </div>
 
-    <div class="float" style="left:320px;bottom:-180px;animation-delay:2s;">
+    <div class="float" style="left:300px;bottom:-160px;animation-delay:2s;">
         Variables
     </div>
 
-    <div class="float" style="left:760px;bottom:-260px;animation-delay:4s;">
+    <div class="float" style="left:720px;bottom:-120px;animation-delay:4s;">
+        Lists
+    </div>
+
+    <div class="float" style="left:520px;bottom:-300px;animation-delay:6s;">
         print()
     </div>
 
@@ -452,11 +456,11 @@ body::after{
         >
 
         <div class="heroTitle">
-            Python Basics
+            Python Touring
         </div>
 
         <div class="heroSub">
-            Variables • Lists • print()
+            Variables • Arrays • print()
         </div>
 
     </div>
@@ -464,8 +468,6 @@ body::after{
     <!-- EDITOR -->
 
     <div class="editor" id="editor">
-
-        <!-- TOPBAR -->
 
         <div class="topbar">
 
@@ -479,31 +481,77 @@ body::after{
 
         </div>
 
-        <!-- WORKSPACE -->
-
         <div class="workspace">
-
-            <!-- CODE -->
 
             <div class="code" id="code"></div>
 
-            <!-- CONSOLE -->
+            <!-- POINTER -->
 
-            <div class="console">
+            <div class="pointer" id="pointer"></div>
 
-                <div class="consoleTop">
+            <!-- TOUR 1 -->
 
-                    <div class="dot red"></div>
-                    <div class="dot yellow"></div>
-                    <div class="dot green"></div>
+            <div
+                class="tour blue"
+                id="tour1"
+                style="
+                top:90px;
+                right:24px;
+                "
+            >
 
-                    <div class="consoleTitle">
-                        Python Console
-                    </div>
-
+                <div class="tourTitle">
+                    VARIABLE
                 </div>
 
-                <div class="consoleBody" id="consoleBody"></div>
+                <div class="tourText">
+                    Variables store values like text,
+                    numbers, or objects.
+                </div>
+
+            </div>
+
+            <!-- TOUR 2 -->
+
+            <div
+                class="tour purple"
+                id="tour2"
+                style="
+                top:190px;
+                right:24px;
+                "
+            >
+
+                <div class="tourTitle">
+                    ARRAY / LIST
+                </div>
+
+                <div class="tourText">
+                    Lists can keep multiple values
+                    inside one variable.
+                </div>
+
+            </div>
+
+            <!-- TOUR 3 -->
+
+            <div
+                class="tour yellowBox"
+                id="tour3"
+                style="
+                top:310px;
+                right:24px;
+                "
+            >
+
+                <div class="tourTitle">
+                    print()
+                </div>
+
+                <div class="tourText">
+                    print() shows output directly
+                    inside the console.
+                </div>
 
             </div>
 
@@ -513,10 +561,10 @@ body::after{
                 class="highlight hl1"
                 id="hl1"
                 style="
-                top:82px;
-                left:72px;
-                width:290px;
-                height:42px;
+                top:88px;
+                left:74px;
+                width:340px;
+                height:38px;
                 "
             ></div>
 
@@ -524,10 +572,10 @@ body::after{
                 class="highlight hl2"
                 id="hl2"
                 style="
-                top:142px;
-                left:72px;
-                width:470px;
-                height:42px;
+                top:148px;
+                left:74px;
+                width:540px;
+                height:38px;
                 "
             ></div>
 
@@ -535,94 +583,34 @@ body::after{
                 class="highlight hl3"
                 id="hl3"
                 style="
-                top:262px;
-                left:92px;
-                width:310px;
-                height:42px;
+                top:268px;
+                left:74px;
+                width:390px;
+                height:38px;
                 "
             ></div>
 
-            <!-- TOUR -->
+        </div>
 
-            <div
-                class="tour blue"
-                id="tour1"
-                style="top:70px;right:26px;"
-            >
+    </div>
 
-                <div class="tourTitle">
-                    VARIABLE
-                </div>
+    <!-- CONSOLE -->
 
-                <div class="tourText">
-                    Variables store values like text, numbers, and objects.
-                </div>
+    <div class="console" id="console">
 
-                <div
-                    class="pointer"
-                    style="
-                    height:70px;
-                    left:-24px;
-                    top:50px;
-                    transform:rotate(90deg);
-                    "
-                ></div>
+        <div class="consoleTop">
 
-            </div>
+            <div class="dot red"></div>
+            <div class="dot yellow"></div>
+            <div class="dot green"></div>
 
-            <div
-                class="tour purple"
-                id="tour2"
-                style="top:155px;right:26px;"
-            >
-
-                <div class="tourTitle">
-                    LIST / ARRAY
-                </div>
-
-                <div class="tourText">
-                    Lists keep multiple values together in a single variable.
-                </div>
-
-                <div
-                    class="pointer"
-                    style="
-                    height:120px;
-                    left:-45px;
-                    top:70px;
-                    transform:rotate(90deg);
-                    "
-                ></div>
-
-            </div>
-
-            <div
-                class="tour yellowBox"
-                id="tour3"
-                style="top:285px;right:26px;"
-            >
-
-                <div class="tourTitle">
-                    PRINT FUNCTION
-                </div>
-
-                <div class="tourText">
-                    print() outputs values directly into the terminal console.
-                </div>
-
-                <div
-                    class="pointer"
-                    style="
-                    height:90px;
-                    left:-30px;
-                    top:55px;
-                    transform:rotate(90deg);
-                    "
-                ></div>
-
+            <div class="consoleTitle">
+                Python Console
             </div>
 
         </div>
+
+        <div class="consoleBody" id="consoleBody"></div>
 
     </div>
 
@@ -641,8 +629,8 @@ document.getElementById("editor");
 const codeBox =
 document.getElementById("code");
 
-const consoleBody =
-document.getElementById("consoleBody");
+const pointer =
+document.getElementById("pointer");
 
 const tour1 =
 document.getElementById("tour1");
@@ -661,6 +649,12 @@ document.getElementById("hl2");
 
 const hl3 =
 document.getElementById("hl3");
+
+const consoleBox =
+document.getElementById("console");
+
+const consoleBody =
+document.getElementById("consoleBody");
 
 /* START */
 
@@ -682,7 +676,7 @@ setTimeout(()=>{
 
 const lines = [
 
-`<span class="comment"># Python Basics</span>`,
+`<span class="comment"># Python Tutorial</span>`,
 
 `<span class="variable">name</span> = <span class="string">"Dominex"</span>`,
 
@@ -707,9 +701,7 @@ function typeLine(){
 
     if(lineIndex >= lines.length){
 
-        setTimeout(showTours,400);
-
-        setTimeout(runConsole,1100);
+        setTimeout(startTour,500);
 
         return;
     }
@@ -751,7 +743,7 @@ function typeLine(){
 
             lineIndex++;
 
-            setTimeout(typeLine,120);
+            setTimeout(typeLine,90);
 
         }
     }
@@ -759,42 +751,88 @@ function typeLine(){
     typeChar();
 }
 
-/* TOUR */
+/* TOURING */
 
-function showTours(){
+function startTour(){
+
+    /* VARIABLE */
+
+    pointer.style.opacity = "1";
+    pointer.style.left = "430px";
+    pointer.style.top = "110px";
 
     hl1.classList.add("show");
     tour1.classList.add("show");
 
     setTimeout(()=>{
 
+        hl1.classList.remove("show");
+        tour1.classList.remove("show");
+
+        /* ARRAY */
+
+        pointer.style.left = "620px";
+        pointer.style.top = "170px";
+
         hl2.classList.add("show");
         tour2.classList.add("show");
 
-    },1300);
+    },2200);
 
     setTimeout(()=>{
+
+        hl2.classList.remove("show");
+        tour2.classList.remove("show");
+
+        /* PRINT */
+
+        pointer.style.left = "470px";
+        pointer.style.top = "290px";
 
         hl3.classList.add("show");
         tour3.classList.add("show");
 
-    },2600);
+    },4400);
+
+    setTimeout(()=>{
+
+        pointer.style.opacity = "0";
+
+        hl3.classList.remove("show");
+        tour3.classList.remove("show");
+
+        showConsole();
+
+    },6700);
 }
 
 /* CONSOLE */
 
-function runConsole(){
+function showConsole(){
+
+    editor.style.display = "none";
+
+    consoleBox.classList.add("show");
 
     const outputs = [
 
         "> python tutorial.py",
 
+        "",
+
         "Value: 10",
+
         "Value: 20",
+
         "Value: 30",
+
         "Value: 40",
 
+        "",
+
         "Welcome Dominex",
+
+        "",
 
         "Program finished successfully"
 
@@ -813,7 +851,7 @@ function runConsole(){
 
             consoleBody.appendChild(line);
 
-        },index * 90);
+        },index * 80);
 
     });
 }
