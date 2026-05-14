@@ -18,165 +18,140 @@
 body{
     height:100vh;
     overflow:hidden;
-    background:#040712;
+    background:#050816;
     font-family:Inter,sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
-/* SOFT PREMIUM GLOW BACKGROUND */
+/* BACKGROUND GLOW */
 body::before,
 body::after{
     content:"";
     position:absolute;
-    width:700px;
-    height:700px;
+    width:600px;
+    height:600px;
     border-radius:50%;
-    filter:blur(180px);
+    filter:blur(160px);
 }
 
 body::before{
     background:#3b82f6;
-    top:-260px;
-    left:-240px;
-    opacity:.20;
+    top:-200px;
+    left:-200px;
+    opacity:.18;
 }
 
 body::after{
     background:#22c55e;
-    bottom:-260px;
-    right:-240px;
-    opacity:.16;
+    bottom:-200px;
+    right:-200px;
+    opacity:.15;
 }
 
-/* CANVAS */
-.canvas{
-    position:absolute;
-    inset:0;
+/* MAIN BOARD */
+.board{
+    width:900px;
+    height:420px;
+    background:rgba(15,23,42,.85);
+    border:1px solid #1e293b;
+    border-radius:26px;
+    box-shadow:0 0 80px rgba(0,0,0,.6);
+    position:relative;
     overflow:hidden;
 }
 
-/* FLOATING MATH PARTICLES */
-.m{
-    position:absolute;
-    color:#7dd3fc;
-    font-size:18px;
-    font-weight:900;
-    opacity:0;
-    text-shadow:0 0 22px rgba(125,211,252,.9);
-    animation:rise 5.5s linear forwards;
-    will-change: transform, opacity;
-}
-
-@keyframes rise{
-    0%{
-        transform:translateY(0) scale(.2);
-        opacity:0;
-    }
-    15%{
-        opacity:1;
-    }
-    100%{
-        transform:translateY(-260px) scale(1.6);
-        opacity:0;
-    }
-}
-
-/* EXPLOSION FORMULAS */
-.formula{
-    position:absolute;
-    color:#86efac;
-    font-size:24px;
-    font-weight:900;
-    text-shadow:0 0 28px rgba(34,197,94,.9);
-    opacity:0;
-    transform:scale(.2);
-    animation:expand 2.4s ease forwards;
-    will-change: transform, opacity;
-}
-
-@keyframes expand{
-    0%{
-        transform:scale(.2);
-        opacity:0;
-    }
-    40%{
-        opacity:1;
-    }
-    100%{
-        transform:scale(1.8);
-        opacity:0;
-    }
-}
-
-/* CENTER TITLE */
-.center{
+/* CENTER EQUATION AREA */
+.eqBox{
     position:absolute;
     inset:0;
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
-    pointer-events:none;
 }
 
-.title{
-    font-size:38px;
+/* EQUATION TEXT */
+.eq{
+    font-size:34px;
     font-weight:900;
-    color:#4ade80;
-    text-shadow:0 0 40px rgba(74,222,128,.6);
+    color:#7dd3fc;
+    text-shadow:0 0 25px rgba(125,211,252,.7);
     opacity:0;
-    animation:showTitle 2s forwards;
-    animation-delay:5.8s;
+    transform:scale(.7);
+    transition:1s ease;
 }
 
-.sub{
-    margin-top:12px;
-    font-size:14px;
-    color:#38bdf8;
-    opacity:0;
-    animation:fade 2s forwards;
-    animation-delay:6.2s;
+.eq.show{
+    opacity:1;
+    transform:scale(1);
 }
 
-@keyframes showTitle{
-    to{
-        opacity:1;
-        transform:scale(1.08);
-    }
-}
-
-@keyframes fade{
-    to{ opacity:1; }
-}
-
-/* OWNER BRAND */
-.owner{
+/* LINE DRAW EFFECT */
+.line{
     position:absolute;
-    bottom:40px;
+    height:3px;
+    background:linear-gradient(90deg,#38bdf8,#22c55e);
+    width:0;
+    box-shadow:0 0 20px rgba(56,189,248,.6);
+    border-radius:10px;
+}
+
+/* step animation */
+.draw{
+    animation:draw 1s ease forwards;
+}
+
+@keyframes draw{
+    from{ width:0; }
+    to{ width:300px; }
+}
+
+/* SUB TEXT */
+.sub{
+    margin-top:18px;
+    font-size:14px;
+    color:#94a3b8;
+    opacity:0;
+    transition:1s ease;
+}
+
+.sub.show{
+    opacity:1;
+}
+
+/* TITLE */
+.title{
+    position:absolute;
+    top:26px;
     width:100%;
     text-align:center;
     font-size:18px;
-    font-weight:900;
-    color:#93c5fd;
-    text-shadow:0 0 30px rgba(147,197,253,.8);
+    font-weight:800;
+    color:#60a5fa;
+    text-shadow:0 0 20px rgba(96,165,250,.5);
     opacity:0;
-    animation:fade 2s forwards;
-    animation-delay:7s;
+    animation:fadeIn 1.5s forwards;
 }
 
-/* subtle glow waves */
-.wave{
+@keyframes fadeIn{
+    to{ opacity:1; }
+}
+
+/* OWNER */
+.owner{
     position:absolute;
-    width:300px;
-    height:300px;
-    border-radius:50%;
-    border:1px solid rgba(255,255,255,.08);
-    animation:wave 6s infinite;
-    opacity:.3;
-}
-
-@keyframes wave{
-    0%{ transform:scale(.3); opacity:.3; }
-    100%{ transform:scale(2.5); opacity:0; }
+    bottom:24px;
+    width:100%;
+    text-align:center;
+    font-size:16px;
+    font-weight:900;
+    color:#86efac;
+    text-shadow:0 0 25px rgba(134,239,172,.6);
+    opacity:0;
+    animation:fadeIn 1.5s forwards;
+    animation-delay:6s;
 }
 
 </style>
@@ -184,83 +159,69 @@ body::after{
 
 <body>
 
-<div class="canvas" id="canvas"></div>
+<div class="board">
 
-<div class="center">
-    <div class="title">MATHEMATICAL UNIVERSE</div>
-    <div class="sub">Numbers • Equations • Infinite Motion</div>
+    <div class="title">MATHEMATICAL TRANSFORMATION ENGINE</div>
+
+    <div class="eqBox">
+
+        <div class="eq" id="eq">x + x + x + x</div>
+        <div class="sub" id="sub">Starting Expression</div>
+
+        <div class="line" id="line1" style="top:180px; left:300px;"></div>
+        <div class="line" id="line2" style="top:180px; left:300px;"></div>
+
+    </div>
+
+    <div class="owner">Dominex Macedon</div>
+
 </div>
-
-<div class="owner">Dominex Macedon</div>
 
 <script>
 
-const canvas = document.getElementById("canvas");
+const eq = document.getElementById("eq");
+const sub = document.getElementById("sub");
 
-const symbols = [
-"1","2","3","4","5","6","7","8","9","0",
-"x","y","z","+","-","×","÷","=",
-"π","√","∞","∑","∫"
-];
+const line1 = document.getElementById("line1");
+const line2 = document.getElementById("line2");
 
-const formulas = [
-"x = y + z",
-"E = mc²",
-"a² + b² = c²",
-"π ≈ 3.14159",
-"∞ → ∞",
-"f(x) = x² + 2x + 1"
-];
+/* START */
+setTimeout(()=>{
 
-/* FLOATING SYMBOLS */
-function createMath(){
+    eq.classList.add("show");
+    sub.classList.add("show");
 
-    const el = document.createElement("div");
-    el.className = "m";
-    el.innerText = symbols[Math.floor(Math.random()*symbols.length)];
+},500);
 
-    el.style.left = Math.random()*window.innerWidth + "px";
-    el.style.top = window.innerHeight + "px";
-    el.style.fontSize = (14 + Math.random()*28) + "px";
+/* STEP 1 → DRAW LINE */
+setTimeout(()=>{
 
-    canvas.appendChild(el);
+    line1.classList.add("draw");
 
-    setTimeout(()=> el.remove(),5500);
-}
+},1800);
 
-/* FORMULA BURSTS */
-function createFormula(){
+/* TRANSFORM */
+setTimeout(()=>{
 
-    const el = document.createElement("div");
-    el.className = "formula";
-    el.innerText = formulas[Math.floor(Math.random()*formulas.length)];
+    eq.innerText = "4x";
+    sub.innerText = "Simplified Expression";
 
-    el.style.left = Math.random()*window.innerWidth + "px";
-    el.style.top = Math.random()*window.innerHeight + "px";
+},3200);
 
-    canvas.appendChild(el);
+/* STEP 2 LINE */
+setTimeout(()=>{
 
-    setTimeout(()=> el.remove(),2400);
-}
+    line2.classList.add("draw");
 
-/* BACKGROUND WAVES */
-function createWave(){
+},4200);
 
-    const w = document.createElement("div");
-    w.className = "wave";
+/* FINAL TRANSFORM */
+setTimeout(()=>{
 
-    w.style.left = Math.random()*window.innerWidth + "px";
-    w.style.top = Math.random()*window.innerHeight + "px";
+    eq.innerText = "x² derivative → 2x";
+    sub.innerText = "Advanced Transformation";
 
-    canvas.appendChild(w);
-
-    setTimeout(()=> w.remove(),6000);
-}
-
-/* LOOPS */
-setInterval(createMath,90);
-setInterval(createFormula,800);
-setInterval(createWave,1200);
+},5600);
 
 </script>
 
