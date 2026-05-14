@@ -26,7 +26,7 @@ body{
     font-family:Inter,sans-serif;
 }
 
-/* BACKGROUND */
+/* BG */
 
 body::before,
 body::after{
@@ -69,7 +69,7 @@ body::after{
     inset 0 0 40px rgba(255,255,255,.03);
 }
 
-/* FLOAT TEXT */
+/* FLOAT */
 
 .float{
     position:absolute;
@@ -191,10 +191,7 @@ body::after{
 
 .code{
     position:absolute;
-    left:0;
-    top:0;
-    width:100%;
-    height:100%;
+    inset:0;
     padding:24px;
     font-family:'Fira Code', monospace;
     font-size:15px;
@@ -275,7 +272,7 @@ body::after{
     filter:drop-shadow(0 0 10px rgba(255,255,255,.5));
     z-index:50;
     opacity:0;
-    transition:.5s ease;
+    transition:.45s ease;
 }
 
 /* TOUR BOX */
@@ -311,8 +308,6 @@ body::after{
     font-size:13px;
     line-height:1.7;
 }
-
-/* COLORS */
 
 .blue{
     border:1px solid #2563eb;
@@ -489,17 +484,13 @@ body::after{
 
             <div class="pointer" id="pointer"></div>
 
-            <!-- TOUR 1 -->
+            <!-- TOUR -->
 
             <div
                 class="tour blue"
                 id="tour1"
-                style="
-                top:90px;
-                right:24px;
-                "
+                style="top:90px;right:24px;"
             >
-
                 <div class="tourTitle">
                     VARIABLE
                 </div>
@@ -508,20 +499,13 @@ body::after{
                     Variables store values like text,
                     numbers, or objects.
                 </div>
-
             </div>
-
-            <!-- TOUR 2 -->
 
             <div
                 class="tour purple"
                 id="tour2"
-                style="
-                top:190px;
-                right:24px;
-                "
+                style="top:200px;right:24px;"
             >
-
                 <div class="tourTitle">
                     ARRAY / LIST
                 </div>
@@ -530,65 +514,28 @@ body::after{
                     Lists can keep multiple values
                     inside one variable.
                 </div>
-
             </div>
-
-            <!-- TOUR 3 -->
 
             <div
                 class="tour yellowBox"
                 id="tour3"
-                style="
-                top:310px;
-                right:24px;
-                "
+                style="top:320px;right:24px;"
             >
-
                 <div class="tourTitle">
                     print()
                 </div>
 
                 <div class="tourText">
-                    print() shows output directly
+                    print() displays output
                     inside the console.
                 </div>
-
             </div>
 
             <!-- HIGHLIGHTS -->
 
-            <div
-                class="highlight hl1"
-                id="hl1"
-                style="
-                top:88px;
-                left:74px;
-                width:340px;
-                height:38px;
-                "
-            ></div>
-
-            <div
-                class="highlight hl2"
-                id="hl2"
-                style="
-                top:148px;
-                left:74px;
-                width:540px;
-                height:38px;
-                "
-            ></div>
-
-            <div
-                class="highlight hl3"
-                id="hl3"
-                style="
-                top:268px;
-                left:74px;
-                width:390px;
-                height:38px;
-                "
-            ></div>
+            <div class="highlight hl1" id="hl1"></div>
+            <div class="highlight hl2" id="hl2"></div>
+            <div class="highlight hl3" id="hl3"></div>
 
         </div>
 
@@ -751,18 +698,69 @@ function typeLine(){
     typeChar();
 }
 
-/* TOURING */
+/* DYNAMIC POINTER */
+
+function pointToLine(
+    lineNumber,
+    highlight,
+    tourBox
+){
+
+    const lines =
+    document.querySelectorAll(".line");
+
+    const target =
+    lines[lineNumber];
+
+    const rect =
+    target.getBoundingClientRect();
+
+    const frameRect =
+    document.querySelector(".frame")
+    .getBoundingClientRect();
+
+    /* POINTER */
+
+    pointer.style.opacity = "1";
+
+    pointer.style.left =
+    (rect.left - frameRect.left + rect.width - 50)
+    + "px";
+
+    pointer.style.top =
+    (rect.top - frameRect.top + 8)
+    + "px";
+
+    /* HIGHLIGHT */
+
+    highlight.style.left =
+    (rect.left - frameRect.left + 56)
+    + "px";
+
+    highlight.style.top =
+    (rect.top - frameRect.top + 3)
+    + "px";
+
+    highlight.style.width =
+    (rect.width - 70)
+    + "px";
+
+    highlight.style.height =
+    (rect.height + 2)
+    + "px";
+
+    highlight.classList.add("show");
+
+    tourBox.classList.add("show");
+}
+
+/* TOUR */
 
 function startTour(){
 
     /* VARIABLE */
 
-    pointer.style.opacity = "1";
-    pointer.style.left = "430px";
-    pointer.style.top = "110px";
-
-    hl1.classList.add("show");
-    tour1.classList.add("show");
+    pointToLine(1, hl1, tour1);
 
     setTimeout(()=>{
 
@@ -771,11 +769,7 @@ function startTour(){
 
         /* ARRAY */
 
-        pointer.style.left = "620px";
-        pointer.style.top = "170px";
-
-        hl2.classList.add("show");
-        tour2.classList.add("show");
+        pointToLine(2, hl2, tour2);
 
     },2200);
 
@@ -786,11 +780,7 @@ function startTour(){
 
         /* PRINT */
 
-        pointer.style.left = "470px";
-        pointer.style.top = "290px";
-
-        hl3.classList.add("show");
-        tour3.classList.add("show");
+        pointToLine(4, hl3, tour3);
 
     },4400);
 
@@ -803,7 +793,7 @@ function startTour(){
 
         showConsole();
 
-    },6700);
+    },6600);
 }
 
 /* CONSOLE */
