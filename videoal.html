@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rectangle Lab Animation</title>
+<title>Shape Morph Lab</title>
 
 <style>
 body{
@@ -17,13 +17,12 @@ body{
     font-family:Inter,sans-serif;
 }
 
-/* FRAME */
 .frame{
-    width:420px;
-    height:780px;
+    width:430px;
+    height:800px;
+    position:relative;
     background:#0f172a;
     border-radius:28px;
-    position:relative;
     overflow:hidden;
     border:1px solid rgba(255,255,255,.08);
 }
@@ -49,53 +48,34 @@ canvas{
     padding:10px 12px;
     border-radius:14px;
     background:rgba(255,255,255,.06);
-    backdrop-filter:blur(10px);
     color:white;
-    font-size:12px;
     font-weight:800;
-    text-shadow:0 0 10px black;
+    font-size:12px;
+    backdrop-filter:blur(10px);
 }
 
-/* CALC PANEL */
-.panel{
+/* EQUATION */
+.eq{
     position:absolute;
     bottom:18px;
     left:18px;
     right:18px;
+    padding:14px;
 
-    background:rgba(2,6,23,.7);
+    background:rgba(2,6,23,.75);
     border:1px solid rgba(255,255,255,.08);
     border-radius:18px;
 
-    padding:14px;
     color:#7dd3fc;
+    font-weight:800;
+    font-size:14px;
 
-    font-size:13px;
-    font-weight:700;
-
-    backdrop-filter:blur(12px);
-    text-shadow:0 0 12px rgba(125,211,252,.6);
+    text-shadow:0 0 18px rgba(125,211,252,.7);
 }
 
 .glow{
     color:#38bdf8;
-    text-shadow:
-    0 0 10px #38bdf8,
-    0 0 25px #2563eb;
-}
-
-/* LABELS */
-.label{
-    position:absolute;
-    color:white;
-    font-size:12px;
-    font-weight:900;
-    padding:4px 8px;
-    border-radius:10px;
-    background:rgba(255,255,255,.06);
-    backdrop-filter:blur(6px);
-    border:1px solid rgba(255,255,255,.1);
-    text-shadow:0 0 12px rgba(255,255,255,.4);
+    text-shadow:0 0 12px #38bdf8, 0 0 28px #2563eb;
 }
 
 </style>
@@ -105,17 +85,15 @@ canvas{
 
 <div class="frame">
 
-<canvas id="c" width="420" height="780"></canvas>
+<canvas id="c" width="430" height="800"></canvas>
 
 <div class="hud">
-    <div class="box" id="coords">X:0 Y:0</div>
-    <div class="box" id="state">DRAWING</div>
+    <div class="box" id="state">LINE</div>
+    <div class="box" id="color">BLUE</div>
 </div>
 
-<div class="panel" id="panel">
-    Area: <span class="glow" id="area">0</span> |
-    Perimeter: <span class="glow" id="peri">0</span> |
-    Diagonal: <span class="glow" id="diag">0</span>
+<div class="eq" id="eq">
+Equation: <span class="glow">y = mx + b</span>
 </div>
 
 </div>
@@ -125,118 +103,161 @@ canvas{
 const canvas = document.getElementById("c");
 const ctx = canvas.getContext("2d");
 
-let w = 0, h = 0;
+let t = 0;
+let mode = 0;
 
-let rect = {
-    x:80,
-    y:200,
-    w:260,
-    h:220
-};
+/* COLOR SET */
+const colors = [
+    "#38bdf8", // line
+    "#a78bfa", // circle
+    "#4ade80", // rectangle
+    "#fbbf24", // triangle
+    "#ef4444"  // polygon
+];
 
-/* LIVE CALCS */
-function calc(){
-    let area = rect.w * rect.h;
-    let peri = 2 * (rect.w + rect.h);
-    let diag = Math.sqrt(rect.w*rect.w + rect.h*rect.h);
-
-    document.getElementById("area").innerText = area;
-    document.getElementById("peri").innerText = peri;
-    document.getElementById("diag").innerText = diag.toFixed(2);
+/* DRAW HELPERS */
+function clear(){
+    ctx.clearRect(0,0,430,800);
 }
 
-/* DRAW RECT */
-function draw(){
+/* LINE */
+function drawLine(){
+    ctx.strokeStyle = colors[0];
+    ctx.lineWidth = 4;
+    ctx.shadowColor = colors[0];
+    ctx.shadowBlur = 20;
 
-    ctx.clearRect(0,0,420,780);
-
-    /* glow effect */
-    ctx.shadowColor = "#38bdf8";
-    ctx.shadowBlur = 25;
-
-    ctx.strokeStyle = "#38bdf8";
-    ctx.lineWidth = 3;
-
-    ctx.strokeRect(rect.x, rect.y, rect.w, rect.h);
+    ctx.beginPath();
+    ctx.moveTo(100,400);
+    ctx.lineTo(330,400);
+    ctx.stroke();
 
     ctx.shadowBlur = 0;
-
-    /* corners */
-    drawPoint(rect.x, rect.y, "X");
-    drawPoint(rect.x+rect.w, rect.y, "Y");
-    drawPoint(rect.x+rect.w, rect.y+rect.h, "Z");
-    drawPoint(rect.x, rect.y+rect.h, "W");
-
-    /* labels */
-    label("X", rect.x, rect.y);
-    label("Y", rect.x+rect.w, rect.y);
-    label("Z", rect.x+rect.w, rect.y+rect.h);
-    label("W", rect.x, rect.y+rect.h);
 }
 
-/* POINT */
-function drawPoint(x,y){
-    ctx.fillStyle="#7dd3fc";
+/* CIRCLE */
+function drawCircle(){
+    let r = 90;
+
+    ctx.strokeStyle = colors[1];
+    ctx.lineWidth = 4;
+    ctx.shadowColor = colors[1];
+    ctx.shadowBlur = 25;
+
     ctx.beginPath();
-    ctx.arc(x,y,4,0,Math.PI*2);
-    ctx.fill();
+    ctx.arc(215,400,r,0,Math.PI*2);
+    ctx.stroke();
+
+    ctx.shadowBlur = 0;
 }
 
-/* LABEL DOM */
-function label(text,x,y){
+/* RECT */
+function drawRect(){
+    ctx.strokeStyle = colors[2];
+    ctx.lineWidth = 4;
+    ctx.shadowColor = colors[2];
+    ctx.shadowBlur = 25;
 
-    let el = document.getElementById("lab_"+text);
+    ctx.strokeRect(130,320,170,160);
 
-    if(!el){
-        el = document.createElement("div");
-        el.className = "label";
-        el.id = "lab_"+text;
-        el.innerText = text;
-        document.body.appendChild(el);
+    ctx.shadowBlur = 0;
+}
+
+/* TRIANGLE */
+function drawTriangle(){
+    ctx.strokeStyle = colors[3];
+    ctx.lineWidth = 4;
+    ctx.shadowColor = colors[3];
+    ctx.shadowBlur = 25;
+
+    ctx.beginPath();
+    ctx.moveTo(215,300);
+    ctx.lineTo(130,480);
+    ctx.lineTo(300,480);
+    ctx.closePath();
+    ctx.stroke();
+
+    ctx.shadowBlur = 0;
+}
+
+/* POLYGON */
+function drawPolygon(){
+    ctx.strokeStyle = colors[4];
+    ctx.lineWidth = 4;
+    ctx.shadowColor = colors[4];
+    ctx.shadowBlur = 25;
+
+    ctx.beginPath();
+
+    let cx = 215, cy = 400, r = 90;
+
+    for(let i=0;i<6;i++){
+        let a = (Math.PI*2/6)*i;
+        let x = cx + Math.cos(a)*r;
+        let y = cy + Math.sin(a)*r;
+
+        if(i==0) ctx.moveTo(x,y);
+        else ctx.lineTo(x,y);
     }
 
-    el.style.left = (x+10) + "px";
-    el.style.top = (y+10) + "px";
+    ctx.closePath();
+    ctx.stroke();
+
+    ctx.shadowBlur = 0;
 }
 
-/* SNAP ANIMATION */
-let phase = 0;
+/* EQUATIONS */
+const eqs = [
+    "y = mx + b (LINE)",
+    "x² + y² = r² (CIRCLE)",
+    "A = w × h (RECTANGLE)",
+    "A = 1/2 × b × h (TRIANGLE)",
+    "A = (n × s²) / (4tan(π/n)) (POLYGON)"
+];
 
+/* STATE TEXT */
+const states = [
+    "LINE",
+    "CIRCLE",
+    "RECTANGLE",
+    "TRIANGLE",
+    "POLYGON"
+];
+
+/* ANIMATION LOOP */
 function animate(){
 
-    if(phase === 0){
+    clear();
 
-        rect.w += 2;
-        if(rect.w > 300) phase = 1;
-    }
+    /* snap transitions */
+    if(t < 60) mode = 0;
+    else if(t < 120) mode = 1;
+    else if(t < 180) mode = 2;
+    else if(t < 240) mode = 3;
+    else mode = 4;
 
-    else if(phase === 1){
+    /* draw current shape */
+    if(mode === 0) drawLine();
+    if(mode === 1) drawCircle();
+    if(mode === 2) drawRect();
+    if(mode === 3) drawTriangle();
+    if(mode === 4) drawPolygon();
 
-        rect.h += 2;
-        if(rect.h > 260) phase = 2;
-    }
+    /* UI update */
+    document.getElementById("state").innerText = states[mode];
+    document.getElementById("color").innerText = states[mode];
 
-    else if(phase === 2){
+    document.getElementById("eq").innerHTML =
+    `Equation: <span class="glow">${eqs[mode]}</span>`;
 
-        rect.x += (210 - rect.x) * 0.2;
-        rect.y += (220 - rect.y) * 0.2;
-    }
+    t += 2;
 
-    calc();
-    draw();
+    if(t > 300) t = 0;
 
     requestAnimationFrame(animate);
 }
 
 animate();
-
-/* LIVE COORD */
-document.addEventListener("mousemove",(e)=>{
-
-    document.getElementById("coords").innerText =
-    "X:" + e.clientX + " Y:" + e.clientY;
-
-});
 
 </script>
 
