@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Physics Solver Typing</title>
+<title>Physics Solver Cinema</title>
 
 <style>
 body{
@@ -17,40 +17,53 @@ body{
     align-items:center;
 }
 
-/* MAIN TEXT AREA */
+/* TEXT LAYER */
 .screen{
     width:90%;
     max-width:900px;
     color:#cbd5e1;
     font-size:18px;
-    line-height:2;
+    line-height:2.2;
     white-space:pre-wrap;
 }
 
-/* GLOW EFFECT */
+/* GLOW COLORS */
 .glow{
     color:#38bdf8;
     text-shadow:
-    0 0 10px #38bdf8,
-    0 0 30px #2563eb;
-    font-weight:800;
+    0 0 12px #38bdf8,
+    0 0 35px #2563eb;
+    font-weight:900;
 }
 
-/* STRONG HIGHLIGHT */
+/* STRONG RESULT */
 .big{
     color:#7dd3fc;
     font-size:22px;
     font-weight:900;
-    text-shadow:0 0 25px #38bdf8;
+    text-shadow:
+    0 0 20px #38bdf8,
+    0 0 40px #2563eb;
+}
+
+/* FINAL PULSE */
+.final{
+    color:#a78bfa;
+    font-size:24px;
+    font-weight:900;
+    text-shadow:
+    0 0 20px #a78bfa,
+    0 0 50px #7c3aed;
 }
 
 /* CURSOR */
 .cursor{
     display:inline-block;
     width:10px;
+    height:18px;
     background:white;
-    margin-left:4px;
-    animation:blink .7s infinite;
+    margin-left:6px;
+    animation:blink .6s infinite;
 }
 
 @keyframes blink{
@@ -68,48 +81,48 @@ body{
 
 const screen = document.getElementById("screen");
 
-/* FULL CONTENT FLOW */
+/* FULL FLOW (TOP → BOTTOM LOGIC) */
 const lines = [
 
-`PHYSICS PROBLEM:`,
-`A car starts from rest and accelerates at a constant rate of 3 m/s².`,
-`Find velocity after 10 seconds.`,
+"PHYSICS PROBLEM:",
+"A car starts from rest and accelerates at a constant rate of 3 m/s².",
+"Find velocity after 10 seconds.",
 
-``,
+"",
 
-`SOLUTION:`,
-`We use equation of motion:`,
+"SOLUTION:",
+"We use equation of motion:",
 
-`v = u + at`,
+"v = u + at",
 
-`Where:`,
-`u = initial velocity = 0 m/s`,
-`a = acceleration = <span class="glow">3 m/s²</span>`,
-`t = time = <span class="glow">10 s</span>`,
+"Where:",
+"u = initial velocity = 0 m/s",
+"a = <span class='glow'>3 m/s²</span>",
+"t = <span class='glow'>10 s</span>",
 
-``,
+"",
 
-`Now substitute values:`,
+"Substitute values:",
 
-`v = 0 + (3 × 10)`,
+"v = 0 + (3 × 10)",
 
-`v = <span class="big">30 m/s</span>`,
+"v = <span class='big'>30 m/s</span>",
 
-``,
+"",
 
-`FINAL ANSWER:`,
-`Velocity = <span class="big glow">30 m/s</span>`,
+"FINAL ANSWER:",
+"Velocity = <span class='final'>30 m/s</span>",
 
-``,
+"",
 
-`#DominexMacedon`
+"#DominexMacedon"
 ];
 
 let i = 0;
 let char = 0;
-let current = "";
+let output = "";
 
-/* TYPE FUNCTION */
+/* TYPE EFFECT */
 function type(){
 
     if(i >= lines.length) return;
@@ -118,18 +131,21 @@ function type(){
 
     if(char < line.length){
 
-        current += line.charAt(char);
-        screen.innerHTML = current + '<span class="cursor"></span>';
+        output += line.charAt(char);
+
+        screen.innerHTML = output + '<span class="cursor"></span>';
+
         char++;
 
-        setTimeout(type, 18);
+        setTimeout(type, 16); // smooth but not slow
     }
     else{
-        current += "\n";
+
+        output += "\n";
         i++;
         char = 0;
 
-        setTimeout(type, 250);
+        setTimeout(type, 180);
     }
 }
 
