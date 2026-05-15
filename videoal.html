@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculus Visual Lab</title>
+<title>Calculus Solver Cinema</title>
 
 <style>
 body{
@@ -13,108 +13,99 @@ body{
     justify-content:center;
     align-items:center;
     background:#020617;
-    overflow:hidden;
     font-family:Inter,sans-serif;
+    overflow:hidden;
 }
 
+/* FRAME */
 .frame{
     width:430px;
     height:800px;
-    position:relative;
     background:#0f172a;
     border-radius:28px;
-    overflow:hidden;
     border:1px solid rgba(255,255,255,.08);
+    position:relative;
+    overflow:hidden;
 }
 
-/* CANVAS */
-canvas{
+/* TOP */
+.top{
     position:absolute;
-    inset:0;
-}
-
-/* HUD */
-.hud{
-    position:absolute;
-    top:16px;
-    left:16px;
-    right:16px;
+    top:14px;
+    left:14px;
+    right:14px;
     display:flex;
     justify-content:space-between;
-    z-index:10;
-}
-
-.box{
-    padding:10px 12px;
-    border-radius:14px;
-    background:rgba(255,255,255,.06);
     color:white;
-    font-weight:900;
     font-size:12px;
-    backdrop-filter:blur(10px);
+    font-weight:900;
+    opacity:.8;
 }
 
-/* FORMULA */
-.formula{
+/* PROBLEM CODE BOX */
+.problem{
     position:absolute;
-    bottom:110px;
-    left:18px;
-    right:18px;
+    top:70px;
+    left:14px;
+    right:14px;
+
+    background:#0b1220;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:18px;
 
     padding:14px;
-    border-radius:18px;
-
-    background:rgba(2,6,23,.75);
-    border:1px solid rgba(255,255,255,.08);
 
     color:#7dd3fc;
-    font-weight:900;
     font-size:14px;
+    font-weight:800;
 
-    text-shadow:0 0 18px rgba(125,211,252,.7);
-
-    transition:.3s;
+    text-shadow:0 0 12px rgba(125,211,252,.4);
 }
 
-.glow{
-    color:#38bdf8;
-    text-shadow:0 0 12px #38bdf8, 0 0 30px #2563eb;
-    font-size:18px;
-}
-
-/* EXPLANATION */
-.explain{
+/* SOLUTION AREA */
+.solution{
     position:absolute;
-    bottom:18px;
-    left:18px;
-    right:18px;
+    top:200px;
+    left:14px;
+    right:14px;
+    bottom:100px;
 
-    padding:16px;
-    border-radius:18px;
-
-    background:rgba(15,23,42,.9);
-    border:1px solid rgba(255,255,255,.08);
+    display:flex;
+    flex-direction:column;
+    gap:12px;
 
     color:white;
-    font-size:13px;
     font-weight:700;
+    font-size:13px;
+}
 
+/* STEP */
+.step{
     opacity:0;
-    transform:translateY(10px) scale(.95);
-
+    transform:translateY(10px);
     transition:.4s;
 }
 
-.explain.show{
+.step.show{
     opacity:1;
-    transform:translateY(0) scale(1.05);
+    transform:translateY(0);
 }
 
+/* GLOW TEXT */
+.glow{
+    color:#38bdf8;
+    text-shadow:
+    0 0 8px #38bdf8,
+    0 0 25px #2563eb;
+    font-size:15px;
+}
+
+/* BIG HIGHLIGHT */
 .big{
     color:#7dd3fc;
-    font-size:16px;
+    font-size:18px;
     font-weight:900;
-    text-shadow:0 0 12px #38bdf8;
+    text-shadow:0 0 18px #38bdf8;
 }
 
 /* END */
@@ -125,7 +116,6 @@ canvas{
     justify-content:center;
     align-items:center;
     flex-direction:column;
-
     background:rgba(2,6,23,.95);
 
     opacity:0;
@@ -140,14 +130,15 @@ canvas{
     color:white;
     font-size:34px;
     font-weight:900;
-    text-align:center;
 }
 
 .end h2{
-    color:#7dd3fc;
-    margin-top:12px;
-    font-size:18px;
+    color:#38bdf8;
+    margin-top:10px;
+    font-size:16px;
+    font-weight:800;
 }
+
 </style>
 </head>
 
@@ -155,154 +146,92 @@ canvas{
 
 <div class="frame">
 
-<canvas id="c" width="430" height="800"></canvas>
-
-<div class="hud">
-    <div class="box" id="state">FUNCTION</div>
-    <div class="box" id="mode">f(x)</div>
+<div class="top">
+    <div>CALCULUS SOLVER</div>
+    <div>#DominexMacedon</div>
 </div>
 
-<div class="formula" id="formula">
-f(x) = x²
+<!-- PROBLEM -->
+<div class="problem" id="problem">
+<pre>
+Solve:
+f(x) = x² + 3x + 2
+Find f'(x)
+</pre>
 </div>
 
-<div class="explain" id="explain"></div>
+<!-- SOLUTION -->
+<div class="solution">
 
+    <div class="step" id="s1">
+        Step 1: Break function into parts
+    </div>
+
+    <div class="step" id="s2">
+        f(x) = x² + 3x + 2
+    </div>
+
+    <div class="step" id="s3">
+        Apply derivative rules:
+    </div>
+
+    <div class="step" id="s4">
+        d/dx(x²) = <span class="glow">2x</span>
+    </div>
+
+    <div class="step" id="s5">
+        d/dx(3x) = <span class="glow">3</span>
+    </div>
+
+    <div class="step" id="s6">
+        d/dx(2) = <span class="glow">0</span>
+    </div>
+
+    <div class="step" id="s7">
+        Combine results:
+    </div>
+
+    <div class="step" id="s8">
+        <span class="big">f'(x) = 2x + 3</span>
+    </div>
+
+</div>
+
+<!-- END -->
 <div class="end" id="end">
-    <h1>#DominexMacedon</h1>
-    <h2>Calculus Visual Cinema</h2>
+    <h1>ANSWER COMPLETE</h1>
+    <h2>#DominexMacedon</h2>
 </div>
 
 </div>
 
 <script>
 
-const canvas = document.getElementById("c");
-const ctx = canvas.getContext("2d");
+let steps = [
+"s1","s2","s3","s4","s5","s6","s7","s8"
+];
 
-let t = 0;
-let mode = 0;
+let i = 0;
 
-/* FUNCTION */
-function f(x){
-    return Math.pow(x-2,2)/10 + 200;
-}
+function showSteps(){
 
-/* DRAW GRAPH */
-function drawGraph(){
+    if(i < steps.length){
 
-    ctx.strokeStyle="#38bdf8";
-    ctx.lineWidth=3;
-    ctx.shadowColor="#38bdf8";
-    ctx.shadowBlur=15;
+        document.getElementById(steps[i]).classList.add("show");
 
-    ctx.beginPath();
+        i++;
 
-    for(let x=0;x<430;x+=2){
-        let y = f(x);
-        if(x===0) ctx.moveTo(x,y);
-        else ctx.lineTo(x,y);
+        setTimeout(showSteps,650);
     }
-
-    ctx.stroke();
-    ctx.shadowBlur=0;
-}
-
-/* DERIVATIVE TANGENT */
-function drawTangent(){
-
-    let x = 200;
-    let y = f(x);
-
-    let slope = (f(x+5)-f(x))/5;
-
-    ctx.strokeStyle="#a78bfa";
-    ctx.lineWidth=3;
-
-    ctx.beginPath();
-    ctx.moveTo(x-60, y - slope*60);
-    ctx.lineTo(x+60, y + slope*60);
-    ctx.stroke();
-}
-
-/* INTEGRAL AREA */
-function drawArea(){
-
-    ctx.fillStyle="rgba(56,189,248,.2)";
-
-    ctx.beginPath();
-
-    for(let x=120;x<300;x+=2){
-        let y = f(x);
-        ctx.lineTo(x,y);
-    }
-
-    ctx.lineTo(300,600);
-    ctx.lineTo(120,600);
-
-    ctx.closePath();
-    ctx.fill();
-}
-
-/* EXPLANATION */
-function explain(text, big){
-
-    const el = document.getElementById("explain");
-
-    el.innerHTML = text;
-
-    if(big){
-        el.classList.add("show");
-    }else{
-        el.classList.remove("show");
-    }
-}
-
-/* LOOP */
-function animate(){
-
-    ctx.clearRect(0,0,430,800);
-
-    drawGraph();
-
-    if(t < 120){
-        mode=0;
-        document.getElementById("formula").innerHTML =
-        `f(x) = <span class="glow">x²</span>`;
-
-        explain("This is a function graph showing curve behavior",false);
-    }
-
-    else if(t < 240){
-        mode=1;
-        drawTangent();
-
-        document.getElementById("formula").innerHTML =
-        `Derivative: <span class="glow">f'(x)</span>`;
-
-        explain("<span class='big'>Slope changes instantly at every point</span>",true);
-    }
-
-    else if(t < 360){
-        mode=2;
-        drawArea();
-
-        document.getElementById("formula").innerHTML =
-        `Integral: <span class="glow">∫ f(x) dx</span>`;
-
-        explain("<span class='big'>Area under curve represents accumulation</span>",true);
-    }
-
     else{
-        document.getElementById("end").classList.add("show");
+        setTimeout(()=>{
+            document.getElementById("end").classList.add("show");
+        },900);
     }
-
-    t++;
-
-    requestAnimationFrame(animate);
 }
 
-animate();
+/* START */
+setTimeout(showSteps,800);
 
 </script>
 
