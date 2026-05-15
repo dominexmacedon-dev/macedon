@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Physics Solver Cinema</title>
+<title>Physics Cinema Flow</title>
 
 <style>
 body{
@@ -17,14 +17,64 @@ body{
     align-items:center;
 }
 
-/* TEXT LAYER */
+/* MAIN SCREEN */
 .screen{
     width:90%;
     max-width:900px;
+    position:relative;
     color:#cbd5e1;
     font-size:18px;
     line-height:2.2;
-    white-space:pre-wrap;
+}
+
+/* PROBLEM BLOCK */
+.problem{
+    position:absolute;
+    left:0;
+    right:0;
+
+    text-align:center;
+    top:40%;
+
+    color:#38bdf8;
+    font-weight:900;
+    font-size:20px;
+
+    text-shadow:
+    0 0 12px #38bdf8,
+    0 0 30px #2563eb;
+
+    transition:all 1.2s ease;
+}
+
+/* MOVE UP STATE */
+.problem.up{
+    top:10%;
+    font-size:16px;
+    text-align:left;
+    color:#7dd3fc;
+}
+
+/* SOLUTION */
+.solution{
+    position:absolute;
+    top:25%;
+    left:0;
+    right:0;
+
+    opacity:0;
+    transform:translateY(20px);
+
+    transition:1s ease;
+
+    color:#cbd5e1;
+    font-weight:700;
+}
+
+/* SHOW SOLUTION */
+.solution.show{
+    opacity:1;
+    transform:translateY(0);
 }
 
 /* GLOW COLORS */
@@ -32,28 +82,22 @@ body{
     color:#38bdf8;
     text-shadow:
     0 0 12px #38bdf8,
-    0 0 35px #2563eb;
+    0 0 30px #2563eb;
     font-weight:900;
 }
 
-/* STRONG RESULT */
 .big{
     color:#7dd3fc;
     font-size:22px;
     font-weight:900;
-    text-shadow:
-    0 0 20px #38bdf8,
-    0 0 40px #2563eb;
+    text-shadow:0 0 25px #38bdf8;
 }
 
-/* FINAL PULSE */
 .final{
     color:#a78bfa;
     font-size:24px;
     font-weight:900;
-    text-shadow:
-    0 0 20px #a78bfa,
-    0 0 50px #7c3aed;
+    text-shadow:0 0 35px #7c3aed;
 }
 
 /* CURSOR */
@@ -75,24 +119,27 @@ body{
 
 <body>
 
-<div class="screen" id="screen"></div>
+<div class="screen">
+
+    <div class="problem" id="problem"></div>
+
+    <div class="solution" id="solution"></div>
+
+</div>
 
 <script>
 
-const screen = document.getElementById("screen");
+const problemEl = document.getElementById("problem");
+const solutionEl = document.getElementById("solution");
 
-/* FULL FLOW (TOP → BOTTOM LOGIC) */
-const lines = [
+/* PROBLEM TEXT */
+const problemText =
+"A car starts from rest and accelerates at 3 m/s². Find velocity after 10 seconds.";
 
-"PHYSICS PROBLEM:",
-"A car starts from rest and accelerates at a constant rate of 3 m/s².",
-"Find velocity after 10 seconds.",
-
-"",
-
+/* SOLUTION STEPS */
+const steps = [
 "SOLUTION:",
 "We use equation of motion:",
-
 "v = u + at",
 
 "Where:",
@@ -100,56 +147,69 @@ const lines = [
 "a = <span class='glow'>3 m/s²</span>",
 "t = <span class='glow'>10 s</span>",
 
-"",
-
 "Substitute values:",
-
 "v = 0 + (3 × 10)",
 
 "v = <span class='big'>30 m/s</span>",
 
-"",
-
 "FINAL ANSWER:",
-"Velocity = <span class='final'>30 m/s</span>",
-
-"",
-
-"#DominexMacedon"
+"Velocity = <span class='final'>30 m/s</span>"
 ];
 
+/* TYPE PROBLEM CENTER */
 let i = 0;
-let char = 0;
-let output = "";
 
-/* TYPE EFFECT */
-function type(){
+function typeProblem(){
 
-    if(i >= lines.length) return;
+    if(i < problemText.length){
 
-    let line = lines[i];
+        problemEl.innerHTML += problemText[i];
 
-    if(char < line.length){
+        i++;
 
-        output += line.charAt(char);
-
-        screen.innerHTML = output + '<span class="cursor"></span>';
-
-        char++;
-
-        setTimeout(type, 16); // smooth but not slow
+        setTimeout(typeProblem, 18);
     }
     else{
 
-        output += "\n";
-        i++;
-        char = 0;
-
-        setTimeout(type, 180);
+        setTimeout(moveUp, 600);
     }
 }
 
-type();
+/* MOVE PROBLEM UP */
+function moveUp(){
+
+    problemEl.classList.add("up");
+
+    setTimeout(showSolution, 900);
+}
+
+/* SHOW SOLUTION */
+let j = 0;
+
+function showSolution(){
+
+    solutionEl.classList.add("show");
+
+    typeSolution();
+}
+
+/* TYPE SOLUTION */
+function typeSolution(){
+
+    if(j >= steps.length) return;
+
+    let line = document.createElement("div");
+    line.innerHTML = steps[j];
+
+    solutionEl.appendChild(line);
+
+    j++;
+
+    setTimeout(typeSolution, 650);
+}
+
+/* START */
+typeProblem();
 
 </script>
 
