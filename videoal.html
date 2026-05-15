@@ -17,12 +17,14 @@
 }
 
 body{
-    background:#020617;
+    background:#030712;
     height:100vh;
     overflow:hidden;
+
     display:flex;
     justify-content:center;
     align-items:center;
+
     font-family:Inter,sans-serif;
 }
 
@@ -33,36 +35,36 @@ body::after{
     content:"";
     position:absolute;
     border-radius:50%;
-    filter:blur(160px);
+    filter:blur(140px);
 }
 
 body::before{
-    width:480px;
-    height:480px;
+    width:340px;
+    height:340px;
     background:#2563eb;
-    top:-200px;
-    left:-200px;
-    opacity:.2;
+    top:-120px;
+    left:-120px;
+    opacity:.18;
 }
 
 body::after{
-    width:480px;
-    height:480px;
+    width:340px;
+    height:340px;
     background:#7c3aed;
-    right:-200px;
-    bottom:-200px;
-    opacity:.18;
+    right:-120px;
+    bottom:-120px;
+    opacity:.16;
 }
 
 /* FRAME */
 
 .frame{
-    width:430px;
-    height:860px;
+    width:390px;
+    height:780px;
 
     background:#0f172a;
 
-    border-radius:42px;
+    border-radius:34px;
 
     overflow:hidden;
 
@@ -71,33 +73,8 @@ body::after{
     border:1px solid rgba(255,255,255,.06);
 
     box-shadow:
-    0 0 80px rgba(0,0,0,.7),
+    0 0 70px rgba(0,0,0,.7),
     inset 0 0 30px rgba(255,255,255,.03);
-}
-
-/* GLOW */
-
-.glow{
-    position:absolute;
-    border-radius:50%;
-    filter:blur(90px);
-    opacity:.18;
-}
-
-.g1{
-    width:220px;
-    height:220px;
-    background:#2563eb;
-    top:30px;
-    left:-40px;
-}
-
-.g2{
-    width:220px;
-    height:220px;
-    background:#7c3aed;
-    right:-40px;
-    bottom:30px;
 }
 
 /* INTRO */
@@ -111,7 +88,7 @@ body::after{
     justify-content:center;
     align-items:center;
 
-    z-index:20;
+    z-index:10;
 
     transition:1s ease;
 }
@@ -122,10 +99,10 @@ body::after{
 }
 
 .pythonLogo{
-    width:120px;
+    width:110px;
 
     filter:
-    drop-shadow(0 0 35px rgba(59,130,246,.55));
+    drop-shadow(0 0 35px rgba(59,130,246,.5));
 
     animation:float 4s ease-in-out infinite;
 }
@@ -137,11 +114,11 @@ body::after{
 }
 
 .title{
-    margin-top:30px;
+    margin-top:28px;
 
     color:white;
 
-    font-size:42px;
+    font-size:36px;
 
     font-weight:900;
 
@@ -153,35 +130,33 @@ body::after{
 }
 
 .sub{
-    margin-top:18px;
+    margin-top:16px;
 
     color:#7dd3fc;
 
-    font-size:17px;
+    font-size:15px;
 
     font-weight:700;
 
     text-align:center;
 
-    line-height:1.7;
+    line-height:1.8;
 }
 
-/* MAIN CARD */
+/* CARD */
 
 .card{
     position:absolute;
 
-    inset:22px;
+    inset:18px;
 
-    background:rgba(15,23,42,.84);
+    background:rgba(15,23,42,.9);
 
     border:1px solid rgba(255,255,255,.06);
 
-    border-radius:30px;
+    border-radius:28px;
 
-    backdrop-filter:blur(18px);
-
-    padding:26px;
+    padding:22px;
 
     opacity:0;
 
@@ -190,7 +165,7 @@ body::after{
     display:flex;
     flex-direction:column;
 
-    z-index:30;
+    backdrop-filter:blur(18px);
 }
 
 .card.show{
@@ -202,101 +177,45 @@ body::after{
 .label{
     color:#38bdf8;
 
-    font-size:13px;
+    font-size:12px;
 
     font-weight:800;
 
     letter-spacing:2px;
 }
 
-/* HEADLINE */
+/* TITLE */
 
-.headline{
-    margin-top:14px;
+.mainTitle{
+    margin-top:10px;
 
     color:white;
 
-    font-size:34px;
+    font-size:28px;
 
     font-weight:900;
 
-    line-height:1.15;
+    line-height:1.2;
 
     letter-spacing:-1px;
-
-    min-height:82px;
-}
-
-/* GLOW WORD */
-
-.glowWord{
-    display:inline-block;
-
-    font-weight:900;
-
-    animation:glowPulse 1.5s ease-in-out infinite;
-}
-
-.blue{
-    color:#7dd3fc;
-
-    text-shadow:
-    0 0 12px rgba(125,211,252,.9),
-    0 0 28px rgba(59,130,246,.8),
-    0 0 60px rgba(59,130,246,.55);
-}
-
-.green{
-    color:#86efac;
-
-    text-shadow:
-    0 0 12px rgba(134,239,172,.9),
-    0 0 28px rgba(34,197,94,.8),
-    0 0 60px rgba(34,197,94,.55);
-}
-
-.purple{
-    color:#d8b4fe;
-
-    text-shadow:
-    0 0 12px rgba(216,180,254,.9),
-    0 0 28px rgba(168,85,247,.8),
-    0 0 60px rgba(168,85,247,.55);
-}
-
-.orange{
-    color:#fdba74;
-
-    text-shadow:
-    0 0 12px rgba(253,186,116,.9),
-    0 0 28px rgba(249,115,22,.8),
-    0 0 60px rgba(249,115,22,.55);
-}
-
-@keyframes glowPulse{
-    50%{
-        transform:scale(1.06);
-    }
 }
 
 /* CODE WINDOW */
 
 .window{
-    margin-top:24px;
+    margin-top:22px;
+
+    background:#020617;
 
     border-radius:22px;
 
     overflow:hidden;
 
     border:1px solid rgba(255,255,255,.06);
-
-    background:#020617;
 }
 
-/* TOPBAR */
-
 .topbar{
-    height:52px;
+    height:48px;
 
     background:#111827;
 
@@ -305,26 +224,26 @@ body::after{
     display:flex;
     align-items:center;
 
-    padding:0 18px;
+    padding:0 16px;
 }
 
 .dot{
-    width:10px;
-    height:10px;
+    width:9px;
+    height:9px;
     border-radius:50%;
     margin-right:6px;
 }
 
 .red{background:#ef4444;}
 .yellow{background:#facc15;}
-.greenDot{background:#22c55e;}
+.green{background:#22c55e;}
 
 .file{
     margin-left:10px;
 
     color:#cbd5e1;
 
-    font-size:13px;
+    font-size:12px;
 
     font-weight:700;
 }
@@ -332,22 +251,22 @@ body::after{
 /* CODE */
 
 .code{
-    padding:22px;
+    padding:20px;
 
-    min-height:180px;
+    min-height:290px;
 
     font-family:'Fira Code', monospace;
 
-    font-size:16px;
+    font-size:14px;
 
-    line-height:2;
+    line-height:2.1;
 
     color:white;
 }
 
 .line{
     display:grid;
-    grid-template-columns:34px auto;
+    grid-template-columns:28px auto;
     align-items:flex-start;
 }
 
@@ -359,6 +278,8 @@ body::after{
     white-space:pre-wrap;
     word-break:break-word;
 }
+
+/* COLORS */
 
 .comment{
     color:#64748b;
@@ -380,28 +301,74 @@ body::after{
     color:#c084fc;
 }
 
-/* GLOW CODE */
-
-.highlight{
-    font-weight:900;
-
-    animation:codePulse 1.4s ease-in-out infinite;
+.orange{
+    color:#fb923c;
 }
 
-@keyframes codePulse{
+/* HIGHLIGHT */
+
+.highlight{
+    font-size:17px;
+
+    font-weight:900;
+
+    animation:pulse 1.5s ease-in-out infinite;
+}
+
+.glowBlue{
+    color:#7dd3fc;
+
+    text-shadow:
+    0 0 12px rgba(125,211,252,.95),
+    0 0 30px rgba(59,130,246,.8),
+    0 0 60px rgba(59,130,246,.55);
+}
+
+.glowGreen{
+    color:#86efac;
+
+    text-shadow:
+    0 0 12px rgba(134,239,172,.95),
+    0 0 30px rgba(34,197,94,.8),
+    0 0 60px rgba(34,197,94,.55);
+}
+
+.glowPurple{
+    color:#d8b4fe;
+
+    text-shadow:
+    0 0 12px rgba(216,180,254,.95),
+    0 0 30px rgba(168,85,247,.8),
+    0 0 60px rgba(168,85,247,.55);
+}
+
+.glowOrange{
+    color:#fdba74;
+
+    text-shadow:
+    0 0 12px rgba(253,186,116,.95),
+    0 0 30px rgba(249,115,22,.8),
+    0 0 60px rgba(249,115,22,.55);
+}
+
+@keyframes pulse{
     50%{
-        filter:brightness(1.3);
+        transform:scale(1.08);
     }
 }
 
 /* CURSOR */
 
 .cursor{
-    width:8px;
-    height:17px;
+    width:7px;
+    height:15px;
+
     background:white;
+
     display:inline-block;
+
     margin-left:2px;
+
     animation:blink .7s infinite;
 }
 
@@ -411,10 +378,10 @@ body::after{
     }
 }
 
-/* EXPLANATION */
+/* EXPLAIN */
 
-.explainBox{
-    margin-top:24px;
+.explain{
+    margin-top:22px;
 
     background:linear-gradient(
         135deg,
@@ -422,19 +389,17 @@ body::after{
         rgba(59,130,246,.08)
     );
 
-    border:1px solid rgba(96,165,250,.16);
+    border:1px solid rgba(96,165,250,.15);
 
-    border-radius:22px;
+    border-radius:20px;
 
-    padding:20px;
-
-    min-height:130px;
+    padding:18px;
 }
 
 .explainTitle{
     color:#7dd3fc;
 
-    font-size:13px;
+    font-size:12px;
 
     font-weight:900;
 
@@ -446,35 +411,13 @@ body::after{
 
     color:white;
 
-    font-size:15px;
+    font-size:14px;
 
     line-height:1.9;
 
     font-weight:500;
-}
 
-/* TERMINAL */
-
-.terminal{
-    margin-top:20px;
-
-    background:#020617;
-
-    border-radius:20px;
-
-    border:1px solid rgba(255,255,255,.06);
-
-    padding:18px;
-
-    min-height:110px;
-
-    font-family:'Fira Code', monospace;
-
-    color:#4ade80;
-
-    font-size:15px;
-
-    line-height:2;
+    min-height:80px;
 }
 
 /* FINAL */
@@ -492,7 +435,7 @@ body::after{
 
     transition:1s ease;
 
-    z-index:60;
+    z-index:30;
 }
 
 .final.show{
@@ -502,7 +445,7 @@ body::after{
 .finalTitle{
     color:white;
 
-    font-size:44px;
+    font-size:38px;
 
     font-weight:900;
 
@@ -511,22 +454,16 @@ body::after{
     line-height:1.2;
 
     letter-spacing:-1px;
-
-    text-shadow:
-    0 0 35px rgba(255,255,255,.12);
 }
 
 .finalSub{
-    margin-top:20px;
+    margin-top:16px;
 
     color:#60a5fa;
 
-    font-size:18px;
+    font-size:16px;
 
     font-weight:800;
-
-    text-shadow:
-    0 0 20px rgba(96,165,250,.45);
 }
 
 </style>
@@ -535,9 +472,6 @@ body::after{
 <body>
 
 <div class="frame">
-
-    <div class="glow g1"></div>
-    <div class="glow g2"></div>
 
     <!-- INTRO -->
 
@@ -550,7 +484,7 @@ body::after{
 
         <div class="title">
             Programming Concepts<br>
-            in 15 Seconds
+            Explained Fast
         </div>
 
         <div class="sub">
@@ -564,12 +498,12 @@ body::after{
 
     <div class="card" id="card">
 
-        <div class="label" id="label">
-            VARIABLES
+        <div class="label">
+            PYTHON BASICS
         </div>
 
-        <div class="headline" id="headline">
-            Store Data
+        <div class="mainTitle">
+            Learn Core Concepts
         </div>
 
         <!-- CODE -->
@@ -580,7 +514,7 @@ body::after{
 
                 <div class="dot red"></div>
                 <div class="dot yellow"></div>
-                <div class="dot greenDot"></div>
+                <div class="dot green"></div>
 
                 <div class="file">
                     app.py
@@ -594,7 +528,7 @@ body::after{
 
         <!-- EXPLANATION -->
 
-        <div class="explainBox">
+        <div class="explain">
 
             <div class="explainTitle">
                 EXPLANATION
@@ -604,10 +538,6 @@ body::after{
 
         </div>
 
-        <!-- TERMINAL -->
-
-        <div class="terminal" id="terminal"></div>
-
     </div>
 
     <!-- FINAL -->
@@ -615,12 +545,12 @@ body::after{
     <div class="final" id="final">
 
         <div class="finalTitle">
-            Coding Should<br>
-            Feel Cinematic
+            Coding Can Feel<br>
+            Cinematic
         </div>
 
         <div class="finalSub">
-            Follow For More Python Concepts
+            Follow For More Python
         </div>
 
     </div>
@@ -637,20 +567,11 @@ document.getElementById("intro");
 const card =
 document.getElementById("card");
 
-const label =
-document.getElementById("label");
-
-const headline =
-document.getElementById("headline");
-
 const code =
 document.getElementById("code");
 
 const explain =
 document.getElementById("explain");
-
-const terminal =
-document.getElementById("terminal");
 
 const final =
 document.getElementById("final");
@@ -665,219 +586,126 @@ setTimeout(()=>{
 
         card.classList.add("show");
 
-        variableScene();
+        startTyping();
 
     },900);
 
-},2800);
+},2500);
 
-/* TYPE TEXT */
+/* CODE */
 
-function typeText(el,text,speed=25){
+const lines = [
 
-    el.innerHTML = "";
+`<span class="comment"># Python Concepts</span>`,
+
+`<span class="variable highlight glowBlue">name</span> = <span class="string">"Dominex"</span>`,
+
+`<span class="func highlight glowGreen">print</span>(<span class="string">"Hello"</span>, name)`,
+
+`<span class="keyword highlight glowPurple">for</span> i in range(3):`,
+
+`    <span class="func">print</span>(i)`,
+
+`response = requests.<span class="orange highlight glowOrange">get</span>(<span class="string">"api.weather.com"</span>)`
+
+];
+
+let lineIndex = 0;
+
+function startTyping(){
+
+    typeLine();
+}
+
+function typeLine(){
+
+    if(lineIndex >= lines.length){
+
+        setTimeout(showExplain,1000);
+
+        return;
+    }
+
+    const row =
+    document.createElement("div");
+
+    row.className = "line";
+
+    row.innerHTML = `
+        <div class="num">${lineIndex + 1}</div>
+        <div class="text"></div>
+    `;
+
+    code.appendChild(row);
+
+    const text =
+    row.querySelector(".text");
+
+    const html =
+    lines[lineIndex];
 
     let i = 0;
 
-    function write(){
+    function type(){
 
-        el.innerHTML =
-        text.substring(0,i) +
+        text.innerHTML =
+        html.substring(0,i) +
         '<span class="cursor"></span>';
 
         i++;
 
-        if(i <= text.length){
+        if(i <= html.length){
 
-            setTimeout(write,speed);
+            setTimeout(type,7);
 
         }else{
 
-            el.innerHTML = text;
+            text.innerHTML = html;
+
+            lineIndex++;
+
+            setTimeout(typeLine,220);
         }
     }
 
-    write();
+    type();
 }
 
-/* TYPE CODE */
+/* EXPLAIN */
 
-function typeCode(lines){
+const explainText =
 
-    code.innerHTML = "";
+`<span class="glowBlue highlight">Variables</span> store data,
+<span class="glowGreen highlight">functions</span> run actions,
+<span class="glowPurple highlight">loops</span> repeat tasks,
+and APIs connect apps using
+<span class="glowOrange highlight">requests.get()</span>.`;
 
-    let lineIndex = 0;
+function showExplain(){
 
-    function addLine(){
+    let i = 0;
 
-        if(lineIndex >= lines.length){
-            return;
+    function type(){
+
+        explain.innerHTML =
+        explainText.substring(0,i) +
+        '<span class="cursor"></span>';
+
+        i++;
+
+        if(i <= explainText.length){
+
+            setTimeout(type,8);
+
+        }else{
+
+            explain.innerHTML = explainText;
+
+            setTimeout(showFinal,4500);
         }
-
-        const row =
-        document.createElement("div");
-
-        row.className = "line";
-
-        row.innerHTML = `
-            <div class="num">${lineIndex + 1}</div>
-            <div class="text"></div>
-        `;
-
-        code.appendChild(row);
-
-        const text =
-        row.querySelector(".text");
-
-        const html =
-        lines[lineIndex];
-
-        let i = 0;
-
-        function type(){
-
-            text.innerHTML =
-            html.substring(0,i) +
-            '<span class="cursor"></span>';
-
-            i++;
-
-            if(i <= html.length){
-
-                setTimeout(type,8);
-
-            }else{
-
-                text.innerHTML = html;
-
-                lineIndex++;
-
-                setTimeout(addLine,220);
-            }
-        }
-
-        type();
     }
 
-    addLine();
-}
-
-/* VARIABLE */
-
-function variableScene(){
-
-    label.innerText = "VARIABLE";
-
-    headline.innerHTML =
-    `Store <span class="glowWord blue">Data</span>`;
-
-    typeCode([
-
-`<span class="variable highlight blue">name</span> = <span class="string">"Dominex"</span>`
-
-    ]);
-
-    typeText(
-        explain,
-        "Variables store information inside your Python program."
-    );
-
-    typeText(
-        terminal,
-        'name → "Dominex"',
-        30
-    );
-
-    setTimeout(functionScene,5200);
-}
-
-/* FUNCTION */
-
-function functionScene(){
-
-    label.innerText = "FUNCTION";
-
-    headline.innerHTML =
-    `Run <span class="glowWord green">Actions</span>`;
-
-    typeCode([
-
-`<span class="func highlight green">print</span>(<span class="string">"Hello"</span>)`
-
-    ]);
-
-    typeText(
-        explain,
-        "Functions execute actions and help organize your code."
-    );
-
-    typeText(
-        terminal,
-        "Hello",
-        35
-    );
-
-    setTimeout(loopScene,5200);
-}
-
-/* LOOP */
-
-function loopScene(){
-
-    label.innerText = "LOOP";
-
-    headline.innerHTML =
-    `Repeat <span class="glowWord purple">Tasks</span>`;
-
-    typeCode([
-
-`<span class="keyword highlight purple">for</span> i in range(3):`,
-`    print(i)`
-
-    ]);
-
-    typeText(
-        explain,
-        "Loops automatically repeat code multiple times."
-    );
-
-    typeText(
-        terminal,
-        "0\n1\n2",
-        40
-    );
-
-    setTimeout(apiScene,5600);
-}
-
-/* API */
-
-function apiScene(){
-
-    label.innerText = "API";
-
-    headline.innerHTML =
-    `Connect <span class="glowWord orange">Systems</span>`;
-
-    typeCode([
-
-`response = requests.get(`,
-`"api.weather.com")`
-
-    ]);
-
-    typeText(
-        explain,
-        "APIs allow applications to communicate and share data."
-    );
-
-    typeText(
-        terminal,
-        "Weather Data Received",
-        35
-    );
-
-    setTimeout(showFinal,6200);
+    type();
 }
 
 /* FINAL */
