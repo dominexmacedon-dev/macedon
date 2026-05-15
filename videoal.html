@@ -17,59 +17,68 @@ body{
     align-items:center;
 }
 
-/* MAIN CONTAINER */
+/* SCENE */
 .scene{
     width:90%;
     max-width:900px;
-    position:relative;
     height:100vh;
+    position:relative;
 }
 
-/* PROBLEM BLOCK (CENTER → TOP) */
+/* PROBLEM */
 .problem{
     position:absolute;
     top:50%;
     left:50%;
     transform:translate(-50%,-50%);
     text-align:center;
+    width:100%;
     color:#38bdf8;
     font-size:22px;
     font-weight:900;
     text-shadow:0 0 20px #38bdf8;
-    transition:all 1.2s ease;
-    width:100%;
+    transition:all 1.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* after move */
+/* MOVE UP */
 .problem.top{
-    top:12%;
-    transform:translate(-50%,0);
+    top:10%;
     font-size:18px;
     color:#60a5fa;
     text-shadow:0 0 15px #2563eb;
 }
 
-/* SOLUTION BLOCK */
+/* SOLUTION BOX (kept inside view) */
 .solution{
     position:absolute;
-    top:28%;
+    top:22%;
     left:50%;
     transform:translateX(-50%);
     width:100%;
     text-align:center;
-    opacity:0;
-    transition:opacity 1s ease;
     color:#cbd5e1;
-    line-height:2;
+    line-height:1.9;
     font-size:18px;
+
+    max-height:65vh;
+    overflow:hidden;
 }
 
-/* reveal solution */
-.solution.show{
-    opacity:1;
+/* LINE FADE IN (thinking effect) */
+.line{
+    opacity:0;
+    transform:translateY(10px);
+    animation:appear 0.9s ease forwards;
 }
 
-/* highlight styles */
+@keyframes appear{
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* COLORS */
 .glow{
     color:#38bdf8;
     text-shadow:0 0 10px #38bdf8;
@@ -87,10 +96,27 @@ body{
     color:#a78bfa;
     font-size:24px;
     font-weight:900;
-    text-shadow:0 0 30px #7c3aed;
+    text-shadow:0 0 35px #7c3aed;
 }
 
-/* cursor */
+/* FOOTER */
+.credit{
+    position:absolute;
+    bottom:18px;
+    width:100%;
+    text-align:center;
+    color:#64748b;
+    font-size:12px;
+    letter-spacing:1px;
+    animation:breath 3s ease-in-out infinite;
+}
+
+@keyframes breath{
+    0%,100%{opacity:0.5}
+    50%{opacity:1}
+}
+
+/* CURSOR */
 .cursor{
     display:inline-block;
     width:10px;
@@ -111,11 +137,11 @@ body{
 
 <div class="scene">
 
-    <!-- PROBLEM -->
     <div class="problem" id="problem"></div>
 
-    <!-- SOLUTION -->
     <div class="solution" id="solution"></div>
+
+    <div class="credit">Animated by Dominex Macedon</div>
 
 </div>
 
@@ -124,13 +150,13 @@ body{
 const problemEl = document.getElementById("problem");
 const solutionEl = document.getElementById("solution");
 
-/* TEXT */
+/* PROBLEM */
 const problemText =
 `PHYSICS PROBLEM:
 A car starts from rest and accelerates at 3 m/s².
 Find velocity after 10 seconds.`;
 
-/* SOLUTION LINES */
+/* SOLUTION */
 const solutionLines = [
 "SOLUTION:",
 "We use equation of motion:",
@@ -141,52 +167,60 @@ const solutionLines = [
 "a = <span class='glow'>3 m/s²</span>",
 "t = <span class='glow'>10 s</span>",
 "",
-"Substitute:",
-"v = 0 + (3 × 10)",
-"v = <span class='big'>30 m/s</span>",
+"Now the system thinks...",
 "",
-"FINAL ANSWER:",
-"<span class='final'>Velocity = 30 m/s</span>"
+"v = 0 + (3 × 10)",
+"",
+"<span class='big'>Computing velocity...</span>",
+"",
+"<span class='final'>FINAL: 30 m/s</span>"
 ];
 
-let i = 0;
 let char = 0;
-let solutionIndex = 0;
+let solIndex = 0;
 
-/* TYPE PROBLEM FIRST */
+/* TYPE PROBLEM */
 function typeProblem(){
 
     if(char < problemText.length){
-        problemEl.innerHTML = problemText.substring(0, char+1) + '<span class="cursor"></span>';
+        problemEl.innerHTML =
+            problemText.substring(0, char+1) + '<span class="cursor"></span>';
+
         char++;
-        setTimeout(typeProblem, 20);
-    } else {
+        setTimeout(typeProblem, 28);
+    }
+    else{
         problemEl.innerHTML = problemText;
 
-        // MOVE PROBLEM UP
         setTimeout(() => {
             problemEl.classList.add("top");
             startSolution();
-        }, 800);
+        }, 900);
     }
 }
 
-/* TYPE SOLUTION */
+/* SLOW THINKING TYPE EFFECT */
 function startSolution(){
 
-    solutionEl.classList.add("show");
+    function addLine(){
 
-    function typeSolution(){
+        if(solIndex >= solutionLines.length) return;
 
-        if(solutionIndex >= solutionLines.length) return;
+        const line = document.createElement("div");
+        line.className = "line";
+        line.innerHTML = solutionLines[solIndex];
 
-        solutionEl.innerHTML += solutionLines[solutionIndex] + "<br>";
-        solutionIndex++;
+        solutionEl.appendChild(line);
 
-        setTimeout(typeSolution, 200);
+        solIndex++;
+
+        // variable delay = “thinking effect”
+        const delay = 420 + Math.random() * 250;
+
+        setTimeout(addLine, delay);
     }
 
-    typeSolution();
+    setTimeout(addLine, 400);
 }
 
 typeProblem();
