@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shape Morph Engine</title>
+<title>Calculus Visual Lab</title>
 
 <style>
 body{
@@ -27,6 +27,7 @@ body{
     border:1px solid rgba(255,255,255,.08);
 }
 
+/* CANVAS */
 canvas{
     position:absolute;
     inset:0;
@@ -48,17 +49,17 @@ canvas{
     border-radius:14px;
     background:rgba(255,255,255,.06);
     color:white;
-    font-weight:800;
+    font-weight:900;
     font-size:12px;
     backdrop-filter:blur(10px);
 }
 
-/* EQUATION */
-.eq{
+/* FORMULA */
+.formula{
     position:absolute;
-    bottom:16px;
-    left:16px;
-    right:16px;
+    bottom:110px;
+    left:18px;
+    right:18px;
 
     padding:14px;
     border-radius:18px;
@@ -67,17 +68,86 @@ canvas{
     border:1px solid rgba(255,255,255,.08);
 
     color:#7dd3fc;
-    font-weight:800;
+    font-weight:900;
     font-size:14px;
 
     text-shadow:0 0 18px rgba(125,211,252,.7);
+
+    transition:.3s;
 }
 
 .glow{
     color:#38bdf8;
-    text-shadow:0 0 12px #38bdf8, 0 0 28px #2563eb;
+    text-shadow:0 0 12px #38bdf8, 0 0 30px #2563eb;
+    font-size:18px;
 }
 
+/* EXPLANATION */
+.explain{
+    position:absolute;
+    bottom:18px;
+    left:18px;
+    right:18px;
+
+    padding:16px;
+    border-radius:18px;
+
+    background:rgba(15,23,42,.9);
+    border:1px solid rgba(255,255,255,.08);
+
+    color:white;
+    font-size:13px;
+    font-weight:700;
+
+    opacity:0;
+    transform:translateY(10px) scale(.95);
+
+    transition:.4s;
+}
+
+.explain.show{
+    opacity:1;
+    transform:translateY(0) scale(1.05);
+}
+
+.big{
+    color:#7dd3fc;
+    font-size:16px;
+    font-weight:900;
+    text-shadow:0 0 12px #38bdf8;
+}
+
+/* END */
+.end{
+    position:absolute;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+
+    background:rgba(2,6,23,.95);
+
+    opacity:0;
+    transition:1s;
+}
+
+.end.show{
+    opacity:1;
+}
+
+.end h1{
+    color:white;
+    font-size:34px;
+    font-weight:900;
+    text-align:center;
+}
+
+.end h2{
+    color:#7dd3fc;
+    margin-top:12px;
+    font-size:18px;
+}
 </style>
 </head>
 
@@ -88,12 +158,19 @@ canvas{
 <canvas id="c" width="430" height="800"></canvas>
 
 <div class="hud">
-    <div class="box" id="state">MORPH</div>
-    <div class="box" id="progress">0%</div>
+    <div class="box" id="state">FUNCTION</div>
+    <div class="box" id="mode">f(x)</div>
 </div>
 
-<div class="eq" id="eq">
-Equation: <span class="glow">y = mx + b</span>
+<div class="formula" id="formula">
+f(x) = x²
+</div>
+
+<div class="explain" id="explain"></div>
+
+<div class="end" id="end">
+    <h1>#DominexMacedon</h1>
+    <h2>Calculus Visual Cinema</h2>
 </div>
 
 </div>
@@ -104,148 +181,123 @@ const canvas = document.getElementById("c");
 const ctx = canvas.getContext("2d");
 
 let t = 0;
-
-/* BASE POINT SETS (same resolution for morphing) */
-const N = 80;
-
-/* LINE */
-function shapeLine(){
-    let arr = [];
-    for(let i=0;i<N;i++){
-        let x = 100 + (i/(N-1))*230;
-        let y = 400;
-        arr.push({x,y});
-    }
-    return arr;
-}
-
-/* CIRCLE */
-function shapeCircle(){
-    let arr = [];
-    let cx = 215, cy = 400, r = 110;
-
-    for(let i=0;i<N;i++){
-        let a = (i/N)*Math.PI*2;
-        arr.push({
-            x: cx + Math.cos(a)*r,
-            y: cy + Math.sin(a)*r
-        });
-    }
-    return arr;
-}
-
-/* RECT */
-function shapeRect(){
-    let arr = [];
-    let x=120,y=300,w=190,h=200;
-
-    let edges = [
-        [x,y],
-        [x+w,y],
-        [x+w,y+h],
-        [x,y+h]
-    ];
-
-    for(let i=0;i<N;i++){
-        let p = edges[Math.floor((i/(N-1))*4)];
-        arr.push({x:p[0],y:p[1]});
-    }
-    return arr;
-}
-
-/* TRIANGLE */
-function shapeTriangle(){
-    let arr = [];
-    let pts = [
-        {x:215,y:280},
-        {x:120,y:500},
-        {x:310,y:500}
-    ];
-
-    for(let i=0;i<N;i++){
-        let p = pts[Math.floor((i/(N-1))*3)];
-        arr.push({x:p.x,y:p.y});
-    }
-    return arr;
-}
-
-/* INTERPOLATION */
-function lerp(a,b,t){
-    return a + (b-a)*t;
-}
-
-/* MORPH SETS */
-let shapes = [
-    shapeLine(),
-    shapeCircle(),
-    shapeRect(),
-    shapeTriangle()
-];
-
 let mode = 0;
 
-/* DRAW */
-function draw(points){
+/* FUNCTION */
+function f(x){
+    return Math.pow(x-2,2)/10 + 200;
+}
 
-    ctx.clearRect(0,0,430,800);
+/* DRAW GRAPH */
+function drawGraph(){
 
     ctx.strokeStyle="#38bdf8";
     ctx.lineWidth=3;
     ctx.shadowColor="#38bdf8";
-    ctx.shadowBlur=25;
+    ctx.shadowBlur=15;
 
     ctx.beginPath();
 
-    ctx.moveTo(points[0].x, points[0].y);
-
-    for(let i=1;i<points.length;i++){
-        ctx.lineTo(points[i].x, points[i].y);
+    for(let x=0;x<430;x+=2){
+        let y = f(x);
+        if(x===0) ctx.moveTo(x,y);
+        else ctx.lineTo(x,y);
     }
 
-    ctx.closePath();
     ctx.stroke();
-
     ctx.shadowBlur=0;
 }
 
-/* ANIMATE */
+/* DERIVATIVE TANGENT */
+function drawTangent(){
+
+    let x = 200;
+    let y = f(x);
+
+    let slope = (f(x+5)-f(x))/5;
+
+    ctx.strokeStyle="#a78bfa";
+    ctx.lineWidth=3;
+
+    ctx.beginPath();
+    ctx.moveTo(x-60, y - slope*60);
+    ctx.lineTo(x+60, y + slope*60);
+    ctx.stroke();
+}
+
+/* INTEGRAL AREA */
+function drawArea(){
+
+    ctx.fillStyle="rgba(56,189,248,.2)";
+
+    ctx.beginPath();
+
+    for(let x=120;x<300;x+=2){
+        let y = f(x);
+        ctx.lineTo(x,y);
+    }
+
+    ctx.lineTo(300,600);
+    ctx.lineTo(120,600);
+
+    ctx.closePath();
+    ctx.fill();
+}
+
+/* EXPLANATION */
+function explain(text, big){
+
+    const el = document.getElementById("explain");
+
+    el.innerHTML = text;
+
+    if(big){
+        el.classList.add("show");
+    }else{
+        el.classList.remove("show");
+    }
+}
+
+/* LOOP */
 function animate(){
 
-    let phase = t % 200 / 200;
+    ctx.clearRect(0,0,430,800);
 
-    let s1 = shapes[mode];
-    let s2 = shapes[(mode+1)%shapes.length];
+    drawGraph();
 
-    let mixed = [];
+    if(t < 120){
+        mode=0;
+        document.getElementById("formula").innerHTML =
+        `f(x) = <span class="glow">x²</span>`;
 
-    for(let i=0;i<N;i++){
-        mixed.push({
-            x: lerp(s1[i].x, s2[i].x, phase),
-            y: lerp(s1[i].y, s2[i].y, phase)
-        });
+        explain("This is a function graph showing curve behavior",false);
     }
 
-    draw(mixed);
+    else if(t < 240){
+        mode=1;
+        drawTangent();
 
-    document.getElementById("progress").innerText =
-    Math.floor(phase*100) + "%";
+        document.getElementById("formula").innerHTML =
+        `Derivative: <span class="glow">f'(x)</span>`;
 
-    /* EQUATIONS */
-    let eqs = [
-        "y = mx + b (LINE)",
-        "x² + y² = r² (CIRCLE)",
-        "A = w × h (RECTANGLE)",
-        "A = 1/2 × b × h (TRIANGLE)"
-    ];
-
-    document.getElementById("eq").innerHTML =
-    `Equation: <span class="glow">${eqs[mode]}</span>`;
-
-    t += 2;
-
-    if(t % 200 === 0){
-        mode = (mode + 1) % shapes.length;
+        explain("<span class='big'>Slope changes instantly at every point</span>",true);
     }
+
+    else if(t < 360){
+        mode=2;
+        drawArea();
+
+        document.getElementById("formula").innerHTML =
+        `Integral: <span class="glow">∫ f(x) dx</span>`;
+
+        explain("<span class='big'>Area under curve represents accumulation</span>",true);
+    }
+
+    else{
+        document.getElementById("end").classList.add("show");
+    }
+
+    t++;
 
     requestAnimationFrame(animate);
 }
