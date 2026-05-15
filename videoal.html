@@ -1,202 +1,563 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Starlight Programming Language</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Programming Animation</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+
+<!-- FONT AWESOME -->
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
 <style>
 
-/* =========================================================
-   RESET + BASE
-========================================================= */
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-body {
-  background: radial-gradient(circle at top, #070812, #04050a);
-  color: #e6e9ff;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  overflow: hidden;
+body{
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:
+    radial-gradient(circle at top,#312e81,#020617 60%);
+
+    font-family:'Poppins',sans-serif;
 }
 
-/* =========================================================
-   FRAME GLOW BORDER
-========================================================= */
+/* VIDEO FRAME */
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  border: 1px solid rgba(124, 92, 255, 0.15);
-  box-shadow:
-    inset 0 0 80px rgba(124,92,255,0.08),
-    0 0 120px rgba(0,229,255,0.05);
-  pointer-events: none;
+.video-frame{
+    position:relative;
+    width:430px;
+    height:760px;
+
+    overflow:hidden;
+    border-radius:40px;
+
+    background:
+    linear-gradient(180deg,#020617,#0f172a,#020617);
+
+    border:2px solid rgba(255,255,255,0.08);
+
+    box-shadow:
+    0 0 40px rgba(0,255,255,0.15),
+    0 0 120px rgba(168,85,247,0.2),
+    inset 0 0 50px rgba(255,255,255,0.03);
 }
 
-/* =========================================================
-   SCENES
-========================================================= */
+/* GRID */
 
-.scene {
-  position: absolute;
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+.grid{
+    position:absolute;
+    inset:0;
 
-  opacity: 0;
-  transform: scale(1.05);
-  transition: all 1.4s cubic-bezier(.2,.9,.2,1);
-  pointer-events: none;
+    background-image:
+    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+
+    background-size:40px 40px;
+
+    animation:gridMove 20s linear infinite;
 }
 
-.scene.active {
-  opacity: 1;
-  transform: scale(1);
+@keyframes gridMove{
+    from{
+        transform:translateY(0);
+    }
+    to{
+        transform:translateY(40px);
+    }
 }
 
-/* =========================================================
-   SCENE 1 — INTRO
-========================================================= */
+/* GLOW */
 
-.logo {
-  width: 120px;
-  height: 120px;
-  background: url("starlight.png") center/contain no-repeat;
-  filter: drop-shadow(0 0 25px rgba(124,92,255,.6));
-  animation: float 4s ease-in-out infinite;
+.glow1{
+    position:absolute;
+
+    width:350px;
+    height:350px;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(circle, rgba(0,255,255,0.18), transparent 70%);
+
+    top:-100px;
+    left:-100px;
+
+    filter:blur(20px);
+
+    animation:float1 8s ease-in-out infinite;
 }
 
-@keyframes float {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-14px); }
+.glow2{
+    position:absolute;
+
+    width:320px;
+    height:320px;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(circle, rgba(168,85,247,0.22), transparent 70%);
+
+    bottom:-100px;
+    right:-100px;
+
+    filter:blur(25px);
+
+    animation:float2 10s ease-in-out infinite;
 }
 
-.title {
-  font-size: 42px;
-  margin-top: 18px;
-  text-align: center;
-  text-shadow: 0 0 25px rgba(124,92,255,.4);
+@keyframes float1{
+    0%,100%{
+        transform:translate(0,0);
+    }
+
+    50%{
+        transform:translate(40px,50px);
+    }
 }
 
-.subtitle {
-  margin-top: 10px;
-  color: #9aa4c7;
-  font-size: 14px;
+@keyframes float2{
+    0%,100%{
+        transform:translate(0,0);
+    }
+
+    50%{
+        transform:translate(-50px,-30px);
+    }
 }
 
-.meta {
-  margin-top: 16px;
-  color: #6cf0ff;
-  font-size: 13px;
-  opacity: 0.9;
+/* CONTENT */
+
+.content{
+    position:absolute;
+    inset:0;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding:40px;
+
+    color:white;
+    text-align:center;
 }
 
-/* =========================================================
-   SCENE 2 — CODE EDITOR
-========================================================= */
+/* SCENES */
 
-.editor {
-  width: 85%;
-  height: 75%;
-  border-radius: 14px;
+.scene{
+    position:absolute;
 
-  background: linear-gradient(180deg, #0a0c14, #07080f);
-  border: 1px solid rgba(255,255,255,0.06);
+    opacity:0;
 
-  box-shadow:
-    0 0 80px rgba(0,229,255,0.08),
-    0 0 120px rgba(124,92,255,0.08);
-
-  padding: 28px;
-  overflow: hidden;
+    transform:
+    translateY(40px)
+    scale(.94);
 }
 
-/* CODE BLOCK */
-pre {
-  font-size: 16px;
-  line-height: 1.9;
-  white-space: pre-wrap;
+/* TITLES */
+
+.title{
+    font-size:48px;
+    font-weight:800;
+
+    line-height:1.1;
+    letter-spacing:-2px;
+
+    text-shadow:
+    0 0 15px rgba(255,255,255,.2),
+    0 0 35px rgba(0,255,255,.2);
 }
 
-/* SYNTAX COLORS */
-.keyword {
-  color: #b48cff;
-  text-shadow: 0 0 12px rgba(180,140,255,0.4);
+.subtitle{
+    font-size:34px;
+    font-weight:700;
+
+    color:#d8b4fe;
+
+    text-shadow:
+    0 0 12px #a855f7,
+    0 0 40px #9333ea;
 }
 
-.function {
-  color: #6cf0ff;
-  text-shadow: 0 0 12px rgba(108,240,255,0.4);
+/* EDITOR */
+
+.editor{
+    position:relative;
+
+    width:340px;
+
+    padding:24px;
+
+    border-radius:24px;
+
+    background:
+    rgba(15,23,42,.75);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    backdrop-filter:blur(10px);
+
+    box-shadow:
+    0 0 40px rgba(0,255,255,.1),
+    inset 0 0 20px rgba(255,255,255,.03);
 }
 
-.string {
-  color: #ffd479;
-  text-shadow: 0 0 10px rgba(255,212,121,0.3);
+.editor::before{
+    content:'';
+
+    position:absolute;
+    inset:0;
+
+    border-radius:24px;
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(0,255,255,.06),
+        rgba(168,85,247,.05)
+    );
+
+    pointer-events:none;
 }
 
-.ident {
-  color: #c7d2ff;
+.editor-top{
+    display:flex;
+    gap:8px;
+
+    margin-bottom:22px;
 }
 
-.cursor {
-  display: inline-block;
-  width: 8px;
-  height: 18px;
-  background: #6cf0ff;
-  animation: blink .8s infinite;
+.dot{
+    width:12px;
+    height:12px;
+
+    border-radius:50%;
 }
 
-@keyframes blink {
-  50% { opacity: 0; }
+.red{
+    background:#ff5f57;
 }
 
-/* =========================================================
-   SCENE 3 — EXECUTION TERMINAL
-========================================================= */
-
-.terminal {
-  width: 80%;
-  height: 70%;
-  background: #000;
-  border-radius: 12px;
-
-  border: 1px solid rgba(0,255,170,0.3);
-
-  box-shadow:
-    0 0 60px rgba(0,255,170,0.12),
-    inset 0 0 40px rgba(0,255,170,0.05);
-
-  padding: 20px;
-  overflow: hidden;
+.yellow{
+    background:#febb2e;
 }
 
-.term-line {
-  color: #1aff9a;
-  opacity: 0;
-  transform: translateY(6px);
-  animation: appear .25s forwards;
+.green{
+    background:#28c840;
 }
 
-@keyframes appear {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* CODE */
+
+.code{
+    font-family:'Fira Code', monospace;
+
+    color:#7df9ff;
+
+    font-size:24px;
+    font-weight:600;
+
+    text-shadow:
+    0 0 10px #00ffff,
+    0 0 30px #00ffff;
+
+    white-space:nowrap;
+    overflow:hidden;
+
+    border-right:3px solid #00ffff;
+
+    width:0;
+
+    animation:
+    typing 2.5s steps(30,end) forwards,
+    blink .8s infinite;
 }
 
-.term-header {
-  color: #7c8799;
-  margin-bottom: 12px;
-  font-size: 13px;
+@keyframes typing{
+    from{
+        width:0;
+    }
+
+    to{
+        width:100%;
+    }
+}
+
+@keyframes blink{
+    50%{
+        border-color:transparent;
+    }
+}
+
+/* RUN AREA */
+
+.run-area{
+    position:relative;
+
+    height:95px;
+
+    margin-top:30px;
+}
+
+/* RUN BUTTON */
+
+.run-btn{
+    position:absolute;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    padding:15px 38px;
+
+    border-radius:18px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #06b6d4,
+        #8b5cf6
+    );
+
+    color:white;
+
+    font-weight:700;
+    font-size:20px;
+
+    box-shadow:
+    0 0 20px rgba(0,255,255,.4),
+    0 0 50px rgba(168,85,247,.4);
+
+    animation:buttonPulse 2s infinite;
+}
+
+.run-btn i{
+    font-size:22px;
+
+    filter:
+    drop-shadow(0 0 10px rgba(255,255,255,.8));
+}
+
+@keyframes buttonPulse{
+
+    0%,100%{
+        transform:
+        translateX(-50%)
+        scale(1);
+    }
+
+    50%{
+        transform:
+        translateX(-50%)
+        scale(1.08);
+    }
+}
+
+/* MOUSE */
+
+.mouse{
+    position:absolute;
+
+    width:36px;
+    height:36px;
+
+    border-radius:50%;
+
+    background:white;
+
+    box-shadow:
+    0 0 15px white,
+    0 0 30px #00ffff;
+
+    animation:mouseMove 3s ease forwards;
+}
+
+.mouse::after{
+    content:'';
+
+    position:absolute;
+    inset:8px;
+
+    border-radius:50%;
+
+    background:#0f172a;
+}
+
+@keyframes mouseMove{
+
+    0%{
+        top:-40px;
+        left:20px;
+        opacity:0;
+    }
+
+    10%{
+        opacity:1;
+    }
+
+    70%{
+        top:28px;
+        left:148px;
+    }
+
+    82%{
+        transform:scale(.7);
+    }
+
+    100%{
+        top:28px;
+        left:148px;
+
+        transform:scale(1);
+    }
+}
+
+/* RESULT */
+
+.result{
+    margin-top:28px;
+
+    font-size:64px;
+    font-weight:800;
+
+    opacity:0;
+
+    animation:
+    resultPop 1s forwards;
+
+    animation-delay:3s;
+
+    text-shadow:
+    0 0 15px #ffffff,
+    0 0 35px #00ffff,
+    0 0 80px #00ffff,
+    0 0 140px #a855f7;
+}
+
+.purple{
+    color:#d8b4fe;
+}
+
+.greenText{
+    color:#86efac;
+}
+
+@keyframes resultPop{
+
+    0%{
+        opacity:0;
+
+        transform:
+        scale(.4)
+        rotate(-10deg);
+
+        filter:blur(12px);
+    }
+
+    60%{
+        transform:
+        scale(1.15)
+        rotate(4deg);
+    }
+
+    100%{
+        opacity:1;
+
+        transform:
+        scale(1)
+        rotate(0deg);
+
+        filter:blur(0px);
+    }
+}
+
+/* FOOTER */
+
+.footer{
+    position:absolute;
+
+    bottom:50px;
+    width:100%;
+
+    text-align:center;
+
+    color:rgba(255,255,255,.6);
+
+    letter-spacing:1px;
+
+    font-size:15px;
+}
+
+/* FADE */
+
+.fadeIn{
+    animation:fadeIn 2s forwards;
+}
+
+.fadeOut{
+    animation:fadeOut 1.8s forwards;
+}
+
+@keyframes fadeIn{
+
+    from{
+        opacity:0;
+
+        transform:
+        translateY(40px)
+        scale(.94);
+
+        filter:blur(10px);
+    }
+
+    to{
+        opacity:1;
+
+        transform:
+        translateY(0)
+        scale(1);
+
+        filter:blur(0px);
+    }
+}
+
+@keyframes fadeOut{
+
+    from{
+        opacity:1;
+
+        transform:
+        translateY(0)
+        scale(1);
+
+        filter:blur(0px);
+    }
+
+    to{
+        opacity:0;
+
+        transform:
+        translateY(-20px)
+        scale(.95);
+
+        filter:blur(12px);
+    }
 }
 
 </style>
@@ -204,141 +565,196 @@ pre {
 
 <body>
 
-<!-- =========================================================
-     SCENE 1
-========================================================= -->
-<div class="scene active" id="s1">
+<div class="video-frame">
 
-  <div class="logo"></div>
+    <div class="grid"></div>
 
-  <div class="title">Starlight Programming Language</div>
-  <div class="subtitle">Node.js-powered execution runtime</div>
-  <div class="meta">starlight-cli • npm package • Dominex Macedon</div>
+    <div class="glow1"></div>
+    <div class="glow2"></div>
 
-</div>
+    <div class="content">
 
-<!-- =========================================================
-     SCENE 2
-========================================================= -->
-<div class="scene" id="s2">
+        <!-- SCENE 1 -->
 
-  <div class="editor">
-<pre id="code"></pre>
-  </div>
+        <div id="scene1" class="scene">
 
-</div>
+            <div class="title">
+                What is<br>
+                Programming?
+            </div>
 
-<!-- =========================================================
-     SCENE 3
-========================================================= -->
-<div class="scene" id="s3">
+        </div>
 
-  <div class="terminal">
-    <div class="term-header">starlight program.sl</div>
-    <div id="term"></div>
-  </div>
+        <!-- SCENE 2 -->
+
+        <div id="scene2" class="scene">
+
+            <div class="subtitle">
+                This is Javascript.
+            </div>
+
+        </div>
+
+        <!-- SCENE 3 -->
+
+        <div id="scene3" class="scene">
+
+            <div class="editor">
+
+                <div class="editor-top">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+
+                <div class="code">
+                    let x = 5;
+                </div>
+
+                <div class="run-area">
+
+                    <div class="mouse"></div>
+
+                    <div class="run-btn">
+                        <i class="fa-solid fa-play"></i>
+                        RUN
+                    </div>
+
+                </div>
+
+                <div class="result">
+                    5
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- SCENE 4 -->
+
+        <div id="scene4" class="scene">
+
+            <div class="editor">
+
+                <div class="editor-top">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+
+                <div class="code">
+                    let x = 5 + 5;
+                </div>
+
+                <div class="run-area">
+
+                    <div class="mouse"></div>
+
+                    <div class="run-btn">
+                        <i class="fa-solid fa-play"></i>
+                        RUN
+                    </div>
+
+                </div>
+
+                <div class="result purple">
+                    10
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- SCENE 5 -->
+
+        <div id="scene5" class="scene">
+
+            <div class="editor">
+
+                <div class="editor-top">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+
+                <div class="code">
+                    let x = 5 + 5 + 20;
+                </div>
+
+                <div class="run-area">
+
+                    <div class="mouse"></div>
+
+                    <div class="run-btn">
+                        <i class="fa-solid fa-play"></i>
+                        RUN
+                    </div>
+
+                </div>
+
+                <div class="result greenText">
+                    30
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- SCENE 6 -->
+
+        <div id="scene6" class="scene">
+
+            <div class="title">
+                This is<br>
+                Programming....
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+        Animated by Dominex Macedon
+    </div>
 
 </div>
 
 <script>
 
-/* =========================================================
-   SCENE SWITCH
-========================================================= */
+const scenes = [
 
-const scenes = ["s1","s2","s3"];
+    { id:"scene1", show:0, hide:3500 },
 
-function show(i){
-  scenes.forEach(id => document.getElementById(id).classList.remove("active"));
-  document.getElementById(scenes[i]).classList.add("active");
-}
+    { id:"scene2", show:4200, hide:7200 },
 
-setTimeout(()=>show(1), 3500);
-setTimeout(()=>{ show(2); typeCode(); }, 7000);
-setTimeout(()=>{ show(3); run(); }, 13000);
+    { id:"scene3", show:7800, hide:14500 },
 
-/* =========================================================
-   CODE (FULL VISIBLE)
-========================================================= */
+    { id:"scene4", show:15100, hide:21800 },
 
-const lines = [
-`let name = "Dominex Macedon"`,
-`let greeting = "Hello " + name`,
-``,
-`sldeploy(greeting)`
+    { id:"scene5", show:22400, hide:29100 },
+
+    { id:"scene6", show:29800, hide:999999 }
+
 ];
 
-let line = 0;
-let char = 0;
+scenes.forEach(scene => {
 
-const codeEl = document.getElementById("code");
+    const el = document.getElementById(scene.id);
 
-function highlight(code){
-  return code
-    .replace(/let/g, `<span class="keyword">let</span>`)
-    .replace(/sldeploy/g, `<span class="function">sldeploy</span>`)
-    .replace(/"([^"]*)"/g, `<span class="string">"$1"</span>`)
-    .replace(/\bname\b/g, `<span class="ident">name</span>`)
-    .replace(/\bgreeting\b/g, `<span class="ident">greeting</span>`);
-}
+    setTimeout(() => {
 
-function typeCode(){
+        el.classList.add("fadeIn");
 
-  if(line >= lines.length) return;
+    }, scene.show);
 
-  let current = lines[line];
+    setTimeout(() => {
 
-  if(char <= current.length){
+        el.classList.remove("fadeIn");
+        el.classList.add("fadeOut");
 
-    const visible =
-      lines.slice(0,line).join("\n") +
-      "\n" +
-      current.slice(0,char) +
-      "<span class='cursor'></span>";
+    }, scene.hide);
 
-    codeEl.innerHTML = highlight(visible);
-    char++;
-
-    setTimeout(typeCode, 30);
-
-  } else {
-    line++;
-    char = 0;
-    setTimeout(typeCode, 250);
-  }
-}
-
-/* =========================================================
-   EXECUTION (PURE OUTPUT ONLY)
-========================================================= */
-
-function run(){
-
-  const term = document.getElementById("term");
-
-  const output = [
-    "$ starlight program.sl",
-    "",
-    "Hello Dominex Macedon"
-  ];
-
-  let i = 0;
-
-  function next(){
-    if(i >= output.length) return;
-
-    const div = document.createElement("div");
-    div.className = "term-line";
-    div.textContent = output[i];
-
-    term.appendChild(div);
-    i++;
-
-    setTimeout(next, 500);
-  }
-
-  next();
-}
+});
 
 </script>
 
