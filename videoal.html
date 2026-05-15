@@ -6,6 +6,10 @@
 <title>Starlight Programming Language</title>
 
 <style>
+/* =========================================================
+   GLOBAL RESET
+========================================================= */
+
 * {
   margin: 0;
   padding: 0;
@@ -13,13 +17,15 @@
 }
 
 body {
-  background: radial-gradient(circle at top, #070913, #04050a);
-  color: #e6ecff;
+  background: #06070c;
+  color: #e6e9ff;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   overflow: hidden;
 }
 
-/* ================= SCENE SYSTEM ================= */
+/* =========================================================
+   SCENE SYSTEM
+========================================================= */
 
 .scene {
   position: absolute;
@@ -31,7 +37,7 @@ body {
   flex-direction: column;
   opacity: 0;
   transform: scale(1.08);
-  transition: all 1.4s cubic-bezier(.2,.8,.2,1);
+  transition: all 1.3s cubic-bezier(.2,.8,.2,1);
   pointer-events: none;
 }
 
@@ -40,99 +46,145 @@ body {
   transform: scale(1);
 }
 
-/* ================= INTRO ================= */
+/* =========================================================
+   SCENE 1 — MODERN PRODUCT INTRO
+========================================================= */
+
+.intro-wrapper {
+  text-align: center;
+}
 
 .logo {
-  width: 130px;
-  height: 130px;
+  width: 120px;
+  height: 120px;
   background: url("starlight.png") center/contain no-repeat;
-  filter: drop-shadow(0 0 25px rgba(120,90,255,0.8));
-  animation: float 3.5s ease-in-out infinite;
+  margin: auto;
+  filter: drop-shadow(0 0 25px rgba(120,90,255,.4));
+  animation: float 4s ease-in-out infinite;
 }
 
 @keyframes float {
   0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-14px); }
+  50% { transform: translateY(-12px); }
 }
 
 .title {
   font-size: 44px;
-  margin-top: 18px;
-  color: #c8b8ff;
-  text-shadow: 0 0 20px rgba(120,90,255,0.7);
+  margin-top: 20px;
   letter-spacing: 1px;
 }
 
-.sub {
-  margin-top: 10px;
-  color: #a3b0d9;
+.subtitle {
+  margin-top: 8px;
   font-size: 14px;
+  color: #9aa4c7;
 }
 
-.badge {
-  margin-top: 16px;
-  padding: 8px 14px;
-  border: 1px solid rgba(140,120,255,0.4);
-  border-radius: 20px;
-  background: rgba(120,90,255,0.08);
-  box-shadow: 0 0 25px rgba(120,90,255,0.15);
+.meta {
+  margin-top: 18px;
   font-size: 13px;
+  color: #6cf0ff;
 }
 
-/* ================= CODE ================= */
+/* =========================================================
+   SCENE 2 — IDE STYLE CODE VIEW
+========================================================= */
 
-.card {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 14px;
+.ide {
+  width: 90%;
+  height: 85%;
+  display: flex;
+  border: 1px solid #1b2030;
+  background: #0a0c12;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 80px rgba(0,0,0,.7);
+}
+
+/* sidebar */
+.sidebar {
+  width: 220px;
+  background: #070910;
+  border-right: 1px solid #1b2030;
+  padding: 14px;
+}
+
+.file {
+  padding: 8px;
+  font-size: 13px;
+  color: #6b748f;
+  margin-bottom: 6px;
+  border-radius: 6px;
+}
+
+.file.active {
+  background: rgba(108,240,255,.08);
+  color: #6cf0ff;
+}
+
+/* editor */
+.editor {
+  flex: 1;
   padding: 24px;
-  width: 760px;
-  box-shadow: 0 0 70px rgba(120,90,255,0.12);
-  animation: pop 1s ease;
+  position: relative;
 }
 
-@keyframes pop {
-  from { transform: scale(0.95); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-pre {
+.code {
   font-size: 16px;
-  line-height: 1.7;
+  line-height: 1.8;
   white-space: pre;
 }
 
-/* REAL syntax highlight only */
-.keyword { color: #a78bfa; }
-.string { color: #ffd580; }
-.func { color: #4de1ff; }
-.comment { color: #6b7280; }
+/* REAL syntax colors */
+.keyword { color: #b48cff; }
+.string { color: #ffd479; }
+.function { color: #6cf0ff; }
+.comment { color: #5c6370; }
 
-.highlight {
-  background: rgba(77,225,255,0.07);
-  border-left: 2px solid #4de1ff;
-  padding-left: 6px;
+.cursor {
+  display: inline-block;
+  width: 8px;
+  background: #6cf0ff;
+  animation: blink 0.8s infinite;
 }
 
-/* ================= TERMINAL ================= */
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* info panel */
+.info {
+  position: absolute;
+  bottom: 18px;
+  right: 18px;
+  width: 320px;
+  background: rgba(0,0,0,.4);
+  border: 1px solid #1b2030;
+  padding: 12px;
+  font-size: 13px;
+  color: #9aa4c7;
+}
+
+/* =========================================================
+   SCENE 3 — TERMINAL EXECUTION
+========================================================= */
 
 .terminal {
-  width: 760px;
-  height: 280px;
-  background: #05070c;
-  border: 1px solid rgba(0,255,170,0.3);
-  border-radius: 12px;
-  padding: 15px;
-  color: #7CFFB2;
-  box-shadow: 0 0 60px rgba(0,255,170,0.12);
-  font-family: monospace;
+  width: 80%;
+  height: 70%;
+  background: #000;
+  border: 1px solid #1aff9a;
+  box-shadow: 0 0 60px rgba(0,255,154,.12);
+  padding: 16px;
   overflow: hidden;
+  font-family: monospace;
 }
 
 .line {
   opacity: 0;
-  transform: translateY(8px);
-  animation: appear 0.25s forwards;
+  transform: translateY(6px);
+  animation: appear .25s forwards;
+  color: #1aff9a;
 }
 
 @keyframes appear {
@@ -142,16 +194,10 @@ pre {
   }
 }
 
-.cursor {
-  display: inline-block;
-  width: 8px;
-  height: 14px;
-  background: #7CFFB2;
-  animation: blink 0.8s infinite;
-}
-
-@keyframes blink {
-  50% { opacity: 0; }
+.header {
+  color: #7c8799;
+  margin-bottom: 10px;
+  font-size: 13px;
 }
 
 </style>
@@ -159,79 +205,147 @@ pre {
 
 <body>
 
-<!-- ================= SCENE 1 (INTRO) ================= -->
+<!-- ================= SCENE 1 ================= -->
 <div class="scene active" id="s1">
-  <div class="logo"></div>
-  <div class="title">Starlight Programming Language</div>
-  <div class="sub">A lightweight execution language built on Node.js runtime</div>
-  <div class="badge">starlight-cli • npm</div>
-  <div class="sub">Created by Dominex Macedon</div>
+  <div class="intro-wrapper">
+    <div class="logo"></div>
+    <div class="title">Starlight Programming Language</div>
+    <div class="subtitle">A Node.js-based execution runtime for modern scripting</div>
+    <div class="meta">starlight-cli • npm package • Created by Dominex Macedon</div>
+  </div>
 </div>
 
-<!-- ================= SCENE 2 (CODE) ================= -->
+<!-- ================= SCENE 2 ================= -->
 <div class="scene" id="s2">
-  <div class="card">
-<pre id="code">
-<span class="comment">// program.sl</span>
 
-<span class="keyword">let</span> name = <span class="string">"Dominex"</span>
-<span class="keyword">let</span> greeting = <span class="string">"Hello "</span> + name
+  <div class="ide">
 
-<span class="func">sldeploy</span>(greeting)
-</pre>
-  </div>
+    <div class="sidebar">
+      <div class="file active">program.sl</div>
+      <div class="file">runtime.sl</div>
+      <div class="file">core.sl</div>
+    </div>
+
+    <div class="editor">
+
+<pre class="code" id="code"></pre>
+
+<div class="info">
+Simple execution model.<br>
+No verbose syntax.<br>
+Compiled and executed via Node.js runtime.
 </div>
 
-<!-- ================= SCENE 3 (EXECUTION) ================= -->
-<div class="scene" id="s3">
-  <div class="terminal">
-    <div>> starlight program.sl</div>
-    <br/>
-    <div id="out"></div>
-    <span class="cursor"></span>
+    </div>
+
   </div>
+
+</div>
+
+<!-- ================= SCENE 3 ================= -->
+<div class="scene" id="s3">
+
+  <div class="terminal">
+    <div class="header">starlight program.sl execution</div>
+    <div id="term"></div>
+  </div>
+
 </div>
 
 <script>
 
-/* ================= SCENE SWITCH ================= */
+/* =========================================================
+   SCENE CONTROLLER
+========================================================= */
 
-function show(a, b, delay){
-  setTimeout(() => {
-    document.getElementById(a).classList.remove("active");
-    document.getElementById(b).classList.add("active");
-  }, delay);
+const scenes = ["s1","s2","s3"];
+let i = 0;
+
+function show(n){
+  scenes.forEach(id => document.getElementById(id).classList.remove("active"));
+  document.getElementById(scenes[n]).classList.add("active");
 }
 
-show("s1","s2", 3500);
-show("s2","s3", 7500);
+setTimeout(() => { i=1; show(i); typeCode(); }, 3500);
+setTimeout(() => { i=2; show(i); runTerminal(); }, 9000);
 
-/* ================= EXECUTION ================= */
+/* =========================================================
+   SCENE 2 — CODE TYPE ENGINE
+========================================================= */
 
-setTimeout(() => {
-  const out = document.getElementById("out");
+const lines = [
+`let name = "Dominex Macedon"`,
+`let greeting = "Hello " + name`,
+``,
+`sldeploy(greeting)`
+];
 
-  const lines = [
-    "Hello Dominex"
+let line = 0;
+let char = 0;
+const codeEl = document.getElementById("code");
+
+function renderSyntax(text){
+  return text
+    .replace(/let/g, `<span class="keyword">let</span>`)
+    .replace(/sldeploy/g, `<span class="function">sldeploy</span>`)
+    .replace(/"([^"]*)"/g, `<span class="string">"$1"</span>`);
+}
+
+function typeCode(){
+  if(line >= lines.length) return;
+
+  let current = lines[line];
+
+  if(char <= current.length){
+
+    let display =
+      lines.slice(0,line).join("\n") +
+      "\n" +
+      current.substring(0,char) +
+      "<span class='cursor'></span>";
+
+    codeEl.innerHTML = renderSyntax(display);
+    char++;
+
+    setTimeout(typeCode, 35);
+  } else {
+    char = 0;
+    line++;
+    setTimeout(typeCode, 250);
+  }
+}
+
+/* =========================================================
+   SCENE 3 — PURE EXECUTION OUTPUT ONLY
+========================================================= */
+
+function runTerminal(){
+  const term = document.getElementById("term");
+
+  const output = [
+    "$ starlight program.sl",
+    "",
+    "Dominex Macedon",
+    "Hello Dominex Macedon"
   ];
 
   let i = 0;
 
   function print(){
-    if(i >= lines.length) return;
+    if(i >= output.length) return;
 
     const div = document.createElement("div");
     div.className = "line";
-    div.textContent = lines[i];
+    div.textContent = output[i];
 
-    out.appendChild(div);
+    term.appendChild(div);
     i++;
 
-    setTimeout(print, 500);
+    setTimeout(print, 300);
   }
 
   print();
-}, 9000);
+}
 
 </script>
 
