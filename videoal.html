@@ -4,11 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Programming Animation</title>
+<title>Premium Programming Animation</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
 
-<!-- FONT AWESOME -->
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
@@ -24,6 +23,7 @@ body{
     width:100%;
     height:100vh;
     overflow:hidden;
+
     display:flex;
     justify-content:center;
     align-items:center;
@@ -34,25 +34,26 @@ body{
     font-family:'Poppins',sans-serif;
 }
 
-/* VIDEO FRAME */
+/* FRAME */
 
 .video-frame{
     position:relative;
+
     width:430px;
     height:760px;
 
     overflow:hidden;
-    border-radius:40px;
+    border-radius:42px;
 
     background:
     linear-gradient(180deg,#020617,#0f172a,#020617);
 
-    border:2px solid rgba(255,255,255,0.08);
+    border:2px solid rgba(255,255,255,.08);
 
     box-shadow:
-    0 0 40px rgba(0,255,255,0.15),
-    0 0 120px rgba(168,85,247,0.2),
-    inset 0 0 50px rgba(255,255,255,0.03);
+    0 0 40px rgba(0,255,255,.12),
+    0 0 120px rgba(168,85,247,.2),
+    inset 0 0 40px rgba(255,255,255,.03);
 }
 
 /* GRID */
@@ -62,18 +63,19 @@ body{
     inset:0;
 
     background-image:
-    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+    linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
 
     background-size:40px 40px;
 
-    animation:gridMove 20s linear infinite;
+    animation:gridMove 18s linear infinite;
 }
 
 @keyframes gridMove{
     from{
         transform:translateY(0);
     }
+
     to{
         transform:translateY(40px);
     }
@@ -84,18 +86,18 @@ body{
 .glow1{
     position:absolute;
 
-    width:350px;
-    height:350px;
+    width:380px;
+    height:380px;
 
     border-radius:50%;
 
     background:
-    radial-gradient(circle, rgba(0,255,255,0.18), transparent 70%);
+    radial-gradient(circle, rgba(0,255,255,.15), transparent 70%);
 
-    top:-100px;
-    left:-100px;
+    top:-120px;
+    left:-120px;
 
-    filter:blur(20px);
+    filter:blur(25px);
 
     animation:float1 8s ease-in-out infinite;
 }
@@ -103,13 +105,13 @@ body{
 .glow2{
     position:absolute;
 
-    width:320px;
-    height:320px;
+    width:340px;
+    height:340px;
 
     border-radius:50%;
 
     background:
-    radial-gradient(circle, rgba(168,85,247,0.22), transparent 70%);
+    radial-gradient(circle, rgba(168,85,247,.18), transparent 70%);
 
     bottom:-100px;
     right:-100px;
@@ -120,22 +122,24 @@ body{
 }
 
 @keyframes float1{
+
     0%,100%{
         transform:translate(0,0);
     }
 
     50%{
-        transform:translate(40px,50px);
+        transform:translate(50px,40px);
     }
 }
 
 @keyframes float2{
+
     0%,100%{
         transform:translate(0,0);
     }
 
     50%{
-        transform:translate(-50px,-30px);
+        transform:translate(-40px,-30px);
     }
 }
 
@@ -149,10 +153,10 @@ body{
     justify-content:center;
     align-items:center;
 
-    padding:40px;
-
-    color:white;
     text-align:center;
+    color:white;
+
+    padding:35px;
 }
 
 /* SCENES */
@@ -163,14 +167,14 @@ body{
     opacity:0;
 
     transform:
-    translateY(40px)
+    translateY(30px)
     scale(.94);
 }
 
 /* TITLES */
 
 .title{
-    font-size:48px;
+    font-size:50px;
     font-weight:800;
 
     line-height:1.1;
@@ -178,7 +182,7 @@ body{
 
     text-shadow:
     0 0 15px rgba(255,255,255,.2),
-    0 0 35px rgba(0,255,255,.2);
+    0 0 40px rgba(0,255,255,.25);
 }
 
 .subtitle{
@@ -188,31 +192,31 @@ body{
     color:#d8b4fe;
 
     text-shadow:
-    0 0 12px #a855f7,
+    0 0 10px #a855f7,
     0 0 40px #9333ea;
 }
 
 /* EDITOR */
 
 .editor{
-    position:relative;
-
-    width:340px;
+    width:360px;
 
     padding:24px;
 
-    border-radius:24px;
+    border-radius:28px;
 
     background:
-    rgba(15,23,42,.75);
+    rgba(15,23,42,.78);
 
     border:1px solid rgba(255,255,255,.08);
 
     backdrop-filter:blur(10px);
 
     box-shadow:
-    0 0 40px rgba(0,255,255,.1),
+    0 0 40px rgba(0,255,255,.08),
     inset 0 0 20px rgba(255,255,255,.03);
+
+    position:relative;
 }
 
 .editor::before{
@@ -221,13 +225,13 @@ body{
     position:absolute;
     inset:0;
 
-    border-radius:24px;
+    border-radius:28px;
 
     background:
     linear-gradient(
         135deg,
         rgba(0,255,255,.06),
-        rgba(168,85,247,.05)
+        rgba(168,85,247,.04)
     );
 
     pointer-events:none;
@@ -237,7 +241,7 @@ body{
     display:flex;
     gap:8px;
 
-    margin-bottom:22px;
+    margin-bottom:24px;
 }
 
 .dot{
@@ -259,33 +263,65 @@ body{
     background:#28c840;
 }
 
-/* CODE */
+/* CODE AREA */
 
-.code{
+.code-line{
+    display:flex;
+    align-items:center;
+
+    gap:12px;
+
+    margin-bottom:14px;
+
     font-family:'Fira Code', monospace;
+
+    font-size:22px;
+}
+
+.line-number{
+    color:#64748b;
+    width:20px;
+}
+
+.code-content{
+    display:flex;
+    align-items:center;
 
     color:#7df9ff;
 
-    font-size:24px;
-    font-weight:600;
+    overflow:hidden;
+}
+
+/* TYPING */
+
+.typing-text{
+    overflow:hidden;
+
+    white-space:nowrap;
+
+    width:0;
+
+    border-right:3px solid #00ffff;
 
     text-shadow:
     0 0 10px #00ffff,
     0 0 30px #00ffff;
 
-    white-space:nowrap;
-    overflow:hidden;
-
-    border-right:3px solid #00ffff;
-
-    width:0;
-
     animation:
-    typing 2.5s steps(30,end) forwards,
+    typing 2.4s steps(40,end) forwards,
     blink .8s infinite;
 }
 
+.typing-delay-2{
+    animation-delay:.5s;
+}
+
+.typing-delay-3{
+    animation-delay:1s;
+}
+
 @keyframes typing{
+
     from{
         width:0;
     }
@@ -296,76 +332,75 @@ body{
 }
 
 @keyframes blink{
+
     50%{
         border-color:transparent;
     }
 }
 
-/* RUN AREA */
+/* RUN SCENE */
 
-.run-area{
-    position:relative;
+.run-scene{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
 
-    height:95px;
-
-    margin-top:30px;
+    gap:38px;
 }
 
-/* RUN BUTTON */
+.run-text{
+    font-size:20px;
+
+    letter-spacing:3px;
+
+    color:#94a3b8;
+}
+
+/* BUTTON */
 
 .run-btn{
-    position:absolute;
+    position:relative;
 
-    left:50%;
+    width:210px;
+    height:74px;
 
-    transform:translateX(-50%);
+    border-radius:24px;
 
     display:flex;
+    justify-content:center;
     align-items:center;
-    gap:12px;
+    gap:14px;
 
-    padding:15px 38px;
-
-    border-radius:18px;
+    font-size:24px;
+    font-weight:700;
 
     background:
-    linear-gradient(
-        135deg,
-        #06b6d4,
-        #8b5cf6
-    );
+    linear-gradient(135deg,#06b6d4,#8b5cf6);
 
     color:white;
 
-    font-weight:700;
-    font-size:20px;
-
     box-shadow:
-    0 0 20px rgba(0,255,255,.4),
-    0 0 50px rgba(168,85,247,.4);
+    0 0 20px rgba(0,255,255,.45),
+    0 0 60px rgba(168,85,247,.45);
 
-    animation:buttonPulse 2s infinite;
+    animation:pulse 2s infinite;
 }
 
 .run-btn i{
-    font-size:22px;
+    font-size:26px;
 
     filter:
     drop-shadow(0 0 10px rgba(255,255,255,.8));
 }
 
-@keyframes buttonPulse{
+@keyframes pulse{
 
     0%,100%{
-        transform:
-        translateX(-50%)
-        scale(1);
+        transform:scale(1);
     }
 
     50%{
-        transform:
-        translateX(-50%)
-        scale(1.08);
+        transform:scale(1.08);
     }
 }
 
@@ -374,18 +409,21 @@ body{
 .mouse{
     position:absolute;
 
-    width:36px;
-    height:36px;
+    width:38px;
+    height:38px;
 
     border-radius:50%;
 
     background:white;
 
+    top:-100px;
+    left:-90px;
+
     box-shadow:
     0 0 15px white,
-    0 0 30px #00ffff;
+    0 0 35px #00ffff;
 
-    animation:mouseMove 3s ease forwards;
+    animation:mouseMove 2.4s ease forwards;
 }
 
 .mouse::after{
@@ -402,8 +440,8 @@ body{
 @keyframes mouseMove{
 
     0%{
-        top:-40px;
-        left:20px;
+        top:-100px;
+        left:-90px;
         opacity:0;
     }
 
@@ -412,17 +450,17 @@ body{
     }
 
     70%{
-        top:28px;
-        left:148px;
+        top:18px;
+        left:86px;
     }
 
-    82%{
-        transform:scale(.7);
+    84%{
+        transform:scale(.65);
     }
 
     100%{
-        top:28px;
-        left:148px;
+        top:18px;
+        left:86px;
 
         transform:scale(1);
     }
@@ -431,9 +469,9 @@ body{
 /* RESULT */
 
 .result{
-    margin-top:28px;
+    margin-top:10px;
 
-    font-size:64px;
+    font-size:62px;
     font-weight:800;
 
     opacity:0;
@@ -441,7 +479,7 @@ body{
     animation:
     resultPop 1s forwards;
 
-    animation-delay:3s;
+    animation-delay:2.5s;
 
     text-shadow:
     0 0 15px #ffffff,
@@ -450,11 +488,15 @@ body{
     0 0 140px #a855f7;
 }
 
-.purple{
-    color:#d8b4fe;
+.stringColor{
+    color:#f9a8d4;
 }
 
-.greenText{
+.numberColor{
+    color:#7dd3fc;
+}
+
+.arrayColor{
     color:#86efac;
 }
 
@@ -465,9 +507,9 @@ body{
 
         transform:
         scale(.4)
-        rotate(-10deg);
+        rotate(-8deg);
 
-        filter:blur(12px);
+        filter:blur(10px);
     }
 
     60%{
@@ -483,7 +525,7 @@ body{
         scale(1)
         rotate(0deg);
 
-        filter:blur(0px);
+        filter:blur(0);
     }
 }
 
@@ -492,26 +534,25 @@ body{
 .footer{
     position:absolute;
 
-    bottom:50px;
+    bottom:45px;
     width:100%;
 
     text-align:center;
 
-    color:rgba(255,255,255,.6);
-
-    letter-spacing:1px;
+    color:rgba(255,255,255,.55);
 
     font-size:15px;
+    letter-spacing:1px;
 }
 
 /* FADE */
 
 .fadeIn{
-    animation:fadeIn 2s forwards;
+    animation:fadeIn 1.8s forwards;
 }
 
 .fadeOut{
-    animation:fadeOut 1.8s forwards;
+    animation:fadeOut 1.5s forwards;
 }
 
 @keyframes fadeIn{
@@ -520,7 +561,7 @@ body{
         opacity:0;
 
         transform:
-        translateY(40px)
+        translateY(30px)
         scale(.94);
 
         filter:blur(10px);
@@ -533,7 +574,7 @@ body{
         translateY(0)
         scale(1);
 
-        filter:blur(0px);
+        filter:blur(0);
     }
 }
 
@@ -546,7 +587,7 @@ body{
         translateY(0)
         scale(1);
 
-        filter:blur(0px);
+        filter:blur(0);
     }
 
     to{
@@ -554,7 +595,7 @@ body{
 
         transform:
         translateY(-20px)
-        scale(.95);
+        scale(.96);
 
         filter:blur(12px);
     }
@@ -574,7 +615,7 @@ body{
 
     <div class="content">
 
-        <!-- SCENE 1 -->
+        <!-- INTRO -->
 
         <div id="scene1" class="scene">
 
@@ -585,7 +626,7 @@ body{
 
         </div>
 
-        <!-- SCENE 2 -->
+        <!-- JS -->
 
         <div id="scene2" class="scene">
 
@@ -595,7 +636,7 @@ body{
 
         </div>
 
-        <!-- SCENE 3 -->
+        <!-- STRING CODE -->
 
         <div id="scene3" class="scene">
 
@@ -607,65 +648,58 @@ body{
                     <div class="dot green"></div>
                 </div>
 
-                <div class="code">
-                    let x = 5;
-                </div>
+                <div class="code-line">
+                    <div class="line-number">1</div>
 
-                <div class="run-area">
-
-                    <div class="mouse"></div>
-
-                    <div class="run-btn">
-                        <i class="fa-solid fa-play"></i>
-                        RUN
+                    <div class="code-content">
+                        <div class="typing-text">
+                            let name = "DOMINEX";
+                        </div>
                     </div>
-
                 </div>
 
-                <div class="result">
-                    5
+                <div class="code-line">
+                    <div class="line-number">2</div>
+
+                    <div class="code-content">
+                        <div class="typing-text typing-delay-2">
+                            console.log(name);
+                        </div>
+                    </div>
                 </div>
 
             </div>
 
         </div>
 
-        <!-- SCENE 4 -->
+        <!-- STRING RUN -->
 
         <div id="scene4" class="scene">
 
-            <div class="editor">
+            <div class="run-scene">
 
-                <div class="editor-top">
-                    <div class="dot red"></div>
-                    <div class="dot yellow"></div>
-                    <div class="dot green"></div>
+                <div class="run-text">
+                    EXECUTE CODE
                 </div>
 
-                <div class="code">
-                    let x = 5 + 5;
-                </div>
-
-                <div class="run-area">
+                <div class="run-btn">
 
                     <div class="mouse"></div>
 
-                    <div class="run-btn">
-                        <i class="fa-solid fa-play"></i>
-                        RUN
-                    </div>
+                    <i class="fa-solid fa-play"></i>
+                    RUN
 
                 </div>
 
-                <div class="result purple">
-                    10
+                <div class="result stringColor">
+                    DOMINEX
                 </div>
 
             </div>
 
         </div>
 
-        <!-- SCENE 5 -->
+        <!-- NUMBER CODE -->
 
         <div id="scene5" class="scene">
 
@@ -677,22 +711,50 @@ body{
                     <div class="dot green"></div>
                 </div>
 
-                <div class="code">
-                    let x = 5 + 5 + 20;
+                <div class="code-line">
+                    <div class="line-number">1</div>
+
+                    <div class="code-content">
+                        <div class="typing-text">
+                            let total = 10 + 20;
+                        </div>
+                    </div>
                 </div>
 
-                <div class="run-area">
+                <div class="code-line">
+                    <div class="line-number">2</div>
+
+                    <div class="code-content">
+                        <div class="typing-text typing-delay-2">
+                            console.log(total);
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- NUMBER RUN -->
+
+        <div id="scene6" class="scene">
+
+            <div class="run-scene">
+
+                <div class="run-text">
+                    EXECUTE CODE
+                </div>
+
+                <div class="run-btn">
 
                     <div class="mouse"></div>
 
-                    <div class="run-btn">
-                        <i class="fa-solid fa-play"></i>
-                        RUN
-                    </div>
+                    <i class="fa-solid fa-play"></i>
+                    RUN
 
                 </div>
 
-                <div class="result greenText">
+                <div class="result numberColor">
                     30
                 </div>
 
@@ -700,9 +762,82 @@ body{
 
         </div>
 
-        <!-- SCENE 6 -->
+        <!-- ARRAY CODE -->
 
-        <div id="scene6" class="scene">
+        <div id="scene7" class="scene">
+
+            <div class="editor">
+
+                <div class="editor-top">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+
+                <div class="code-line">
+                    <div class="line-number">1</div>
+
+                    <div class="code-content">
+                        <div class="typing-text">
+                            let items = ["JS","HTML"];
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-line">
+                    <div class="line-number">2</div>
+
+                    <div class="code-content">
+                        <div class="typing-text typing-delay-2">
+                            console.log(items);
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-line">
+                    <div class="line-number">3</div>
+
+                    <div class="code-content">
+                        <div class="typing-text typing-delay-3">
+                            items.push("CSS");
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ARRAY RUN -->
+
+        <div id="scene8" class="scene">
+
+            <div class="run-scene">
+
+                <div class="run-text">
+                    EXECUTE CODE
+                </div>
+
+                <div class="run-btn">
+
+                    <div class="mouse"></div>
+
+                    <i class="fa-solid fa-play"></i>
+                    RUN
+
+                </div>
+
+                <div class="result arrayColor">
+                    ["JS","HTML","CSS"]
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- END -->
+
+        <div id="scene9" class="scene">
 
             <div class="title">
                 This is<br>
@@ -725,15 +860,21 @@ const scenes = [
 
     { id:"scene1", show:0, hide:3500 },
 
-    { id:"scene2", show:4200, hide:7200 },
+    { id:"scene2", show:4200, hide:7000 },
 
-    { id:"scene3", show:7800, hide:14500 },
+    { id:"scene3", show:7600, hide:13200 },
 
-    { id:"scene4", show:15100, hide:21800 },
+    { id:"scene4", show:13600, hide:18800 },
 
-    { id:"scene5", show:22400, hide:29100 },
+    { id:"scene5", show:19400, hide:25000 },
 
-    { id:"scene6", show:29800, hide:999999 }
+    { id:"scene6", show:25400, hide:30600 },
+
+    { id:"scene7", show:31200, hide:38000 },
+
+    { id:"scene8", show:38400, hide:43800 },
+
+    { id:"scene9", show:44400, hide:999999 }
 
 ];
 
@@ -750,6 +891,7 @@ scenes.forEach(scene => {
     setTimeout(() => {
 
         el.classList.remove("fadeIn");
+
         el.classList.add("fadeOut");
 
     }, scene.hide);
