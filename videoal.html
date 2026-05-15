@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Physics Cinema Flow</title>
+<title>Physics Solver Cinema</title>
 
 <style>
 body{
@@ -17,73 +17,63 @@ body{
     align-items:center;
 }
 
-/* MAIN SCREEN */
-.screen{
+/* MAIN CONTAINER */
+.scene{
     width:90%;
     max-width:900px;
     position:relative;
-    color:#cbd5e1;
-    font-size:18px;
-    line-height:2.2;
+    height:100vh;
 }
 
-/* PROBLEM BLOCK */
+/* PROBLEM BLOCK (CENTER → TOP) */
 .problem{
     position:absolute;
-    left:0;
-    right:0;
-
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
     text-align:center;
-    top:40%;
-
     color:#38bdf8;
+    font-size:22px;
     font-weight:900;
-    font-size:20px;
-
-    text-shadow:
-    0 0 12px #38bdf8,
-    0 0 30px #2563eb;
-
+    text-shadow:0 0 20px #38bdf8;
     transition:all 1.2s ease;
+    width:100%;
 }
 
-/* MOVE UP STATE */
-.problem.up{
-    top:10%;
-    font-size:16px;
-    text-align:left;
-    color:#7dd3fc;
+/* after move */
+.problem.top{
+    top:12%;
+    transform:translate(-50%,0);
+    font-size:18px;
+    color:#60a5fa;
+    text-shadow:0 0 15px #2563eb;
 }
 
-/* SOLUTION */
+/* SOLUTION BLOCK */
 .solution{
     position:absolute;
-    top:25%;
-    left:0;
-    right:0;
-
+    top:28%;
+    left:50%;
+    transform:translateX(-50%);
+    width:100%;
+    text-align:center;
     opacity:0;
-    transform:translateY(20px);
-
-    transition:1s ease;
-
+    transition:opacity 1s ease;
     color:#cbd5e1;
-    font-weight:700;
+    line-height:2;
+    font-size:18px;
 }
 
-/* SHOW SOLUTION */
+/* reveal solution */
 .solution.show{
     opacity:1;
-    transform:translateY(0);
 }
 
-/* GLOW COLORS */
+/* highlight styles */
 .glow{
     color:#38bdf8;
-    text-shadow:
-    0 0 12px #38bdf8,
-    0 0 30px #2563eb;
-    font-weight:900;
+    text-shadow:0 0 10px #38bdf8;
+    font-weight:700;
 }
 
 .big{
@@ -97,10 +87,10 @@ body{
     color:#a78bfa;
     font-size:24px;
     font-weight:900;
-    text-shadow:0 0 35px #7c3aed;
+    text-shadow:0 0 30px #7c3aed;
 }
 
-/* CURSOR */
+/* cursor */
 .cursor{
     display:inline-block;
     width:10px;
@@ -119,10 +109,12 @@ body{
 
 <body>
 
-<div class="screen">
+<div class="scene">
 
+    <!-- PROBLEM -->
     <div class="problem" id="problem"></div>
 
+    <!-- SOLUTION -->
     <div class="solution" id="solution"></div>
 
 </div>
@@ -132,83 +124,71 @@ body{
 const problemEl = document.getElementById("problem");
 const solutionEl = document.getElementById("solution");
 
-/* PROBLEM TEXT */
+/* TEXT */
 const problemText =
-"A car starts from rest and accelerates at 3 m/s². Find velocity after 10 seconds.";
+`PHYSICS PROBLEM:
+A car starts from rest and accelerates at 3 m/s².
+Find velocity after 10 seconds.`;
 
-/* SOLUTION STEPS */
-const steps = [
+/* SOLUTION LINES */
+const solutionLines = [
 "SOLUTION:",
 "We use equation of motion:",
-"v = u + at",
-
+"<span class='glow'>v = u + at</span>",
+"",
 "Where:",
-"u = initial velocity = 0 m/s",
+"u = 0 m/s",
 "a = <span class='glow'>3 m/s²</span>",
 "t = <span class='glow'>10 s</span>",
-
-"Substitute values:",
+"",
+"Substitute:",
 "v = 0 + (3 × 10)",
-
 "v = <span class='big'>30 m/s</span>",
-
+"",
 "FINAL ANSWER:",
-"Velocity = <span class='final'>30 m/s</span>"
+"<span class='final'>Velocity = 30 m/s</span>"
 ];
 
-/* TYPE PROBLEM CENTER */
 let i = 0;
+let char = 0;
+let solutionIndex = 0;
 
+/* TYPE PROBLEM FIRST */
 function typeProblem(){
 
-    if(i < problemText.length){
+    if(char < problemText.length){
+        problemEl.innerHTML = problemText.substring(0, char+1) + '<span class="cursor"></span>';
+        char++;
+        setTimeout(typeProblem, 20);
+    } else {
+        problemEl.innerHTML = problemText;
 
-        problemEl.innerHTML += problemText[i];
-
-        i++;
-
-        setTimeout(typeProblem, 18);
-    }
-    else{
-
-        setTimeout(moveUp, 600);
+        // MOVE PROBLEM UP
+        setTimeout(() => {
+            problemEl.classList.add("top");
+            startSolution();
+        }, 800);
     }
 }
 
-/* MOVE PROBLEM UP */
-function moveUp(){
-
-    problemEl.classList.add("up");
-
-    setTimeout(showSolution, 900);
-}
-
-/* SHOW SOLUTION */
-let j = 0;
-
-function showSolution(){
+/* TYPE SOLUTION */
+function startSolution(){
 
     solutionEl.classList.add("show");
+
+    function typeSolution(){
+
+        if(solutionIndex >= solutionLines.length) return;
+
+        solutionEl.innerHTML += solutionLines[solutionIndex] + "<br>";
+        solutionIndex++;
+
+        setTimeout(typeSolution, 200);
+    }
 
     typeSolution();
 }
 
-/* TYPE SOLUTION */
-function typeSolution(){
-
-    if(j >= steps.length) return;
-
-    let line = document.createElement("div");
-    line.innerHTML = steps[j];
-
-    solutionEl.appendChild(line);
-
-    j++;
-
-    setTimeout(typeSolution, 650);
-}
-
-/* START */
 typeProblem();
 
 </script>
