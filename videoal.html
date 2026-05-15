@@ -6,7 +6,7 @@
 
 <title>video.html</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
 
@@ -17,9 +17,9 @@
 }
 
 body{
-    background:#030712;
-    overflow:hidden;
+    background:#020617;
     height:100vh;
+    overflow:hidden;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -33,144 +33,71 @@ body::after{
     content:"";
     position:absolute;
     border-radius:50%;
-    filter:blur(170px);
+    filter:blur(160px);
 }
 
 body::before{
-    width:520px;
-    height:520px;
+    width:480px;
+    height:480px;
     background:#2563eb;
-    top:-220px;
-    left:-220px;
-    opacity:.22;
+    top:-200px;
+    left:-200px;
+    opacity:.2;
 }
 
 body::after{
-    width:520px;
-    height:520px;
+    width:480px;
+    height:480px;
     background:#7c3aed;
-    bottom:-220px;
-    right:-220px;
-    opacity:.2;
+    right:-200px;
+    bottom:-200px;
+    opacity:.18;
 }
 
 /* FRAME */
 
 .frame{
-    width:1080px;
-    height:1920px;
-    max-height:95vh;
-    aspect-ratio:9/16;
+    width:430px;
+    height:860px;
 
     background:#0f172a;
 
     border-radius:42px;
 
-    position:relative;
-
     overflow:hidden;
+
+    position:relative;
 
     border:1px solid rgba(255,255,255,.06);
 
     box-shadow:
-    0 0 120px rgba(0,0,0,.7),
-    inset 0 0 40px rgba(255,255,255,.03);
-
-    perspective:2000px;
+    0 0 80px rgba(0,0,0,.7),
+    inset 0 0 30px rgba(255,255,255,.03);
 }
 
-/* CINEMATIC CAMERA */
-
-.camera{
-    position:absolute;
-    inset:0;
-
-    transform-style:preserve-3d;
-
-    animation:camera 14s cubic-bezier(.65,.05,.36,1) infinite;
-}
-
-@keyframes camera{
-
-    0%{
-        transform:
-        rotateY(-4deg)
-        rotateX(1deg)
-        scale(1)
-        translateX(-10px);
-    }
-
-    20%{
-        transform:
-        rotateY(3deg)
-        rotateX(-1deg)
-        scale(1.03)
-        translateX(12px);
-    }
-
-    40%{
-        transform:
-        rotateY(-7deg)
-        rotateX(2deg)
-        scale(1.05)
-        translateX(-18px);
-    }
-
-    60%{
-        transform:
-        rotateY(6deg)
-        rotateX(-2deg)
-        scale(1.03)
-        translateX(16px);
-    }
-
-    80%{
-        transform:
-        rotateY(-2deg)
-        rotateX(.5deg)
-        scale(1.01)
-        translateX(-4px);
-    }
-
-    100%{
-        transform:
-        rotateY(-4deg)
-        rotateX(1deg)
-        scale(1)
-        translateX(-10px);
-    }
-}
-
-/* FLOAT GLOW */
+/* GLOW */
 
 .glow{
     position:absolute;
     border-radius:50%;
-    filter:blur(100px);
+    filter:blur(90px);
     opacity:.18;
-    animation:pulse 6s ease-in-out infinite;
 }
 
 .g1{
-    width:260px;
-    height:260px;
+    width:220px;
+    height:220px;
     background:#2563eb;
-    top:80px;
-    left:60px;
+    top:30px;
+    left:-40px;
 }
 
 .g2{
-    width:260px;
-    height:260px;
+    width:220px;
+    height:220px;
     background:#7c3aed;
-    right:60px;
-    bottom:120px;
-}
-
-@keyframes pulse{
-    50%{
-        transform:scale(1.15);
-    }
+    right:-40px;
+    bottom:30px;
 }
 
 /* INTRO */
@@ -191,30 +118,30 @@ body::after{
 
 .intro.hide{
     opacity:0;
-    transform:scale(1.15);
-    pointer-events:none;
+    transform:scale(1.08);
 }
 
-.python{
-    width:170px;
+.pythonLogo{
+    width:120px;
+
     filter:
-    drop-shadow(0 0 50px rgba(59,130,246,.55));
+    drop-shadow(0 0 35px rgba(59,130,246,.55));
 
     animation:float 4s ease-in-out infinite;
 }
 
 @keyframes float{
     50%{
-        transform:translateY(-16px);
+        transform:translateY(-10px);
     }
 }
 
 .title{
-    margin-top:34px;
+    margin-top:30px;
 
     color:white;
 
-    font-size:74px;
+    font-size:42px;
 
     font-weight:900;
 
@@ -222,52 +149,46 @@ body::after{
 
     text-align:center;
 
-    letter-spacing:-2px;
+    letter-spacing:-1px;
 }
 
 .sub{
-    margin-top:24px;
+    margin-top:18px;
 
     color:#7dd3fc;
 
-    font-size:28px;
+    font-size:17px;
 
     font-weight:700;
 
-    text-shadow:
-    0 0 25px rgba(125,211,252,.4);
+    text-align:center;
+
+    line-height:1.7;
 }
 
-/* CONCEPT CARD */
+/* MAIN CARD */
 
 .card{
     position:absolute;
 
-    width:88%;
-
-    left:50%;
-    top:50%;
-
-    transform:
-    translate(-50%,-50%);
+    inset:22px;
 
     background:rgba(15,23,42,.84);
 
-    border:1px solid rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.06);
 
-    border-radius:40px;
+    border-radius:30px;
 
-    backdrop-filter:blur(24px);
+    backdrop-filter:blur(18px);
 
-    padding:50px;
+    padding:26px;
 
     opacity:0;
 
     transition:.8s ease;
 
-    box-shadow:
-    0 0 70px rgba(0,0,0,.45),
-    inset 0 0 30px rgba(255,255,255,.03);
+    display:flex;
+    flex-direction:column;
 
     z-index:30;
 }
@@ -276,36 +197,94 @@ body::after{
     opacity:1;
 }
 
-.concept{
+/* LABEL */
+
+.label{
     color:#38bdf8;
 
-    font-size:22px;
+    font-size:13px;
 
     font-weight:800;
 
     letter-spacing:2px;
 }
 
+/* HEADLINE */
+
 .headline{
-    margin-top:18px;
+    margin-top:14px;
 
     color:white;
 
-    font-size:72px;
+    font-size:34px;
 
     font-weight:900;
 
-    line-height:1.05;
+    line-height:1.15;
 
-    letter-spacing:-2px;
+    letter-spacing:-1px;
+
+    min-height:82px;
+}
+
+/* GLOW WORD */
+
+.glowWord{
+    display:inline-block;
+
+    font-weight:900;
+
+    animation:glowPulse 1.5s ease-in-out infinite;
+}
+
+.blue{
+    color:#7dd3fc;
+
+    text-shadow:
+    0 0 12px rgba(125,211,252,.9),
+    0 0 28px rgba(59,130,246,.8),
+    0 0 60px rgba(59,130,246,.55);
+}
+
+.green{
+    color:#86efac;
+
+    text-shadow:
+    0 0 12px rgba(134,239,172,.9),
+    0 0 28px rgba(34,197,94,.8),
+    0 0 60px rgba(34,197,94,.55);
+}
+
+.purple{
+    color:#d8b4fe;
+
+    text-shadow:
+    0 0 12px rgba(216,180,254,.9),
+    0 0 28px rgba(168,85,247,.8),
+    0 0 60px rgba(168,85,247,.55);
+}
+
+.orange{
+    color:#fdba74;
+
+    text-shadow:
+    0 0 12px rgba(253,186,116,.9),
+    0 0 28px rgba(249,115,22,.8),
+    0 0 60px rgba(249,115,22,.55);
+}
+
+@keyframes glowPulse{
+    50%{
+        transform:scale(1.06);
+    }
 }
 
 /* CODE WINDOW */
 
 .window{
-    margin-top:40px;
+    margin-top:24px;
 
-    border-radius:28px;
+    border-radius:22px;
 
     overflow:hidden;
 
@@ -314,8 +293,10 @@ body::after{
     background:#020617;
 }
 
-.top{
-    height:62px;
+/* TOPBAR */
+
+.topbar{
+    height:52px;
 
     background:#111827;
 
@@ -324,53 +305,63 @@ body::after{
     display:flex;
     align-items:center;
 
-    padding:0 22px;
+    padding:0 18px;
 }
 
 .dot{
-    width:12px;
-    height:12px;
+    width:10px;
+    height:10px;
     border-radius:50%;
-    margin-right:7px;
+    margin-right:6px;
 }
 
 .red{background:#ef4444;}
 .yellow{background:#facc15;}
-.green{background:#22c55e;}
+.greenDot{background:#22c55e;}
 
 .file{
-    margin-left:14px;
+    margin-left:10px;
 
     color:#cbd5e1;
 
-    font-size:15px;
+    font-size:13px;
 
     font-weight:700;
 }
 
+/* CODE */
+
 .code{
-    padding:34px;
+    padding:22px;
+
+    min-height:180px;
 
     font-family:'Fira Code', monospace;
 
-    font-size:25px;
+    font-size:16px;
 
     line-height:2;
+
+    color:white;
 }
 
 .line{
-    display:flex;
-    align-items:center;
+    display:grid;
+    grid-template-columns:34px auto;
+    align-items:flex-start;
 }
 
 .num{
-    width:52px;
-
     color:#475569;
 }
 
 .text{
-    color:white;
+    white-space:pre-wrap;
+    word-break:break-word;
+}
+
+.comment{
+    color:#64748b;
 }
 
 .variable{
@@ -389,93 +380,99 @@ body::after{
     color:#c084fc;
 }
 
-/* MASSIVE GLOW HIGHLIGHT */
+/* GLOW CODE */
 
 .highlight{
-    display:inline-block;
-
     font-weight:900;
 
-    transform:scale(1.12);
-
-    animation:highlightPulse 1.4s ease-in-out infinite;
+    animation:codePulse 1.4s ease-in-out infinite;
 }
 
-.blue{
-    color:#7dd3fc;
-
-    text-shadow:
-    0 0 18px rgba(125,211,252,.95),
-    0 0 40px rgba(59,130,246,.95),
-    0 0 80px rgba(59,130,246,.75);
-}
-
-.green{
-    color:#86efac;
-
-    text-shadow:
-    0 0 18px rgba(134,239,172,.95),
-    0 0 40px rgba(34,197,94,.85),
-    0 0 80px rgba(34,197,94,.7);
-}
-
-.purple{
-    color:#d8b4fe;
-
-    text-shadow:
-    0 0 18px rgba(216,180,254,.95),
-    0 0 40px rgba(168,85,247,.85),
-    0 0 80px rgba(168,85,247,.7);
-}
-
-.orange{
-    color:#fdba74;
-
-    text-shadow:
-    0 0 18px rgba(253,186,116,.95),
-    0 0 40px rgba(249,115,22,.85),
-    0 0 80px rgba(249,115,22,.7);
-}
-
-@keyframes highlightPulse{
-
+@keyframes codePulse{
     50%{
-        transform:scale(1.2);
+        filter:brightness(1.3);
     }
 }
 
-/* EXPLAIN */
+/* CURSOR */
 
-.explain{
-    margin-top:34px;
+.cursor{
+    width:8px;
+    height:17px;
+    background:white;
+    display:inline-block;
+    margin-left:2px;
+    animation:blink .7s infinite;
+}
 
-    color:#e2e8f0;
+@keyframes blink{
+    50%{
+        opacity:0;
+    }
+}
 
-    font-size:24px;
+/* EXPLANATION */
 
-    line-height:1.8;
+.explainBox{
+    margin-top:24px;
 
-    font-weight:600;
+    background:linear-gradient(
+        135deg,
+        rgba(37,99,235,.2),
+        rgba(59,130,246,.08)
+    );
+
+    border:1px solid rgba(96,165,250,.16);
+
+    border-radius:22px;
+
+    padding:20px;
+
+    min-height:130px;
+}
+
+.explainTitle{
+    color:#7dd3fc;
+
+    font-size:13px;
+
+    font-weight:900;
+
+    letter-spacing:1px;
+}
+
+.explainText{
+    margin-top:12px;
+
+    color:white;
+
+    font-size:15px;
+
+    line-height:1.9;
+
+    font-weight:500;
 }
 
 /* TERMINAL */
 
 .terminal{
-    margin-top:34px;
+    margin-top:20px;
 
     background:#020617;
 
-    border-radius:24px;
-
-    padding:28px;
+    border-radius:20px;
 
     border:1px solid rgba(255,255,255,.06);
+
+    padding:18px;
+
+    min-height:110px;
 
     font-family:'Fira Code', monospace;
 
     color:#4ade80;
 
-    font-size:22px;
+    font-size:15px;
 
     line-height:2;
 }
@@ -495,7 +492,7 @@ body::after{
 
     transition:1s ease;
 
-    z-index:50;
+    z-index:60;
 }
 
 .final.show{
@@ -505,40 +502,31 @@ body::after{
 .finalTitle{
     color:white;
 
-    font-size:78px;
+    font-size:44px;
 
     font-weight:900;
 
     text-align:center;
 
-    line-height:1.1;
+    line-height:1.2;
 
-    letter-spacing:-2px;
+    letter-spacing:-1px;
 
     text-shadow:
-    0 0 50px rgba(255,255,255,.12);
+    0 0 35px rgba(255,255,255,.12);
 }
 
 .finalSub{
-    margin-top:30px;
+    margin-top:20px;
 
     color:#60a5fa;
 
-    font-size:30px;
+    font-size:18px;
 
     font-weight:800;
 
     text-shadow:
-    0 0 30px rgba(96,165,250,.45);
-}
-
-/* TRANSITIONS */
-
-.hide{
-    opacity:0 !important;
-    transform:
-    translate(-50%,-50%)
-    scale(1.1) !important;
+    0 0 20px rgba(96,165,250,.45);
 }
 
 </style>
@@ -548,80 +536,91 @@ body::after{
 
 <div class="frame">
 
-    <div class="camera">
+    <div class="glow g1"></div>
+    <div class="glow g2"></div>
 
-        <div class="glow g1"></div>
-        <div class="glow g2"></div>
+    <!-- INTRO -->
 
-        <!-- INTRO -->
+    <div class="intro" id="intro">
 
-        <div class="intro" id="intro">
+        <img
+            class="pythonLogo"
+            src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg"
+        >
 
-            <img
-                class="python"
-                src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg"
-            >
-
-            <div class="title">
-                Programming Concepts<br>
-                in 15 Seconds
-            </div>
-
-            <div class="sub">
-                Variables • Functions • Loops • APIs
-            </div>
-
+        <div class="title">
+            Programming Concepts<br>
+            in 15 Seconds
         </div>
 
-        <!-- CARD -->
+        <div class="sub">
+            Variables • Functions<br>
+            Loops • APIs
+        </div>
 
-        <div class="card" id="card">
+    </div>
 
-            <div class="concept" id="conceptLabel">
-                VARIABLES
-            </div>
+    <!-- MAIN -->
 
-            <div class="headline" id="headline">
-                Store Data
-            </div>
+    <div class="card" id="card">
 
-            <div class="window">
+        <div class="label" id="label">
+            VARIABLES
+        </div>
 
-                <div class="top">
+        <div class="headline" id="headline">
+            Store Data
+        </div>
 
-                    <div class="dot red"></div>
-                    <div class="dot yellow"></div>
-                    <div class="dot green"></div>
+        <!-- CODE -->
 
-                    <div class="file">
-                        app.py
-                    </div>
+        <div class="window">
 
+            <div class="topbar">
+
+                <div class="dot red"></div>
+                <div class="dot yellow"></div>
+                <div class="dot greenDot"></div>
+
+                <div class="file">
+                    app.py
                 </div>
 
-                <div class="code" id="codeArea"></div>
-
             </div>
 
-            <div class="explain" id="explain"></div>
-
-            <div class="terminal" id="terminal"></div>
+            <div class="code" id="code"></div>
 
         </div>
 
-        <!-- FINAL -->
+        <!-- EXPLANATION -->
 
-        <div class="final" id="final">
+        <div class="explainBox">
 
-            <div class="finalTitle">
-                Coding Should<br>
-                Feel Cinematic
+            <div class="explainTitle">
+                EXPLANATION
             </div>
 
-            <div class="finalSub">
-                Follow for more Python Concepts
-            </div>
+            <div class="explainText" id="explain"></div>
 
+        </div>
+
+        <!-- TERMINAL -->
+
+        <div class="terminal" id="terminal"></div>
+
+    </div>
+
+    <!-- FINAL -->
+
+    <div class="final" id="final">
+
+        <div class="finalTitle">
+            Coding Should<br>
+            Feel Cinematic
+        </div>
+
+        <div class="finalSub">
+            Follow For More Python Concepts
         </div>
 
     </div>
@@ -638,14 +637,14 @@ document.getElementById("intro");
 const card =
 document.getElementById("card");
 
-const conceptLabel =
-document.getElementById("conceptLabel");
+const label =
+document.getElementById("label");
 
 const headline =
 document.getElementById("headline");
 
-const codeArea =
-document.getElementById("codeArea");
+const code =
+document.getElementById("code");
 
 const explain =
 document.getElementById("explain");
@@ -666,202 +665,232 @@ setTimeout(()=>{
 
         card.classList.add("show");
 
-        startVariable();
+        variableScene();
 
-    },700);
+    },900);
 
-},2400);
+},2800);
 
-/* TYPE EFFECT */
+/* TYPE TEXT */
 
-function typeHTML(el,html,speed=14){
+function typeText(el,text,speed=25){
 
     el.innerHTML = "";
 
     let i = 0;
 
-    function type(){
+    function write(){
 
         el.innerHTML =
-        html.substring(0,i);
+        text.substring(0,i) +
+        '<span class="cursor"></span>';
 
         i++;
 
-        if(i <= html.length){
+        if(i <= text.length){
 
-            setTimeout(type,speed);
+            setTimeout(write,speed);
+
+        }else{
+
+            el.innerHTML = text;
         }
     }
 
-    type();
+    write();
+}
+
+/* TYPE CODE */
+
+function typeCode(lines){
+
+    code.innerHTML = "";
+
+    let lineIndex = 0;
+
+    function addLine(){
+
+        if(lineIndex >= lines.length){
+            return;
+        }
+
+        const row =
+        document.createElement("div");
+
+        row.className = "line";
+
+        row.innerHTML = `
+            <div class="num">${lineIndex + 1}</div>
+            <div class="text"></div>
+        `;
+
+        code.appendChild(row);
+
+        const text =
+        row.querySelector(".text");
+
+        const html =
+        lines[lineIndex];
+
+        let i = 0;
+
+        function type(){
+
+            text.innerHTML =
+            html.substring(0,i) +
+            '<span class="cursor"></span>';
+
+            i++;
+
+            if(i <= html.length){
+
+                setTimeout(type,8);
+
+            }else{
+
+                text.innerHTML = html;
+
+                lineIndex++;
+
+                setTimeout(addLine,220);
+            }
+        }
+
+        type();
+    }
+
+    addLine();
 }
 
 /* VARIABLE */
 
-function startVariable(){
+function variableScene(){
 
-    conceptLabel.innerText =
-    "VARIABLES";
+    label.innerText = "VARIABLE";
 
     headline.innerHTML =
-    "Store <span class='highlight blue'>Data</span>";
+    `Store <span class="glowWord blue">Data</span>`;
 
-    typeHTML(codeArea,`
+    typeCode([
 
-<div class="line">
-    <div class="num">1</div>
-    <div class="text">
-        <span class="variable highlight blue">name</span>
-        =
-        <span class="string">"Dominex"</span>
-    </div>
-</div>
+`<span class="variable highlight blue">name</span> = <span class="string">"Dominex"</span>`
 
-    `);
+    ]);
 
-    typeHTML(
+    typeText(
         explain,
-        `Variables store information inside your program.`
+        "Variables store information inside your Python program."
     );
 
-    typeHTML(
+    typeText(
         terminal,
-        `name → "Dominex"`
+        'name → "Dominex"',
+        30
     );
 
-    setTimeout(startFunction,3000);
+    setTimeout(functionScene,5200);
 }
 
 /* FUNCTION */
 
-function startFunction(){
+function functionScene(){
 
-    conceptLabel.innerText =
-    "FUNCTIONS";
+    label.innerText = "FUNCTION";
 
     headline.innerHTML =
-    "Run <span class='highlight green'>Actions</span>";
+    `Run <span class="glowWord green">Actions</span>`;
 
-    typeHTML(codeArea,`
+    typeCode([
 
-<div class="line">
-    <div class="num">1</div>
-    <div class="text">
-        <span class="func highlight green">print</span>(
-        <span class="string">"Hello"</span>)
-    </div>
-</div>
+`<span class="func highlight green">print</span>(<span class="string">"Hello"</span>)`
 
-    `);
+    ]);
 
-    typeHTML(
+    typeText(
         explain,
-        `Functions perform actions instantly.`
+        "Functions execute actions and help organize your code."
     );
 
-    typeHTML(
+    typeText(
         terminal,
-        `Hello`
+        "Hello",
+        35
     );
 
-    setTimeout(startLoop,3000);
+    setTimeout(loopScene,5200);
 }
 
 /* LOOP */
 
-function startLoop(){
+function loopScene(){
 
-    conceptLabel.innerText =
-    "LOOPS";
+    label.innerText = "LOOP";
 
     headline.innerHTML =
-    "Repeat <span class='highlight purple'>Tasks</span>";
+    `Repeat <span class="glowWord purple">Tasks</span>`;
 
-    typeHTML(codeArea,`
+    typeCode([
 
-<div class="line">
-    <div class="num">1</div>
-    <div class="text">
-        <span class="keyword highlight purple">for</span>
-        i in range(3):
-    </div>
-</div>
+`<span class="keyword highlight purple">for</span> i in range(3):`,
+`    print(i)`
 
-<div class="line">
-    <div class="num">2</div>
-    <div class="text">
-        &nbsp;&nbsp;&nbsp;&nbsp;
-        print(i)
-    </div>
-</div>
+    ]);
 
-    `);
-
-    typeHTML(
+    typeText(
         explain,
-        `Loops repeat code automatically.`
+        "Loops automatically repeat code multiple times."
     );
 
-    typeHTML(
+    typeText(
         terminal,
-        `0<br>1<br>2`
+        "0\n1\n2",
+        40
     );
 
-    setTimeout(startAPI,3200);
+    setTimeout(apiScene,5600);
 }
 
 /* API */
 
-function startAPI(){
+function apiScene(){
 
-    conceptLabel.innerText =
-    "API";
+    label.innerText = "API";
 
     headline.innerHTML =
-    "Connect <span class='highlight orange'>Systems</span>";
+    `Connect <span class="glowWord orange">Systems</span>`;
 
-    typeHTML(codeArea,`
+    typeCode([
 
-<div class="line">
-    <div class="num">1</div>
-    <div class="text">
-        requests.get(
-    </div>
-</div>
+`response = requests.get(`,
+`"api.weather.com")`
 
-<div class="line">
-    <div class="num">2</div>
-    <div class="text">
-        "api.weather.com")
-    </div>
-</div>
+    ]);
 
-    `);
-
-    typeHTML(
+    typeText(
         explain,
-        `APIs allow apps to communicate with each other.`
+        "APIs allow applications to communicate and share data."
     );
 
-    typeHTML(
+    typeText(
         terminal,
-        `Weather Data Received`
+        "Weather Data Received",
+        35
     );
 
-    setTimeout(showFinal,3400);
+    setTimeout(showFinal,6200);
 }
 
 /* FINAL */
 
 function showFinal(){
 
-    card.classList.remove("show");
+    card.style.opacity = "0";
 
     setTimeout(()=>{
 
         final.classList.add("show");
 
-    },700);
+    },1000);
 }
 
 </script>
