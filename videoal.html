@@ -2,154 +2,217 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Physics Solver Cinema</title>
+<title>Starlight Programming Language</title>
 
 <style>
-body{
-    margin:0;
-    height:100vh;
-    background:radial-gradient(circle at center, #020617, #000000);
-    overflow:hidden;
-    font-family:Inter, monospace;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+/* =========================================================
+   BASE THEME (REAL SOFTWARE TRAILER STYLE)
+========================================================= */
+
+:root {
+  --bg: #07070b;
+  --panel: #0d0f14;
+  --panel2: #0a0c10;
+  --border: #1f2633;
+  --text: #d7dde8;
+  --muted: #7c8799;
+  --accent: #6cf0ff;
+  --accent2: #b26cff;
+  --good: #3dff9a;
+  --warn: #ffd166;
+  --error: #ff4d6d;
 }
 
-/* SCENE */
-.scene{
-    width:90%;
-    max-width:900px;
-    height:100vh;
-    position:relative;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: ui-sans-serif, system-ui, -apple-system;
 }
 
-/* PROBLEM */
-.problem{
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    text-align:center;
-    width:100%;
-    color:#38bdf8;
-    font-size:24px;
-    font-weight:900;
-    text-shadow:0 0 25px #38bdf8;
-    transition:all 1.6s cubic-bezier(0.22, 1, 0.36, 1);
-    letter-spacing:0.5px;
+body {
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
 }
 
-/* MOVED PROBLEM (still visible) */
-.problem.top{
-    top:8%;
-    font-size:18px;
-    color:#60a5fa;
-    opacity:0.9;
-    text-shadow:0 0 18px #2563eb;
+/* =========================================================
+   GLOBAL LAYOUT SYSTEM
+========================================================= */
+
+.scene {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transform: scale(1.02);
+  transition: 1.2s cubic-bezier(.2,.8,.2,1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* SOLUTION AREA */
-.solution{
-    position:absolute;
-    top:22%;
-    left:50%;
-    transform:translateX(-50%);
-    width:100%;
-    text-align:center;
-    color:#cbd5e1;
-    font-size:18px;
-    line-height:2;
-    max-height:65vh;
-    overflow:hidden;
+.scene.active {
+  opacity: 1;
+  transform: scale(1);
 }
 
-/* LINE ANIMATION (premium “thinking reveal”) */
-.line{
-    opacity:0;
-    transform:translateY(14px) scale(0.98);
-    filter:blur(4px);
-    animation:reveal 0.9s ease forwards;
+/* =========================================================
+   SCENE 1 — INTRO (PRODUCT LAUNCH STYLE)
+========================================================= */
+
+.intro {
+  flex-direction: column;
+  text-align: center;
 }
 
-@keyframes reveal{
-    to{
-        opacity:1;
-        transform:translateY(0) scale(1);
-        filter:blur(0);
-    }
+.logo {
+  width: 120px;
+  height: 120px;
+  background: url("starlight.png") center/contain no-repeat;
+  filter: drop-shadow(0 0 25px rgba(108,240,255,.5));
+  animation: float 4s ease-in-out infinite;
 }
 
-/* COLORS */
-.glow{
-    color:#38bdf8;
-    text-shadow:0 0 12px #38bdf8;
-    font-weight:700;
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 
-.big{
-    color:#7dd3fc;
-    font-size:22px;
-    font-weight:900;
-    text-shadow:0 0 30px #38bdf8;
+.title {
+  font-size: 44px;
+  font-weight: 700;
+  margin-top: 18px;
+  letter-spacing: 1px;
 }
 
-.final{
-    color:#a78bfa;
-    font-size:26px;
-    font-weight:900;
-    text-shadow:0 0 40px #7c3aed;
+.subtitle {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 15px;
 }
 
-/* THINKING DOTS */
-.think{
-    display:inline-block;
-    color:#64748b;
-    font-style:italic;
+.meta {
+  margin-top: 20px;
+  font-size: 13px;
+  color: var(--accent);
+  border: 1px solid rgba(108,240,255,.3);
+  padding: 8px 14px;
+  border-radius: 8px;
 }
 
-.dots::after{
-    content:"";
-    animation:dots 1.2s infinite;
+/* =========================================================
+   SCENE 2 — CODE STUDIO (IDE SIMULATION)
+========================================================= */
+
+.ide {
+  width: 90%;
+  height: 85%;
+  display: flex;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 60px rgba(0,0,0,.6);
 }
 
-@keyframes dots{
-    0%{content:""}
-    33%{content:"."}
-    66%{content:".."}
-    100%{content:"..."}
+/* SIDEBAR */
+.sidebar {
+  width: 220px;
+  background: var(--panel2);
+  border-right: 1px solid var(--border);
+  padding: 16px;
 }
 
-/* FOOTER */
-.credit{
-    position:absolute;
-    bottom:16px;
-    width:100%;
-    text-align:center;
-    font-size:12px;
-    color:#64748b;
-    letter-spacing:1.5px;
-    animation:fade 3s ease-in-out infinite;
+.file {
+  padding: 8px;
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 8px;
+  border-radius: 6px;
 }
 
-@keyframes fade{
-    0%,100%{opacity:0.4}
-    50%{opacity:1}
+.file.active {
+  background: rgba(108,240,255,.08);
+  color: var(--accent);
 }
 
-/* CURSOR */
-.cursor{
-    display:inline-block;
-    width:10px;
-    height:18px;
-    background:white;
-    margin-left:6px;
-    animation:blink .6s infinite;
+/* EDITOR */
+.editor {
+  flex: 1;
+  padding: 20px;
+  position: relative;
 }
 
-@keyframes blink{
-    50%{opacity:0;}
+.code {
+  font-family: monospace;
+  font-size: 15px;
+  line-height: 1.8;
+  white-space: pre;
+}
+
+.kw { color: var(--accent2); }
+.fn { color: var(--accent); }
+.str { color: var(--warn); }
+
+/* TYPE EFFECT CURSOR */
+.cursor {
+  display: inline-block;
+  width: 8px;
+  background: var(--accent);
+  animation: blink .8s infinite;
+}
+
+@keyframes blink {
+  0%,50% { opacity: 1; }
+  51%,100% { opacity: 0; }
+}
+
+/* INFO PANEL */
+.info {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 320px;
+  background: rgba(0,0,0,.4);
+  border: 1px solid var(--border);
+  padding: 12px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* =========================================================
+   SCENE 3 — EXECUTION TERMINAL
+========================================================= */
+
+.terminal {
+  width: 80%;
+  height: 70%;
+  background: #000;
+  border: 1px solid #1bff9a;
+  box-shadow: 0 0 40px rgba(61,255,154,.2);
+  padding: 16px;
+  font-family: monospace;
+  overflow: hidden;
+}
+
+.line {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: appear .25s forwards;
+  color: var(--good);
+}
+
+@keyframes appear {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.headerbar {
+  color: var(--muted);
+  margin-bottom: 10px;
 }
 
 </style>
@@ -157,96 +220,149 @@ body{
 
 <body>
 
-<div class="scene">
+<!-- ===================== SCENE 1 ===================== -->
+<div class="scene active intro" id="s1">
+  <div class="logo"></div>
+  <div class="title">Starlight Programming Language</div>
+  <div class="subtitle">A Node.js-based execution engine for modern scripting</div>
+  <div class="meta">Created by Dominex Macedon • starlight-cli (npm)</div>
+</div>
 
-    <div class="problem" id="problem"></div>
-    <div class="solution" id="solution"></div>
+<!-- ===================== SCENE 2 ===================== -->
+<div class="scene" id="s2">
+  <div class="ide">
 
-    <div class="credit">Animated by Dominex Macedon</div>
+    <div class="sidebar">
+      <div class="file active">program.sl</div>
+      <div class="file">runtime.sl</div>
+      <div class="file">config.json</div>
+      <div class="file">starlight.core</div>
+    </div>
 
+    <div class="editor">
+<pre class="code" id="code"></pre>
+
+<div class="info">
+<strong>Starlight Engine</strong><br><br>
+• let → variable binding<br>
+• sldeploy → runtime output<br>
+• compiled on Node.js runtime layer
+</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================== SCENE 3 ===================== -->
+<div class="scene" id="s3">
+  <div class="terminal" id="term">
+    <div class="headerbar">starlight-cli execution engine</div>
+  </div>
 </div>
 
 <script>
 
-const problemEl = document.getElementById("problem");
-const solutionEl = document.getElementById("solution");
+/* =========================================================
+   SCENE CONTROLLER
+========================================================= */
 
-/* PROBLEM */
-const problemText =
-`PHYSICS PROBLEM:
-A car starts from rest and accelerates at 3 m/s².
-Find velocity after 10 seconds.`;
+const scenes = ["s1","s2","s3"];
+let i = 0;
 
-/* SOLUTION FLOW */
-const solutionLines = [
-"SOLUTION:",
-"<span class='think'>Analyzing motion</span><span class='dots'></span>",
-"",
-"We use equation of motion:",
-"<span class='glow'>v = u + at</span>",
-"",
-"<span class='think'>Substituting values</span><span class='dots'></span>",
-"u = 0 m/s",
-"a = <span class='glow'>3 m/s²</span>",
-"t = <span class='glow'>10 s</span>",
-"",
-"<span class='think'>Computing result</span><span class='dots'></span>",
-"v = 0 + (3 × 10)",
-"",
-"<span class='big'>Processing final value...</span>",
-"",
-"<span class='final'>Velocity = 30 m/s</span>"
+function show(n){
+  scenes.forEach(id => document.getElementById(id).classList.remove("active"));
+  document.getElementById(scenes[n]).classList.add("active");
+}
+
+/* FLOW TIMELINE */
+setTimeout(() => { i=1; show(i); typeCode(); }, 3500);
+setTimeout(() => { i=2; show(i); runTerminal(); }, 9000);
+
+/* =========================================================
+   SCENE 2 — TYPE ENGINE
+========================================================= */
+
+const codeLines = [
+`let name = "Dominex Macedon"`,
+`let msg = "Hello " + name`,
+``,
+`sldeploy(msg)`
 ];
 
-let i = 0;
-let char = 0;
-let sol = 0;
+let codeIndex = 0;
+let charIndex = 0;
+const codeEl = document.getElementById("code");
 
-/* TYPE PROBLEM */
-function typeProblem(){
+function typeCode(){
+  if(codeIndex >= codeLines.length) return;
 
-    if(char < problemText.length){
-        problemEl.innerHTML =
-            problemText.substring(0, char+1) + '<span class="cursor"></span>';
+  let line = codeLines[codeIndex];
+  if(charIndex <= line.length){
 
-        char++;
-        setTimeout(typeProblem, 26);
-    }
-    else{
-        problemEl.innerHTML = problemText;
+    let rendered = codeLines.slice(0,codeIndex).join("\n")
+      + "\n"
+      + line.substring(0,charIndex)
+      + "<span class='cursor'></span>";
 
-        setTimeout(() => {
-            problemEl.classList.add("top");
-            startSolution();
-        }, 1000);
-    }
+    codeEl.innerHTML = highlight(rendered);
+    charIndex++;
+    setTimeout(typeCode, 40);
+  } else {
+    charIndex = 0;
+    codeIndex++;
+    setTimeout(typeCode, 200);
+  }
 }
 
-/* PREMIUM SOLUTION ENGINE */
-function startSolution(){
-
-    function addStep(){
-
-        if(sol >= solutionLines.length) return;
-
-        const div = document.createElement("div");
-        div.className = "line";
-        div.innerHTML = solutionLines[sol];
-
-        solutionEl.appendChild(div);
-
-        sol++;
-
-        // natural “thinking delay”
-        const delay = 380 + Math.random() * 320;
-
-        setTimeout(addStep, delay);
-    }
-
-    setTimeout(addStep, 600);
+/* syntax highlight */
+function highlight(code){
+  return code
+    .replace(/let/g, `<span class="kw">let</span>`)
+    .replace(/sldeploy/g, `<span class="fn">sldeploy</span>`)
+    .replace(/"([^"]*)"/g, `<span class="str">"$1"</span>`);
 }
 
-typeProblem();
+/* =========================================================
+   SCENE 3 — TERMINAL EXECUTION
+========================================================= */
+
+function runTerminal(){
+  const term = document.getElementById("term");
+
+  const lines = [
+    "$ starlight program.sl",
+    "loading runtime engine...",
+    "parsing AST nodes...",
+    "optimizing execution tree...",
+    "compilation complete.",
+    "",
+    "executing:",
+    "name = Dominex Macedon",
+    "msg = Hello Dominex Macedon",
+    "",
+    "sldeploy output:",
+    "Hello Dominex Macedon",
+    "",
+    "[done] execution time: 8ms"
+  ];
+
+  let j = 0;
+
+  function print(){
+    if(j >= lines.length) return;
+
+    const div = document.createElement("div");
+    div.className = "line";
+    div.textContent = lines[j];
+
+    term.appendChild(div);
+    j++;
+
+    setTimeout(print, 220);
+  }
+
+  print();
+}
 
 </script>
 
