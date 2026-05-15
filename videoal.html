@@ -3,140 +3,58 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculus Solver Cinema</title>
+<title>Physics Solver Typing</title>
 
 <style>
 body{
     margin:0;
     height:100vh;
+    background:#020617;
+    overflow:hidden;
+    font-family:Inter, monospace;
     display:flex;
     justify-content:center;
     align-items:center;
-    background:#020617;
-    font-family:Inter,sans-serif;
-    overflow:hidden;
 }
 
-/* FRAME */
-.frame{
-    width:430px;
-    height:800px;
-    background:#0f172a;
-    border-radius:28px;
-    border:1px solid rgba(255,255,255,.08);
-    position:relative;
-    overflow:hidden;
+/* MAIN TEXT AREA */
+.screen{
+    width:90%;
+    max-width:900px;
+    color:#cbd5e1;
+    font-size:18px;
+    line-height:2;
+    white-space:pre-wrap;
 }
 
-/* TOP */
-.top{
-    position:absolute;
-    top:14px;
-    left:14px;
-    right:14px;
-    display:flex;
-    justify-content:space-between;
-    color:white;
-    font-size:12px;
-    font-weight:900;
-    opacity:.8;
-}
-
-/* PROBLEM CODE BOX */
-.problem{
-    position:absolute;
-    top:70px;
-    left:14px;
-    right:14px;
-
-    background:#0b1220;
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:18px;
-
-    padding:14px;
-
-    color:#7dd3fc;
-    font-size:14px;
-    font-weight:800;
-
-    text-shadow:0 0 12px rgba(125,211,252,.4);
-}
-
-/* SOLUTION AREA */
-.solution{
-    position:absolute;
-    top:200px;
-    left:14px;
-    right:14px;
-    bottom:100px;
-
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-
-    color:white;
-    font-weight:700;
-    font-size:13px;
-}
-
-/* STEP */
-.step{
-    opacity:0;
-    transform:translateY(10px);
-    transition:.4s;
-}
-
-.step.show{
-    opacity:1;
-    transform:translateY(0);
-}
-
-/* GLOW TEXT */
+/* GLOW EFFECT */
 .glow{
     color:#38bdf8;
     text-shadow:
-    0 0 8px #38bdf8,
-    0 0 25px #2563eb;
-    font-size:15px;
+    0 0 10px #38bdf8,
+    0 0 30px #2563eb;
+    font-weight:800;
 }
 
-/* BIG HIGHLIGHT */
+/* STRONG HIGHLIGHT */
 .big{
     color:#7dd3fc;
-    font-size:18px;
+    font-size:22px;
     font-weight:900;
-    text-shadow:0 0 18px #38bdf8;
+    text-shadow:0 0 25px #38bdf8;
 }
 
-/* END */
-.end{
-    position:absolute;
-    inset:0;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    background:rgba(2,6,23,.95);
-
-    opacity:0;
-    transition:1s;
+/* CURSOR */
+.cursor{
+    display:inline-block;
+    width:10px;
+    background:white;
+    margin-left:4px;
+    animation:blink .7s infinite;
 }
 
-.end.show{
-    opacity:1;
-}
-
-.end h1{
-    color:white;
-    font-size:34px;
-    font-weight:900;
-}
-
-.end h2{
-    color:#38bdf8;
-    margin-top:10px;
-    font-size:16px;
-    font-weight:800;
+@keyframes blink{
+    50%{opacity:0;}
 }
 
 </style>
@@ -144,94 +62,78 @@ body{
 
 <body>
 
-<div class="frame">
-
-<div class="top">
-    <div>CALCULUS SOLVER</div>
-    <div>#DominexMacedon</div>
-</div>
-
-<!-- PROBLEM -->
-<div class="problem" id="problem">
-<pre>
-Solve:
-f(x) = x² + 3x + 2
-Find f'(x)
-</pre>
-</div>
-
-<!-- SOLUTION -->
-<div class="solution">
-
-    <div class="step" id="s1">
-        Step 1: Break function into parts
-    </div>
-
-    <div class="step" id="s2">
-        f(x) = x² + 3x + 2
-    </div>
-
-    <div class="step" id="s3">
-        Apply derivative rules:
-    </div>
-
-    <div class="step" id="s4">
-        d/dx(x²) = <span class="glow">2x</span>
-    </div>
-
-    <div class="step" id="s5">
-        d/dx(3x) = <span class="glow">3</span>
-    </div>
-
-    <div class="step" id="s6">
-        d/dx(2) = <span class="glow">0</span>
-    </div>
-
-    <div class="step" id="s7">
-        Combine results:
-    </div>
-
-    <div class="step" id="s8">
-        <span class="big">f'(x) = 2x + 3</span>
-    </div>
-
-</div>
-
-<!-- END -->
-<div class="end" id="end">
-    <h1>ANSWER COMPLETE</h1>
-    <h2>#DominexMacedon</h2>
-</div>
-
-</div>
+<div class="screen" id="screen"></div>
 
 <script>
 
-let steps = [
-"s1","s2","s3","s4","s5","s6","s7","s8"
+const screen = document.getElementById("screen");
+
+/* FULL CONTENT FLOW */
+const lines = [
+
+`PHYSICS PROBLEM:`,
+`A car starts from rest and accelerates at a constant rate of 3 m/s².`,
+`Find velocity after 10 seconds.`,
+
+``,
+
+`SOLUTION:`,
+`We use equation of motion:`,
+
+`v = u + at`,
+
+`Where:`,
+`u = initial velocity = 0 m/s`,
+`a = acceleration = <span class="glow">3 m/s²</span>`,
+`t = time = <span class="glow">10 s</span>`,
+
+``,
+
+`Now substitute values:`,
+
+`v = 0 + (3 × 10)`,
+
+`v = <span class="big">30 m/s</span>`,
+
+``,
+
+`FINAL ANSWER:`,
+`Velocity = <span class="big glow">30 m/s</span>`,
+
+``,
+
+`#DominexMacedon`
 ];
 
 let i = 0;
+let char = 0;
+let current = "";
 
-function showSteps(){
+/* TYPE FUNCTION */
+function type(){
 
-    if(i < steps.length){
+    if(i >= lines.length) return;
 
-        document.getElementById(steps[i]).classList.add("show");
+    let line = lines[i];
 
-        i++;
+    if(char < line.length){
 
-        setTimeout(showSteps,650);
+        current += line.charAt(char);
+        screen.innerHTML = current + '<span class="cursor"></span>';
+        char++;
+
+        setTimeout(type, 18);
     }
     else{
-        setTimeout(()=>{
-            document.getElementById("end").classList.add("show");
-        },900);
+        current += "\n";
+        i++;
+        char = 0;
+
+        setTimeout(type, 250);
     }
 }
 
-/* START */
-setTimeout(showSteps,800);
+type();
 
 </script>
 
