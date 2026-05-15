@@ -3,435 +3,94 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Dominex Macedon Game</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<title>Dominex Macedon Pixel Drive</title>
 
 <style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
 body{
-    background:#030712;
-    overflow:hidden;
-    height:100vh;
-
+    margin:0;
+    background:#020617;
     display:flex;
     justify-content:center;
     align-items:center;
-
+    height:100vh;
     font-family:Inter,sans-serif;
+    overflow:hidden;
 }
-
-/* BACKGROUND */
-
-body::before,
-body::after{
-    content:"";
-    position:absolute;
-    border-radius:50%;
-    filter:blur(120px);
-}
-
-body::before{
-    width:380px;
-    height:380px;
-    background:#2563eb;
-    top:-150px;
-    left:-120px;
-    opacity:.2;
-}
-
-body::after{
-    width:380px;
-    height:380px;
-    background:#7c3aed;
-    right:-150px;
-    bottom:-120px;
-    opacity:.18;
-}
-
-/* FRAME */
 
 .frame{
-    width:430px;
-    height:860px;
-
-    background:#0f172a;
-
-    border-radius:38px;
-
-    overflow:hidden;
-
+    width:420px;
+    height:800px;
     position:relative;
-
-    border:1px solid rgba(255,255,255,.06);
-
-    box-shadow:
-    0 0 80px rgba(0,0,0,.7),
-    inset 0 0 40px rgba(255,255,255,.03);
-}
-
-/* HEADER */
-
-.header{
-    position:absolute;
-    top:0;
-    left:0;
-    right:0;
-
-    height:90px;
-
-    background:rgba(15,23,42,.9);
-
-    border-bottom:1px solid rgba(255,255,255,.06);
-
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-
-    padding:0 28px;
-
-    z-index:20;
-
-    backdrop-filter:blur(12px);
-}
-
-.gameTitle{
-    color:white;
-
-    font-size:26px;
-
-    font-weight:900;
-
-    letter-spacing:-1px;
-
-    text-shadow:
-    0 0 18px rgba(255,255,255,.12);
-}
-
-.gameSub{
-    margin-top:6px;
-
-    color:#7dd3fc;
-
-    font-size:13px;
-
-    font-weight:700;
-}
-
-/* GAME AREA */
-
-.game{
-    position:absolute;
-    inset:90px 0 0 0;
-
+    border-radius:30px;
     overflow:hidden;
-}
-
-/* GRID */
-
-.grid{
-    position:absolute;
-    inset:0;
-
-    background:
-    linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
-
-    background-size:40px 40px;
-
-    opacity:.35;
-}
-
-/* PLAYER */
-
-.player{
-    position:absolute;
-
-    width:70px;
-    height:70px;
-
-    border-radius:22px;
-
-    background:linear-gradient(
-        135deg,
-        #38bdf8,
-        #2563eb
-    );
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    color:white;
-
-    font-size:30px;
-
-    font-weight:900;
-
-    box-shadow:
-    0 0 30px rgba(59,130,246,.7),
-    0 0 70px rgba(37,99,235,.5);
-
-    z-index:10;
-
-    transition:
-    left .16s linear,
-    top .16s linear;
-
-    animation:float 2s ease-in-out infinite;
-}
-
-@keyframes float{
-    50%{
-        transform:translateY(-6px);
-    }
-}
-
-/* ENEMIES */
-
-.enemy{
-    position:absolute;
-
-    width:46px;
-    height:46px;
-
-    border-radius:16px;
-
-    background:linear-gradient(
-        135deg,
-        #ef4444,
-        #dc2626
-    );
-
-    box-shadow:
-    0 0 24px rgba(239,68,68,.7);
-
-    animation:spin 2s linear infinite;
-}
-
-@keyframes spin{
-    to{
-        transform:rotate(360deg);
-    }
-}
-
-/* COINS */
-
-.coin{
-    position:absolute;
-
-    width:28px;
-    height:28px;
-
-    border-radius:50%;
-
-    background:radial-gradient(
-        circle at 30% 30%,
-        #fde68a,
-        #f59e0b
-    );
-
-    box-shadow:
-    0 0 20px rgba(245,158,11,.9);
-
-    animation:pulse 1s ease-in-out infinite;
-}
-
-@keyframes pulse{
-    50%{
-        transform:scale(1.2);
-    }
-}
-
-/* SCORE */
-
-.scoreBox{
-    position:absolute;
-
-    top:18px;
-    right:18px;
-
-    background:rgba(255,255,255,.06);
-
+    box-shadow:0 0 80px rgba(0,0,0,.7);
     border:1px solid rgba(255,255,255,.08);
-
-    border-radius:18px;
-
-    padding:12px 16px;
-
-    backdrop-filter:blur(10px);
-
-    z-index:20;
 }
 
-.scoreLabel{
-    color:#94a3b8;
-
-    font-size:11px;
-
-    font-weight:700;
-
-    letter-spacing:1px;
+/* CANVAS */
+canvas{
+    background:#000;
+    display:block;
 }
 
-.score{
-    margin-top:4px;
-
+/* HUD */
+.hud{
+    position:absolute;
+    top:15px;
+    left:15px;
+    right:15px;
+    display:flex;
+    justify-content:space-between;
     color:white;
+    font-size:12px;
+    font-weight:700;
+    text-shadow:0 0 10px black;
+}
 
-    font-size:24px;
+.box{
+    background:rgba(255,255,255,.06);
+    padding:8px 10px;
+    border-radius:12px;
+    backdrop-filter:blur(10px);
+}
 
+/* SPEED */
+.speed{
+    position:absolute;
+    bottom:15px;
+    left:15px;
+    color:#7dd3fc;
     font-weight:900;
+    font-size:20px;
+    text-shadow:0 0 20px rgba(125,211,252,.7);
 }
 
-/* MOUSE */
-
-.mouse{
-    position:absolute;
-
-    width:18px;
-    height:18px;
-
-    border-radius:50%;
-
-    border:3px solid white;
-
-    box-shadow:
-    0 0 18px rgba(255,255,255,.8);
-
-    z-index:50;
-
-    pointer-events:none;
-
-    transition:
-    left .08s linear,
-    top .08s linear;
-}
-
-.mouse::after{
-    content:"";
-
-    position:absolute;
-
-    inset:-10px;
-
-    border-radius:50%;
-
-    border:1px solid rgba(255,255,255,.3);
-
-    animation:ripple 1s linear infinite;
-}
-
-@keyframes ripple{
-    from{
-        transform:scale(.6);
-        opacity:1;
-    }
-
-    to{
-        transform:scale(1.8);
-        opacity:0;
-    }
-}
-
-/* FINAL */
-
-.final{
+/* WIN LOSE */
+.overlay{
     position:absolute;
     inset:0;
-
-    background:rgba(2,6,23,.95);
-
     display:flex;
-    flex-direction:column;
     justify-content:center;
     align-items:center;
-
+    flex-direction:column;
+    background:rgba(0,0,0,.7);
+    color:white;
+    font-size:30px;
+    font-weight:900;
     opacity:0;
-
+    transition:.6s;
     pointer-events:none;
-
-    transition:1s ease;
-
-    z-index:100;
-
-    backdrop-filter:blur(10px);
 }
 
-.final.show{
+.overlay.show{
     opacity:1;
 }
 
-.finalTitle{
-    color:white;
-
-    font-size:42px;
-
-    font-weight:900;
-
-    text-align:center;
-
-    line-height:1.15;
-
-    letter-spacing:-1px;
-
-    text-shadow:
-    0 0 30px rgba(255,255,255,.12);
-}
-
-.finalSub{
-    margin-top:22px;
-
-    width:80%;
-
+.sub{
+    font-size:14px;
+    margin-top:10px;
     color:#7dd3fc;
-
-    font-size:18px;
-
-    font-weight:700;
-
-    text-align:center;
-
-    line-height:1.8;
-
-    text-shadow:
-    0 0 20px rgba(125,211,252,.4);
 }
-
-/* PARTICLES */
-
-.particle{
-    position:absolute;
-
-    width:6px;
-    height:6px;
-
-    border-radius:50%;
-
-    background:white;
-
-    opacity:.7;
-
-    animation:particle 1s linear forwards;
-}
-
-@keyframes particle{
-    to{
-        transform:
-        translateY(-60px)
-        scale(0);
-
-        opacity:0;
-    }
-}
-
 </style>
 </head>
 
@@ -439,295 +98,173 @@ body::after{
 
 <div class="frame">
 
-    <!-- HEADER -->
+<canvas id="game" width="420" height="800"></canvas>
 
-    <div class="header">
+<div class="hud">
+    <div class="box" id="time">TIME: 0s</div>
+    <div class="box" id="distance">KM: 0</div>
+</div>
 
-        <div class="gameTitle">
-            Dominex Macedon
-        </div>
+<div class="speed" id="speed">0 km/h</div>
 
-        <div class="gameSub">
-            Auto Play Game Demo
-        </div>
-
-    </div>
-
-    <!-- GAME -->
-
-    <div class="game" id="game">
-
-        <div class="grid"></div>
-
-        <div class="player" id="player">
-            D
-        </div>
-
-        <div class="scoreBox">
-
-            <div class="scoreLabel">
-                SCORE
-            </div>
-
-            <div class="score" id="score">
-                0
-            </div>
-
-        </div>
-
-        <div class="mouse" id="mouse"></div>
-
-    </div>
-
-    <!-- FINAL -->
-
-    <div class="final" id="final">
-
-        <div class="finalTitle">
-            Want To Create<br>
-            Games Like This?
-        </div>
-
-        <div class="finalSub">
-            Follow me for more tutorials
-        </div>
-
-    </div>
+<div class="overlay" id="overlay">
+    <div id="result">WIN</div>
+    <div class="sub">If you want to create such games, follow me for more tutorials</div>
+</div>
 
 </div>
 
 <script>
 
-/* ELEMENTS */
+const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d");
 
-const game =
-document.getElementById("game");
+let roadW = 200;
+let centerX = 210;
 
-const player =
-document.getElementById("player");
+let car = {
+    x:210,
+    y:650,
+    w:30,
+    h:50
+};
 
-const mouse =
-document.getElementById("mouse");
+let speed = 0;
+let distance = 0;
+let time = 0;
 
-const scoreEl =
-document.getElementById("score");
-
-const final =
-document.getElementById("final");
-
-/* VARIABLES */
-
-let score = 0;
-
-let playerX = 180;
-let playerY = 300;
-
-let mouseX = 200;
-let mouseY = 350;
-
+let obstacles = [];
 let running = true;
 
-/* PLAYER START */
+/* DRAW ROAD */
+function drawRoad(){
 
-player.style.left =
-playerX + "px";
+    ctx.fillStyle="#050814";
+    ctx.fillRect(0,0,420,800);
 
-player.style.top =
-playerY + "px";
+    ctx.strokeStyle="white";
+    ctx.lineWidth=4;
+    ctx.setLineDash([30,20]);
 
-/* MOUSE AUTO MOVE */
+    ctx.beginPath();
+    ctx.moveTo(centerX-roadW/2,0);
+    ctx.lineTo(centerX-roadW/2,800);
+    ctx.stroke();
 
-function autoMouse(){
+    ctx.beginPath();
+    ctx.moveTo(centerX+roadW/2,0);
+    ctx.lineTo(centerX+roadW/2,800);
+    ctx.stroke();
+
+    ctx.setLineDash([]);
+}
+
+/* DRAW CAR */
+function drawCar(){
+
+    ctx.fillStyle="#38bdf8";
+
+    ctx.fillRect(car.x,car.y,car.w,car.h);
+
+    ctx.shadowColor="#38bdf8";
+    ctx.shadowBlur=20;
+
+    ctx.fillRect(car.x,car.y,car.w,car.h);
+
+    ctx.shadowBlur=0;
+}
+
+/* OBSTACLE */
+function spawnObstacle(){
+
+    obstacles.push({
+        x: centerX + (Math.random()*160 - 80),
+        y: -50,
+        w: 30,
+        h: 30
+    });
+}
+
+function drawObstacles(){
+
+    ctx.fillStyle="#ef4444";
+
+    for(let i=0;i<obstacles.length;i++){
+
+        let o = obstacles[i];
+
+        o.y += speed/10;
+
+        ctx.fillRect(o.x,o.y,o.w,o.h);
+
+        if(
+            o.y + o.h > car.y &&
+            o.x < car.x + car.w &&
+            o.x + o.w > car.x
+        ){
+            endGame(false);
+        }
+
+        if(o.y > 820){
+            obstacles.splice(i,1);
+            i--;
+        }
+    }
+}
+
+/* UPDATE */
+function update(){
 
     if(!running) return;
 
-    mouseX =
-    Math.random() * 320 + 20;
+    speed += 0.05;
+    if(speed > 140) speed = 140;
 
-    mouseY =
-    Math.random() * 560 + 40;
+    distance += speed/100;
+    time += 0.016;
 
-    mouse.style.left =
-    mouseX + "px";
+    car.x += Math.sin(time*2)*1.2;
 
-    mouse.style.top =
-    mouseY + "px";
+    ctx.clearRect(0,0,420,800);
 
-    playerX +=
-    (mouseX - playerX) * .16;
+    drawRoad();
+    drawObstacles();
+    drawCar();
 
-    playerY +=
-    (mouseY - playerY) * .16;
+    document.getElementById("speed").innerText =
+    Math.floor(speed) + " km/h";
 
-    player.style.left =
-    playerX + "px";
+    document.getElementById("distance").innerText =
+    "KM: " + distance.toFixed(2);
 
-    player.style.top =
-    playerY + "px";
+    document.getElementById("time").innerText =
+    "TIME: " + Math.floor(time) + "s";
 
-    createParticles(
-        playerX + 35,
-        playerY + 35
-    );
+    if(distance > 5){
+        endGame(true);
+    }
+
+    requestAnimationFrame(update);
 }
 
-setInterval(autoMouse,180);
-
-/* PARTICLES */
-
-function createParticles(x,y){
-
-    const p =
-    document.createElement("div");
-
-    p.className = "particle";
-
-    p.style.left = x + "px";
-    p.style.top = y + "px";
-
-    game.appendChild(p);
-
-    setTimeout(()=>{
-
-        p.remove();
-
-    },1000);
-}
-
-/* COINS */
-
-function spawnCoin(){
-
-    if(!running) return;
-
-    const coin =
-    document.createElement("div");
-
-    coin.className = "coin";
-
-    const x =
-    Math.random() * 340 + 20;
-
-    const y =
-    Math.random() * 600 + 20;
-
-    coin.style.left = x + "px";
-    coin.style.top = y + "px";
-
-    game.appendChild(coin);
-
-    const check =
-    setInterval(()=>{
-
-        const dx =
-        playerX - x;
-
-        const dy =
-        playerY - y;
-
-        const dist =
-        Math.sqrt(dx*dx + dy*dy);
-
-        if(dist < 50){
-
-            clearInterval(check);
-
-            coin.remove();
-
-            score += 10;
-
-            scoreEl.innerText =
-            score;
-        }
-
-    },30);
-
-    setTimeout(()=>{
-
-        clearInterval(check);
-
-        coin.remove();
-
-    },5000);
-}
-
-setInterval(spawnCoin,700);
-
-/* ENEMIES */
-
-function spawnEnemy(){
-
-    if(!running) return;
-
-    const enemy =
-    document.createElement("div");
-
-    enemy.className = "enemy";
-
-    let x =
-    Math.random() * 340 + 20;
-
-    let y = -60;
-
-    enemy.style.left =
-    x + "px";
-
-    enemy.style.top =
-    y + "px";
-
-    game.appendChild(enemy);
-
-    const move =
-    setInterval(()=>{
-
-        y += 5;
-
-        enemy.style.top =
-        y + "px";
-
-        const dx =
-        playerX - x;
-
-        const dy =
-        playerY - y;
-
-        const dist =
-        Math.sqrt(dx*dx + dy*dy);
-
-        if(dist < 60){
-
-            player.style.transform =
-            "scale(1.25)";
-
-            setTimeout(()=>{
-
-                player.style.transform =
-                "";
-
-            },200);
-        }
-
-        if(y > 760){
-
-            clearInterval(move);
-
-            enemy.remove();
-        }
-
-    },30);
-}
-
-setInterval(spawnEnemy,1200);
-
-/* ENDING */
-
-setTimeout(()=>{
+/* END GAME */
+function endGame(win){
 
     running = false;
 
-    final.classList.add("show");
+    document.getElementById("overlay").classList.add("show");
 
-},17000);
+    document.getElementById("result").innerText =
+    win ? "YOU WIN" : "YOU LOSE";
+}
+
+/* AUTO SPAWN */
+setInterval(()=>{
+    if(running) spawnObstacle();
+},800);
+
+/* START */
+update();
 
 </script>
 
