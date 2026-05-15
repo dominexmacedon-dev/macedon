@@ -35,12 +35,12 @@ body::after{
     content:"";
     position:absolute;
     border-radius:50%;
-    filter:blur(140px);
+    filter:blur(120px);
 }
 
 body::before{
-    width:340px;
-    height:340px;
+    width:320px;
+    height:320px;
     background:#2563eb;
     top:-120px;
     left:-120px;
@@ -48,8 +48,8 @@ body::before{
 }
 
 body::after{
-    width:340px;
-    height:340px;
+    width:320px;
+    height:320px;
     background:#7c3aed;
     right:-120px;
     bottom:-120px;
@@ -88,7 +88,7 @@ body::after{
     justify-content:center;
     align-items:center;
 
-    z-index:10;
+    z-index:20;
 
     transition:1s ease;
 }
@@ -98,7 +98,7 @@ body::after{
     transform:scale(1.08);
 }
 
-.pythonLogo{
+.logo{
     width:110px;
 
     filter:
@@ -125,12 +125,10 @@ body::after{
     line-height:1.1;
 
     text-align:center;
-
-    letter-spacing:-1px;
 }
 
 .sub{
-    margin-top:16px;
+    margin-top:18px;
 
     color:#7dd3fc;
 
@@ -143,11 +141,10 @@ body::after{
     line-height:1.8;
 }
 
-/* CARD */
+/* EDITOR */
 
-.card{
+.editor{
     position:absolute;
-
     inset:18px;
 
     background:rgba(15,23,42,.9);
@@ -156,66 +153,23 @@ body::after{
 
     border-radius:28px;
 
-    padding:22px;
+    overflow:hidden;
 
     opacity:0;
 
     transition:.8s ease;
 
-    display:flex;
-    flex-direction:column;
-
-    backdrop-filter:blur(18px);
+    z-index:30;
 }
 
-.card.show{
+.editor.show{
     opacity:1;
 }
 
-/* LABEL */
-
-.label{
-    color:#38bdf8;
-
-    font-size:12px;
-
-    font-weight:800;
-
-    letter-spacing:2px;
-}
-
-/* TITLE */
-
-.mainTitle{
-    margin-top:10px;
-
-    color:white;
-
-    font-size:28px;
-
-    font-weight:900;
-
-    line-height:1.2;
-
-    letter-spacing:-1px;
-}
-
-/* CODE WINDOW */
-
-.window{
-    margin-top:22px;
-
-    background:#020617;
-
-    border-radius:22px;
-
-    overflow:hidden;
-
-    border:1px solid rgba(255,255,255,.06);
-}
+/* TOPBAR */
 
 .topbar{
-    height:48px;
+    height:52px;
 
     background:#111827;
 
@@ -238,7 +192,7 @@ body::after{
 .yellow{background:#facc15;}
 .green{background:#22c55e;}
 
-.file{
+.filename{
     margin-left:10px;
 
     color:#cbd5e1;
@@ -251,23 +205,25 @@ body::after{
 /* CODE */
 
 .code{
-    padding:20px;
-
-    min-height:290px;
+    padding:22px;
 
     font-family:'Fira Code', monospace;
 
     font-size:14px;
 
-    line-height:2.1;
+    line-height:2.2;
 
     color:white;
+
+    position:relative;
 }
 
 .line{
     display:grid;
     grid-template-columns:28px auto;
     align-items:flex-start;
+
+    min-height:34px;
 }
 
 .num{
@@ -275,8 +231,7 @@ body::after{
 }
 
 .text{
-    white-space:pre-wrap;
-    word-break:break-word;
+    transition:.4s ease;
 }
 
 /* COLORS */
@@ -305,50 +260,66 @@ body::after{
     color:#fb923c;
 }
 
-/* HIGHLIGHT */
+/* GLOW HIGHLIGHT */
 
-.highlight{
-    font-size:17px;
+.highlightBlue{
+    color:#7dd3fc !important;
+
+    font-size:18px;
 
     font-weight:900;
 
-    animation:pulse 1.5s ease-in-out infinite;
-}
-
-.glowBlue{
-    color:#7dd3fc;
-
     text-shadow:
     0 0 12px rgba(125,211,252,.95),
-    0 0 30px rgba(59,130,246,.8),
-    0 0 60px rgba(59,130,246,.55);
+    0 0 28px rgba(59,130,246,.85),
+    0 0 55px rgba(59,130,246,.6);
+
+    animation:pulse 1.4s ease-in-out infinite;
 }
 
-.glowGreen{
-    color:#86efac;
+.highlightGreen{
+    color:#86efac !important;
+
+    font-size:18px;
+
+    font-weight:900;
 
     text-shadow:
     0 0 12px rgba(134,239,172,.95),
-    0 0 30px rgba(34,197,94,.8),
-    0 0 60px rgba(34,197,94,.55);
+    0 0 28px rgba(34,197,94,.85),
+    0 0 55px rgba(34,197,94,.6);
+
+    animation:pulse 1.4s ease-in-out infinite;
 }
 
-.glowPurple{
-    color:#d8b4fe;
+.highlightPurple{
+    color:#d8b4fe !important;
+
+    font-size:18px;
+
+    font-weight:900;
 
     text-shadow:
     0 0 12px rgba(216,180,254,.95),
-    0 0 30px rgba(168,85,247,.8),
-    0 0 60px rgba(168,85,247,.55);
+    0 0 28px rgba(168,85,247,.85),
+    0 0 55px rgba(168,85,247,.6);
+
+    animation:pulse 1.4s ease-in-out infinite;
 }
 
-.glowOrange{
-    color:#fdba74;
+.highlightOrange{
+    color:#fdba74 !important;
+
+    font-size:18px;
+
+    font-weight:900;
 
     text-shadow:
     0 0 12px rgba(253,186,116,.95),
-    0 0 30px rgba(249,115,22,.8),
-    0 0 60px rgba(249,115,22,.55);
+    0 0 28px rgba(249,115,22,.85),
+    0 0 55px rgba(249,115,22,.6);
+
+    animation:pulse 1.4s ease-in-out infinite;
 }
 
 @keyframes pulse{
@@ -381,25 +352,39 @@ body::after{
 /* EXPLAIN */
 
 .explain{
-    margin-top:22px;
+    position:absolute;
+
+    width:220px;
 
     background:linear-gradient(
         135deg,
-        rgba(37,99,235,.2),
-        rgba(59,130,246,.08)
+        rgba(37,99,235,.24),
+        rgba(59,130,246,.1)
     );
 
-    border:1px solid rgba(96,165,250,.15);
+    border:1px solid rgba(96,165,250,.16);
 
     border-radius:20px;
 
     padding:18px;
+
+    backdrop-filter:blur(12px);
+
+    opacity:0;
+
+    transition:.5s ease;
+
+    z-index:50;
+}
+
+.explain.show{
+    opacity:1;
 }
 
 .explainTitle{
     color:#7dd3fc;
 
-    font-size:12px;
+    font-size:11px;
 
     font-weight:900;
 
@@ -407,17 +392,15 @@ body::after{
 }
 
 .explainText{
-    margin-top:12px;
+    margin-top:10px;
 
     color:white;
 
-    font-size:14px;
+    font-size:13px;
 
-    line-height:1.9;
+    line-height:1.8;
 
     font-weight:500;
-
-    min-height:80px;
 }
 
 /* FINAL */
@@ -435,7 +418,7 @@ body::after{
 
     transition:1s ease;
 
-    z-index:30;
+    z-index:100;
 }
 
 .final.show{
@@ -452,8 +435,6 @@ body::after{
     text-align:center;
 
     line-height:1.2;
-
-    letter-spacing:-1px;
 }
 
 .finalSub{
@@ -478,12 +459,12 @@ body::after{
     <div class="intro" id="intro">
 
         <img
-            class="pythonLogo"
+            class="logo"
             src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg"
         >
 
         <div class="title">
-            Programming Concepts<br>
+            Python Concepts<br>
             Explained Fast
         </div>
 
@@ -494,47 +475,33 @@ body::after{
 
     </div>
 
-    <!-- MAIN -->
+    <!-- EDITOR -->
 
-    <div class="card" id="card">
+    <div class="editor" id="editor">
 
-        <div class="label">
-            PYTHON BASICS
-        </div>
+        <div class="topbar">
 
-        <div class="mainTitle">
-            Learn Core Concepts
-        </div>
+            <div class="dot red"></div>
+            <div class="dot yellow"></div>
+            <div class="dot green"></div>
 
-        <!-- CODE -->
-
-        <div class="window">
-
-            <div class="topbar">
-
-                <div class="dot red"></div>
-                <div class="dot yellow"></div>
-                <div class="dot green"></div>
-
-                <div class="file">
-                    app.py
-                </div>
-
+            <div class="filename">
+                app.py
             </div>
 
-            <div class="code" id="code"></div>
-
         </div>
 
-        <!-- EXPLANATION -->
+        <div class="code" id="code"></div>
 
-        <div class="explain">
+        <!-- EXPLAIN -->
+
+        <div class="explain" id="explain">
 
             <div class="explainTitle">
                 EXPLANATION
             </div>
 
-            <div class="explainText" id="explain"></div>
+            <div class="explainText" id="explainText"></div>
 
         </div>
 
@@ -564,14 +531,17 @@ body::after{
 const intro =
 document.getElementById("intro");
 
-const card =
-document.getElementById("card");
+const editor =
+document.getElementById("editor");
 
 const code =
 document.getElementById("code");
 
 const explain =
 document.getElementById("explain");
+
+const explainText =
+document.getElementById("explainText");
 
 const final =
 document.getElementById("final");
@@ -584,33 +554,35 @@ setTimeout(()=>{
 
     setTimeout(()=>{
 
-        card.classList.add("show");
+        editor.classList.add("show");
 
         startTyping();
 
     },900);
 
-},2500);
+},2400);
 
-/* CODE */
+/* CODE LINES */
 
 const lines = [
 
 `<span class="comment"># Python Concepts</span>`,
 
-`<span class="variable highlight glowBlue">name</span> = <span class="string">"Dominex"</span>`,
+`<span id="varTarget"><span class="variable">name</span> = <span class="string">"Dominex"</span></span>`,
 
-`<span class="func highlight glowGreen">print</span>(<span class="string">"Hello"</span>, name)`,
+`<span id="funcTarget"><span class="func">print</span>(<span class="string">"Hello"</span>, name)</span>`,
 
-`<span class="keyword highlight glowPurple">for</span> i in range(3):`,
+`<span id="loopTarget"><span class="keyword">for</span> i in range(3):</span>`,
 
-`    <span class="func">print</span>(i)`,
+`    print(i)`,
 
-`response = requests.<span class="orange highlight glowOrange">get</span>(<span class="string">"api.weather.com"</span>)`
+`<span id="apiTarget">response = requests.<span class="orange">get</span>(<span class="string">"api.weather.com"</span>)</span>`
 
 ];
 
 let lineIndex = 0;
+
+/* TYPE CODE */
 
 function startTyping(){
 
@@ -621,7 +593,7 @@ function typeLine(){
 
     if(lineIndex >= lines.length){
 
-        setTimeout(showExplain,1000);
+        setTimeout(startExplainFlow,900);
 
         return;
     }
@@ -664,55 +636,165 @@ function typeLine(){
 
             lineIndex++;
 
-            setTimeout(typeLine,220);
+            setTimeout(typeLine,180);
         }
     }
 
     type();
 }
 
-/* EXPLAIN */
+/* TYPE EXPLAIN */
 
-const explainText =
+function typeExplain(text){
 
-`<span class="glowBlue highlight">Variables</span> store data,
-<span class="glowGreen highlight">functions</span> run actions,
-<span class="glowPurple highlight">loops</span> repeat tasks,
-and APIs connect apps using
-<span class="glowOrange highlight">requests.get()</span>.`;
-
-function showExplain(){
+    explainText.innerHTML = "";
 
     let i = 0;
 
-    function type(){
+    function write(){
 
-        explain.innerHTML =
-        explainText.substring(0,i) +
-        '<span class="cursor"></span>';
+        explainText.innerHTML +=
+        text.charAt(i);
 
         i++;
 
-        if(i <= explainText.length){
+        if(i < text.length){
 
-            setTimeout(type,8);
-
-        }else{
-
-            explain.innerHTML = explainText;
-
-            setTimeout(showFinal,4500);
+            setTimeout(write,18);
         }
     }
 
-    type();
+    write();
+}
+
+/* EXPLANATION FLOW */
+
+function startExplainFlow(){
+
+    showVariable();
+}
+
+/* VARIABLE */
+
+function showVariable(){
+
+    const target =
+    document.getElementById("varTarget");
+
+    target.classList.add("highlightBlue");
+
+    explain.style.top = "135px";
+    explain.style.right = "18px";
+
+    explain.classList.add("show");
+
+    typeExplain(
+        "Variables store information inside Python programs."
+    );
+
+    setTimeout(()=>{
+
+        explain.classList.remove("show");
+
+        target.classList.remove("highlightBlue");
+
+    },3000);
+
+    setTimeout(showFunction,3600);
+}
+
+/* FUNCTION */
+
+function showFunction(){
+
+    const target =
+    document.getElementById("funcTarget");
+
+    target.classList.add("highlightGreen");
+
+    explain.style.top = "210px";
+    explain.style.right = "18px";
+
+    explain.classList.add("show");
+
+    typeExplain(
+        "Functions perform actions and execute reusable code."
+    );
+
+    setTimeout(()=>{
+
+        explain.classList.remove("show");
+
+        target.classList.remove("highlightGreen");
+
+    },3000);
+
+    setTimeout(showLoop,3600);
+}
+
+/* LOOP */
+
+function showLoop(){
+
+    const target =
+    document.getElementById("loopTarget");
+
+    target.classList.add("highlightPurple");
+
+    explain.style.top = "290px";
+    explain.style.right = "18px";
+
+    explain.classList.add("show");
+
+    typeExplain(
+        "Loops repeat tasks automatically multiple times."
+    );
+
+    setTimeout(()=>{
+
+        explain.classList.remove("show");
+
+        target.classList.remove("highlightPurple");
+
+    },3000);
+
+    setTimeout(showAPI,3600);
+}
+
+/* API */
+
+function showAPI(){
+
+    const target =
+    document.getElementById("apiTarget");
+
+    target.classList.add("highlightOrange");
+
+    explain.style.top = "420px";
+    explain.style.right = "18px";
+
+    explain.classList.add("show");
+
+    typeExplain(
+        "APIs allow applications to communicate and exchange data."
+    );
+
+    setTimeout(()=>{
+
+        explain.classList.remove("show");
+
+        target.classList.remove("highlightOrange");
+
+    },3200);
+
+    setTimeout(showFinal,4200);
 }
 
 /* FINAL */
 
 function showFinal(){
 
-    card.style.opacity = "0";
+    editor.style.opacity = "0";
 
     setTimeout(()=>{
 
