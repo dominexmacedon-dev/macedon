@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>video.html</title>
+<title>Dominex Macedon Game</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 
 <style>
 
@@ -18,8 +18,8 @@
 
 body{
     background:#030712;
-    height:100vh;
     overflow:hidden;
+    height:100vh;
 
     display:flex;
     justify-content:center;
@@ -39,32 +39,32 @@ body::after{
 }
 
 body::before{
-    width:320px;
-    height:320px;
+    width:380px;
+    height:380px;
     background:#2563eb;
-    top:-120px;
+    top:-150px;
     left:-120px;
-    opacity:.18;
+    opacity:.2;
 }
 
 body::after{
-    width:320px;
-    height:320px;
+    width:380px;
+    height:380px;
     background:#7c3aed;
-    right:-120px;
+    right:-150px;
     bottom:-120px;
-    opacity:.16;
+    opacity:.18;
 }
 
 /* FRAME */
 
 .frame{
-    width:390px;
-    height:780px;
+    width:430px;
+    height:860px;
 
     background:#0f172a;
 
-    border-radius:34px;
+    border-radius:38px;
 
     overflow:hidden;
 
@@ -73,334 +73,272 @@ body::after{
     border:1px solid rgba(255,255,255,.06);
 
     box-shadow:
-    0 0 70px rgba(0,0,0,.7),
-    inset 0 0 30px rgba(255,255,255,.03);
+    0 0 80px rgba(0,0,0,.7),
+    inset 0 0 40px rgba(255,255,255,.03);
 }
 
-/* INTRO */
+/* HEADER */
 
-.intro{
+.header{
     position:absolute;
-    inset:0;
+    top:0;
+    left:0;
+    right:0;
+
+    height:90px;
+
+    background:rgba(15,23,42,.9);
+
+    border-bottom:1px solid rgba(255,255,255,.06);
 
     display:flex;
     flex-direction:column;
     justify-content:center;
-    align-items:center;
+
+    padding:0 28px;
 
     z-index:20;
 
-    transition:1s ease;
+    backdrop-filter:blur(12px);
 }
 
-.intro.hide{
-    opacity:0;
-    transform:scale(1.08);
+.gameTitle{
+    color:white;
+
+    font-size:26px;
+
+    font-weight:900;
+
+    letter-spacing:-1px;
+
+    text-shadow:
+    0 0 18px rgba(255,255,255,.12);
 }
 
-.logo{
-    width:110px;
+.gameSub{
+    margin-top:6px;
 
-    filter:
-    drop-shadow(0 0 35px rgba(59,130,246,.5));
+    color:#7dd3fc;
 
-    animation:float 4s ease-in-out infinite;
+    font-size:13px;
+
+    font-weight:700;
+}
+
+/* GAME AREA */
+
+.game{
+    position:absolute;
+    inset:90px 0 0 0;
+
+    overflow:hidden;
+}
+
+/* GRID */
+
+.grid{
+    position:absolute;
+    inset:0;
+
+    background:
+    linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+
+    background-size:40px 40px;
+
+    opacity:.35;
+}
+
+/* PLAYER */
+
+.player{
+    position:absolute;
+
+    width:70px;
+    height:70px;
+
+    border-radius:22px;
+
+    background:linear-gradient(
+        135deg,
+        #38bdf8,
+        #2563eb
+    );
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    color:white;
+
+    font-size:30px;
+
+    font-weight:900;
+
+    box-shadow:
+    0 0 30px rgba(59,130,246,.7),
+    0 0 70px rgba(37,99,235,.5);
+
+    z-index:10;
+
+    transition:
+    left .16s linear,
+    top .16s linear;
+
+    animation:float 2s ease-in-out infinite;
 }
 
 @keyframes float{
     50%{
-        transform:translateY(-10px);
+        transform:translateY(-6px);
     }
 }
 
-.title{
-    margin-top:28px;
+/* ENEMIES */
 
-    color:white;
-
-    font-size:36px;
-
-    font-weight:900;
-
-    line-height:1.1;
-
-    text-align:center;
-}
-
-.sub{
-    margin-top:18px;
-
-    color:#7dd3fc;
-
-    font-size:15px;
-
-    font-weight:700;
-
-    text-align:center;
-
-    line-height:1.8;
-}
-
-/* EDITOR */
-
-.editor{
+.enemy{
     position:absolute;
-    inset:18px;
 
-    background:rgba(15,23,42,.9);
+    width:46px;
+    height:46px;
 
-    border:1px solid rgba(255,255,255,.06);
+    border-radius:16px;
 
-    border-radius:28px;
+    background:linear-gradient(
+        135deg,
+        #ef4444,
+        #dc2626
+    );
 
-    overflow:hidden;
+    box-shadow:
+    0 0 24px rgba(239,68,68,.7);
 
-    opacity:0;
-
-    transition:.8s ease;
-
-    z-index:30;
+    animation:spin 2s linear infinite;
 }
 
-.editor.show{
-    opacity:1;
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
 }
 
-/* TOPBAR */
+/* COINS */
 
-.topbar{
-    height:52px;
+.coin{
+    position:absolute;
 
-    background:#111827;
+    width:28px;
+    height:28px;
 
-    border-bottom:1px solid #1e293b;
-
-    display:flex;
-    align-items:center;
-
-    padding:0 16px;
-}
-
-.dot{
-    width:9px;
-    height:9px;
     border-radius:50%;
-    margin-right:6px;
-}
 
-.red{background:#ef4444;}
-.yellow{background:#facc15;}
-.green{background:#22c55e;}
+    background:radial-gradient(
+        circle at 30% 30%,
+        #fde68a,
+        #f59e0b
+    );
 
-.filename{
-    margin-left:10px;
+    box-shadow:
+    0 0 20px rgba(245,158,11,.9);
 
-    color:#cbd5e1;
-
-    font-size:12px;
-
-    font-weight:700;
-}
-
-/* CODE */
-
-.code{
-    padding:22px;
-
-    font-family:'Fira Code', monospace;
-
-    font-size:14px;
-
-    line-height:2.2;
-
-    color:white;
-
-    position:relative;
-}
-
-.line{
-    display:grid;
-    grid-template-columns:28px auto;
-    align-items:flex-start;
-
-    min-height:34px;
-}
-
-.num{
-    color:#475569;
-}
-
-.text{
-    transition:.4s ease;
-}
-
-/* COLORS */
-
-.comment{
-    color:#64748b;
-}
-
-.variable{
-    color:#38bdf8;
-}
-
-.string{
-    color:#facc15;
-}
-
-.func{
-    color:#4ade80;
-}
-
-.keyword{
-    color:#c084fc;
-}
-
-.orange{
-    color:#fb923c;
-}
-
-/* GLOW HIGHLIGHT */
-
-.highlightBlue{
-    color:#7dd3fc !important;
-
-    font-size:18px;
-
-    font-weight:900;
-
-    text-shadow:
-    0 0 12px rgba(125,211,252,.95),
-    0 0 28px rgba(59,130,246,.85),
-    0 0 55px rgba(59,130,246,.6);
-
-    animation:pulse 1.4s ease-in-out infinite;
-}
-
-.highlightGreen{
-    color:#86efac !important;
-
-    font-size:18px;
-
-    font-weight:900;
-
-    text-shadow:
-    0 0 12px rgba(134,239,172,.95),
-    0 0 28px rgba(34,197,94,.85),
-    0 0 55px rgba(34,197,94,.6);
-
-    animation:pulse 1.4s ease-in-out infinite;
-}
-
-.highlightPurple{
-    color:#d8b4fe !important;
-
-    font-size:18px;
-
-    font-weight:900;
-
-    text-shadow:
-    0 0 12px rgba(216,180,254,.95),
-    0 0 28px rgba(168,85,247,.85),
-    0 0 55px rgba(168,85,247,.6);
-
-    animation:pulse 1.4s ease-in-out infinite;
-}
-
-.highlightOrange{
-    color:#fdba74 !important;
-
-    font-size:18px;
-
-    font-weight:900;
-
-    text-shadow:
-    0 0 12px rgba(253,186,116,.95),
-    0 0 28px rgba(249,115,22,.85),
-    0 0 55px rgba(249,115,22,.6);
-
-    animation:pulse 1.4s ease-in-out infinite;
+    animation:pulse 1s ease-in-out infinite;
 }
 
 @keyframes pulse{
     50%{
-        transform:scale(1.08);
+        transform:scale(1.2);
     }
 }
 
-/* CURSOR */
+/* SCORE */
 
-.cursor{
-    width:7px;
-    height:15px;
-
-    background:white;
-
-    display:inline-block;
-
-    margin-left:2px;
-
-    animation:blink .7s infinite;
-}
-
-@keyframes blink{
-    50%{
-        opacity:0;
-    }
-}
-
-/* EXPLAIN */
-
-.explain{
+.scoreBox{
     position:absolute;
 
-    width:220px;
+    top:18px;
+    right:18px;
 
-    background:linear-gradient(
-        135deg,
-        rgba(37,99,235,.24),
-        rgba(59,130,246,.1)
-    );
+    background:rgba(255,255,255,.06);
 
-    border:1px solid rgba(96,165,250,.16);
+    border:1px solid rgba(255,255,255,.08);
 
-    border-radius:20px;
+    border-radius:18px;
 
-    padding:18px;
+    padding:12px 16px;
 
-    backdrop-filter:blur(12px);
+    backdrop-filter:blur(10px);
 
-    opacity:0;
-
-    transition:.5s ease;
-
-    z-index:50;
+    z-index:20;
 }
 
-.explain.show{
-    opacity:1;
-}
-
-.explainTitle{
-    color:#7dd3fc;
+.scoreLabel{
+    color:#94a3b8;
 
     font-size:11px;
 
-    font-weight:900;
+    font-weight:700;
 
     letter-spacing:1px;
 }
 
-.explainText{
-    margin-top:10px;
+.score{
+    margin-top:4px;
 
     color:white;
 
-    font-size:13px;
+    font-size:24px;
 
-    line-height:1.8;
+    font-weight:900;
+}
 
-    font-weight:500;
+/* MOUSE */
+
+.mouse{
+    position:absolute;
+
+    width:18px;
+    height:18px;
+
+    border-radius:50%;
+
+    border:3px solid white;
+
+    box-shadow:
+    0 0 18px rgba(255,255,255,.8);
+
+    z-index:50;
+
+    pointer-events:none;
+
+    transition:
+    left .08s linear,
+    top .08s linear;
+}
+
+.mouse::after{
+    content:"";
+
+    position:absolute;
+
+    inset:-10px;
+
+    border-radius:50%;
+
+    border:1px solid rgba(255,255,255,.3);
+
+    animation:ripple 1s linear infinite;
+}
+
+@keyframes ripple{
+    from{
+        transform:scale(.6);
+        opacity:1;
+    }
+
+    to{
+        transform:scale(1.8);
+        opacity:0;
+    }
 }
 
 /* FINAL */
@@ -409,6 +347,8 @@ body::after{
     position:absolute;
     inset:0;
 
+    background:rgba(2,6,23,.95);
+
     display:flex;
     flex-direction:column;
     justify-content:center;
@@ -416,9 +356,13 @@ body::after{
 
     opacity:0;
 
+    pointer-events:none;
+
     transition:1s ease;
 
     z-index:100;
+
+    backdrop-filter:blur(10px);
 }
 
 .final.show{
@@ -428,23 +372,64 @@ body::after{
 .finalTitle{
     color:white;
 
-    font-size:38px;
+    font-size:42px;
 
     font-weight:900;
 
     text-align:center;
 
-    line-height:1.2;
+    line-height:1.15;
+
+    letter-spacing:-1px;
+
+    text-shadow:
+    0 0 30px rgba(255,255,255,.12);
 }
 
 .finalSub{
-    margin-top:16px;
+    margin-top:22px;
 
-    color:#60a5fa;
+    width:80%;
 
-    font-size:16px;
+    color:#7dd3fc;
 
-    font-weight:800;
+    font-size:18px;
+
+    font-weight:700;
+
+    text-align:center;
+
+    line-height:1.8;
+
+    text-shadow:
+    0 0 20px rgba(125,211,252,.4);
+}
+
+/* PARTICLES */
+
+.particle{
+    position:absolute;
+
+    width:6px;
+    height:6px;
+
+    border-radius:50%;
+
+    background:white;
+
+    opacity:.7;
+
+    animation:particle 1s linear forwards;
+}
+
+@keyframes particle{
+    to{
+        transform:
+        translateY(-60px)
+        scale(0);
+
+        opacity:0;
+    }
 }
 
 </style>
@@ -454,56 +439,43 @@ body::after{
 
 <div class="frame">
 
-    <!-- INTRO -->
+    <!-- HEADER -->
 
-    <div class="intro" id="intro">
+    <div class="header">
 
-        <img
-            class="logo"
-            src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg"
-        >
-
-        <div class="title">
-            Python Concepts<br>
-            Explained Fast
+        <div class="gameTitle">
+            Dominex Macedon
         </div>
 
-        <div class="sub">
-            Variables • Functions<br>
-            Loops • APIs
+        <div class="gameSub">
+            Auto Play Game Demo
         </div>
 
     </div>
 
-    <!-- EDITOR -->
+    <!-- GAME -->
 
-    <div class="editor" id="editor">
+    <div class="game" id="game">
 
-        <div class="topbar">
+        <div class="grid"></div>
 
-            <div class="dot red"></div>
-            <div class="dot yellow"></div>
-            <div class="dot green"></div>
+        <div class="player" id="player">
+            D
+        </div>
 
-            <div class="filename">
-                app.py
+        <div class="scoreBox">
+
+            <div class="scoreLabel">
+                SCORE
+            </div>
+
+            <div class="score" id="score">
+                0
             </div>
 
         </div>
 
-        <div class="code" id="code"></div>
-
-        <!-- EXPLAIN -->
-
-        <div class="explain" id="explain">
-
-            <div class="explainTitle">
-                EXPLANATION
-            </div>
-
-            <div class="explainText" id="explainText"></div>
-
-        </div>
+        <div class="mouse" id="mouse"></div>
 
     </div>
 
@@ -512,12 +484,12 @@ body::after{
     <div class="final" id="final">
 
         <div class="finalTitle">
-            Coding Can Feel<br>
-            Cinematic
+            Want To Create<br>
+            Games Like This?
         </div>
 
         <div class="finalSub">
-            Follow For More Python
+            Follow me for more tutorials
         </div>
 
     </div>
@@ -528,280 +500,234 @@ body::after{
 
 /* ELEMENTS */
 
-const intro =
-document.getElementById("intro");
+const game =
+document.getElementById("game");
 
-const editor =
-document.getElementById("editor");
+const player =
+document.getElementById("player");
 
-const code =
-document.getElementById("code");
+const mouse =
+document.getElementById("mouse");
 
-const explain =
-document.getElementById("explain");
-
-const explainText =
-document.getElementById("explainText");
+const scoreEl =
+document.getElementById("score");
 
 const final =
 document.getElementById("final");
 
-/* START */
+/* VARIABLES */
 
-setTimeout(()=>{
+let score = 0;
 
-    intro.classList.add("hide");
+let playerX = 180;
+let playerY = 300;
 
-    setTimeout(()=>{
+let mouseX = 200;
+let mouseY = 350;
 
-        editor.classList.add("show");
+let running = true;
 
-        startTyping();
+/* PLAYER START */
 
-    },900);
+player.style.left =
+playerX + "px";
 
-},2400);
+player.style.top =
+playerY + "px";
 
-/* CODE LINES */
+/* MOUSE AUTO MOVE */
 
-const lines = [
+function autoMouse(){
 
-`<span class="comment"># Python Concepts</span>`,
+    if(!running) return;
 
-`<span id="varTarget"><span class="variable">name</span> = <span class="string">"Dominex"</span></span>`,
+    mouseX =
+    Math.random() * 320 + 20;
 
-`<span id="funcTarget"><span class="func">print</span>(<span class="string">"Hello"</span>, name)</span>`,
+    mouseY =
+    Math.random() * 560 + 40;
 
-`<span id="loopTarget"><span class="keyword">for</span> i in range(3):</span>`,
+    mouse.style.left =
+    mouseX + "px";
 
-`    print(i)`,
+    mouse.style.top =
+    mouseY + "px";
 
-`<span id="apiTarget">response = requests.<span class="orange">get</span>(<span class="string">"api.weather.com"</span>)</span>`
+    playerX +=
+    (mouseX - playerX) * .16;
 
-];
+    playerY +=
+    (mouseY - playerY) * .16;
 
-let lineIndex = 0;
+    player.style.left =
+    playerX + "px";
 
-/* TYPE CODE */
+    player.style.top =
+    playerY + "px";
 
-function startTyping(){
-
-    typeLine();
+    createParticles(
+        playerX + 35,
+        playerY + 35
+    );
 }
 
-function typeLine(){
+setInterval(autoMouse,180);
 
-    if(lineIndex >= lines.length){
+/* PARTICLES */
 
-        setTimeout(startExplainFlow,900);
+function createParticles(x,y){
 
-        return;
-    }
-
-    const row =
+    const p =
     document.createElement("div");
 
-    row.className = "line";
+    p.className = "particle";
 
-    row.innerHTML = `
-        <div class="num">${lineIndex + 1}</div>
-        <div class="text"></div>
-    `;
+    p.style.left = x + "px";
+    p.style.top = y + "px";
 
-    code.appendChild(row);
-
-    const text =
-    row.querySelector(".text");
-
-    const html =
-    lines[lineIndex];
-
-    let i = 0;
-
-    function type(){
-
-        text.innerHTML =
-        html.substring(0,i) +
-        '<span class="cursor"></span>';
-
-        i++;
-
-        if(i <= html.length){
-
-            setTimeout(type,7);
-
-        }else{
-
-            text.innerHTML = html;
-
-            lineIndex++;
-
-            setTimeout(typeLine,180);
-        }
-    }
-
-    type();
-}
-
-/* TYPE EXPLAIN */
-
-function typeExplain(text){
-
-    explainText.innerHTML = "";
-
-    let i = 0;
-
-    function write(){
-
-        explainText.innerHTML +=
-        text.charAt(i);
-
-        i++;
-
-        if(i < text.length){
-
-            setTimeout(write,18);
-        }
-    }
-
-    write();
-}
-
-/* EXPLANATION FLOW */
-
-function startExplainFlow(){
-
-    showVariable();
-}
-
-/* VARIABLE */
-
-function showVariable(){
-
-    const target =
-    document.getElementById("varTarget");
-
-    target.classList.add("highlightBlue");
-
-    explain.style.top = "135px";
-    explain.style.right = "18px";
-
-    explain.classList.add("show");
-
-    typeExplain(
-        "Variables store information inside Python programs."
-    );
+    game.appendChild(p);
 
     setTimeout(()=>{
 
-        explain.classList.remove("show");
-
-        target.classList.remove("highlightBlue");
-
-    },3000);
-
-    setTimeout(showFunction,3600);
-}
-
-/* FUNCTION */
-
-function showFunction(){
-
-    const target =
-    document.getElementById("funcTarget");
-
-    target.classList.add("highlightGreen");
-
-    explain.style.top = "210px";
-    explain.style.right = "18px";
-
-    explain.classList.add("show");
-
-    typeExplain(
-        "Functions perform actions and execute reusable code."
-    );
-
-    setTimeout(()=>{
-
-        explain.classList.remove("show");
-
-        target.classList.remove("highlightGreen");
-
-    },3000);
-
-    setTimeout(showLoop,3600);
-}
-
-/* LOOP */
-
-function showLoop(){
-
-    const target =
-    document.getElementById("loopTarget");
-
-    target.classList.add("highlightPurple");
-
-    explain.style.top = "290px";
-    explain.style.right = "18px";
-
-    explain.classList.add("show");
-
-    typeExplain(
-        "Loops repeat tasks automatically multiple times."
-    );
-
-    setTimeout(()=>{
-
-        explain.classList.remove("show");
-
-        target.classList.remove("highlightPurple");
-
-    },3000);
-
-    setTimeout(showAPI,3600);
-}
-
-/* API */
-
-function showAPI(){
-
-    const target =
-    document.getElementById("apiTarget");
-
-    target.classList.add("highlightOrange");
-
-    explain.style.top = "420px";
-    explain.style.right = "18px";
-
-    explain.classList.add("show");
-
-    typeExplain(
-        "APIs allow applications to communicate and exchange data."
-    );
-
-    setTimeout(()=>{
-
-        explain.classList.remove("show");
-
-        target.classList.remove("highlightOrange");
-
-    },3200);
-
-    setTimeout(showFinal,4200);
-}
-
-/* FINAL */
-
-function showFinal(){
-
-    editor.style.opacity = "0";
-
-    setTimeout(()=>{
-
-        final.classList.add("show");
+        p.remove();
 
     },1000);
 }
+
+/* COINS */
+
+function spawnCoin(){
+
+    if(!running) return;
+
+    const coin =
+    document.createElement("div");
+
+    coin.className = "coin";
+
+    const x =
+    Math.random() * 340 + 20;
+
+    const y =
+    Math.random() * 600 + 20;
+
+    coin.style.left = x + "px";
+    coin.style.top = y + "px";
+
+    game.appendChild(coin);
+
+    const check =
+    setInterval(()=>{
+
+        const dx =
+        playerX - x;
+
+        const dy =
+        playerY - y;
+
+        const dist =
+        Math.sqrt(dx*dx + dy*dy);
+
+        if(dist < 50){
+
+            clearInterval(check);
+
+            coin.remove();
+
+            score += 10;
+
+            scoreEl.innerText =
+            score;
+        }
+
+    },30);
+
+    setTimeout(()=>{
+
+        clearInterval(check);
+
+        coin.remove();
+
+    },5000);
+}
+
+setInterval(spawnCoin,700);
+
+/* ENEMIES */
+
+function spawnEnemy(){
+
+    if(!running) return;
+
+    const enemy =
+    document.createElement("div");
+
+    enemy.className = "enemy";
+
+    let x =
+    Math.random() * 340 + 20;
+
+    let y = -60;
+
+    enemy.style.left =
+    x + "px";
+
+    enemy.style.top =
+    y + "px";
+
+    game.appendChild(enemy);
+
+    const move =
+    setInterval(()=>{
+
+        y += 5;
+
+        enemy.style.top =
+        y + "px";
+
+        const dx =
+        playerX - x;
+
+        const dy =
+        playerY - y;
+
+        const dist =
+        Math.sqrt(dx*dx + dy*dy);
+
+        if(dist < 60){
+
+            player.style.transform =
+            "scale(1.25)";
+
+            setTimeout(()=>{
+
+                player.style.transform =
+                "";
+
+            },200);
+        }
+
+        if(y > 760){
+
+            clearInterval(move);
+
+            enemy.remove();
+        }
+
+    },30);
+}
+
+setInterval(spawnEnemy,1200);
+
+/* ENDING */
+
+setTimeout(()=>{
+
+    running = false;
+
+    final.classList.add("show");
+
+},17000);
 
 </script>
 
